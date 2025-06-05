@@ -5,6 +5,7 @@
   "version": "0.0.0",
   "devDependencies": {
     "@vitejs/plugin-react": "^4.5.1",
+    "daisyui": "^5.0.43",
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
@@ -23,7 +24,11 @@
   },
   "type": "module",
   "dependencies": {
+    "@tailwindcss/vite": "^4.1.8",
+    "lucide-react": "^0.513.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.2",
+    "tailwindcss": "^4.1.8"
   }
 }
