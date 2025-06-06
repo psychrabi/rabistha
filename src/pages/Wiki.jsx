@@ -9,37 +9,37 @@ function Wiki() {
     'quick-start': {
       title: 'Quick Start Guide',
       icon: <Book className="w-5 h-5" />,
-      path: '/wiki/quick-start',
+      path: '/rabistha/wiki/quick-start',
       description: 'Get started with ASTER quickly and efficiently'
     },
     'user-manual': {
       title: 'User Manual',
       icon: <FileText className="w-5 h-5" />,
-      path: '/wiki/user-manual',
+      path: '/rabistha/wiki/user-manual',
       description: 'Comprehensive guide to ASTER features and functionality'
     },
     'faq': {
       title: 'FAQ',
       icon: <HelpCircle className="w-5 h-5" />,
-      path: '/wiki/faq',
+      path: '/rabistha/wiki/faq',
       description: 'Frequently asked questions and answers'
     },
     'solutions': {
       title: 'Solutions',
       icon: <Star className="w-5 h-5" />,
-      path: '/wiki/solutions',
+      path: '/rabistha/wiki/solutions',
       description: 'Troubleshooting guides and solutions'
     },
     'version-history': {
       title: 'Version History',
       icon: <History className="w-5 h-5" />,
-      path: '/wiki/version-history',
+      path: '/rabistha/wiki/version-history',
       description: 'Release notes and version updates'
     },
     'useful-links': {
       title: 'Useful Links',
       icon: <Link className="w-5 h-5" />,
-      path: '/wiki/useful-links',
+      path: '/rabistha/wiki/useful-links',
       description: 'Additional resources and external links'
     }
   };
@@ -54,9 +54,8 @@ function Wiki() {
             <RouterLink
               key={key}
               to={section.path}
-              className={`flex items-center gap-2 p-2 rounded-lg hover:bg-base-300 ${
-                activeSection === key ? 'bg-primary text-primary-content' : ''
-              }`}
+              className={`flex items-center gap-2 p-2 rounded-lg hover:bg-base-300 ${activeSection === key ? 'bg-primary text-primary-content' : ''
+                }`}
               onClick={() => setActiveSection(key)}
             >
               {section.icon}
