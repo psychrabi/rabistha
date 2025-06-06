@@ -27,14 +27,14 @@ export default function Navbar() {
     </div>
     <div className="navbar-center hidden lg:flex">
       <ul className="menu menu-horizontal px-1">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/features">Features</Link></li>
-        <li><Link to="/purchase">Purchase</Link></li>
-        <li><Link to="/faqs">FAQs</Link></li>
-        <li><Link to="/contact">Contact</Link></li>
-        <li><Link to="/wiki">Wiki</Link></li>
-        <li><Link to="/blog">Blog</Link></li>
-        <li><Link to="/news">News</Link></li>
+        <li><Link to="/rabistha/">Home</Link></li>
+        <li><Link to="/rabistha/features">Features</Link></li>
+        <li><Link to="/rabistha/purchase">Purchase</Link></li>
+        <li><Link to="/rabistha/faqs">FAQs</Link></li>
+        <li><Link to="/rabistha/contact">Contact</Link></li>
+        <li><Link to="/rabistha/wiki">Wiki</Link></li>
+        <li><Link to="/rabistha/blog">Blog</Link></li>
+        <li><Link to="/rabistha/news">News</Link></li>
       </ul>
     </div>
     <div className="navbar-end">
