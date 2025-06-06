@@ -22,47 +22,47 @@ export const router = createBrowserRouter([
 		Component: MainLayout,
 		children: [
 			{
-				path: "/",
+				path: "/rabistha/",
 				Component: Home,
 			},
 			{
-				path: "/features",
+				path: "/rabistha/features",
 				Component: Features,
 			},
 			{
-				path: "/purchase",
+				path: "/rabistha/purchase",
 				Component: Purchase,
 			},
 			{
-				path: "/faqs",
+				path: "/rabistha/faqs",
 				Component: FAQ,
 			},
 			{
-				path: "/contact",
+				path: "/rabistha/contact",
 				Component: Contact,
 			},
 			{
-				path: "/wiki",
+				path: "/rabistha/wiki",
 				Component: Wiki,
 			},
 			{
-				path: "/wiki/quick-start",
+				path: "/rabistha/wiki/quick-start",
 				Component: QuickStart,
 			},
 			{
-				path: "/wiki/user-manual",
+				path: "/rabistha/wiki/user-manual",
 				Component: UserManual,
 			},
 			{
-				path: "/blog",
+				path: "/rabistha/blog",
 				Component: Blog,
 			},
 			{
-				path: "/news",
+				path: "/rabistha/news",
 				Component: News,
 			},
 			{
-				path: "/*",
+				path: "/rabistha/*",
 				Component: NotFound
 			}
 		],
