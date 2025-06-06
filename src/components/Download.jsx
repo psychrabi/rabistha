@@ -8,7 +8,6 @@ export default function Download() {
 				<h1 class="text-2xl font-bold tracking-tight text-gray-800 xl:text-3xl dark:text-white">
 					Try ASTER for free
 				</h1>
-
 				<p class="block max-w-4xl mt-4 text-gray-500 dark:text-gray-300 text-lg" >
 					The program will work without restrictions 14 days after which payment and activation will be required.
 				</p>
