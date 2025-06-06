@@ -100,8 +100,6 @@ function Home() {
               <h1 className="text-2xl font-semibold text-gray-800 lg:text-3xl dark:text-white">Step three</h1>
               <p className="mt-3 text-gray-600 dark:text-gray-400 text-2xl">Install ASTER program, configure and enable it.</p>
               <p className="my-3 text-gray-600 dark:text-gray-400 text-md">On each monitor, desktop will be displayed and users will be able to independantly work with one computer computer and use common applications</p>
-
-              
             </div>
           </div>
         </div>
