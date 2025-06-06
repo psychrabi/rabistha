@@ -1,6 +1,5 @@
-import Download from '@/components/Download'
+import Download from '@/components/Download';
 import Testimonials from '@/components/Testimonials';
-import { DownloadCloud } from 'lucide-react';
 import { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 function Home() {
