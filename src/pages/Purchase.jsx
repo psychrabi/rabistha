@@ -85,7 +85,7 @@ function Purchase() {
           * Multiple licenses can be activated in the same computer to get total combined number of workplaces
         </p>
       </div>
-      
+
     </div>
   );
 }

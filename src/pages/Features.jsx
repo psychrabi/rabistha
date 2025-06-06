@@ -1,4 +1,4 @@
-import { BanknoteArrowDown, Clock, ClockFading, Leaf, Network, PlugZap, RulerDimensionLine, Sparkles, Volume, Volume1 } from "lucide-react";
+import { BanknoteArrowDown, ClockFading, Leaf, Network, PlugZap, RulerDimensionLine, Sparkles, Volume1 } from "lucide-react";
 
 const features = [
   {
