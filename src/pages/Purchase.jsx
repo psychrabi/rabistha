@@ -1,10 +1,13 @@
 import { ArrowLeftRight, Blocks, CircleHelp, Users } from 'lucide-react';
 import { useState } from 'react';
+import Download from '../components/Download';
+import Toast from '../components/Toast';
 import useCartStore from '../store/cartStore';
-import Cart from '../components/Cart';
 
 function Purchase() {
   const [isPerpetual, setIsPerpetual] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
   const addItem = useCartStore(state => state.addItem);
 
   const featureIcons = {
@@ -34,8 +37,20 @@ function Purchase() {
 
   const currentPricing = isPerpetual ? pricingData.perpetual : pricingData.annual;
 
+  const handleAddToCart = (item) => {
+    addItem(item);
+    setToastMessage(`${item.name} added to cart`);
+    setShowToast(true);
+  };
+
   return (
-    <div className="flex flex-col gap-8 items-center">
+    <>
+    <div className="flex flex-col gap-8 items-center pb-12">
+      <Toast
+        message={toastMessage}
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+      />      
       <div className="flex flex-col gap-2 text-center">
         <h1 className="font-bold text-3xl">Pricing</h1>
         <span>Whatever your status, our offers evolve according to your needs</span>
@@ -78,8 +93,8 @@ function Purchase() {
                 </div>
               ))}
             </div>
-            <button 
-              onClick={() => addItem(data)}
+            <button
+              onClick={() => handleAddToCart(data)}
               className={`btn ${data.is_popular ? 'btn-primary' : 'btn-neutral'}`}
             >
               Add to Cart
@@ -93,6 +108,8 @@ function Purchase() {
         </p>
       </div>
     </div>
+    <Download />
+    </>
   );
 }
 

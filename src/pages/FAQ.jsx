@@ -1,3 +1,5 @@
+import Download from "../components/Download";
+
 function FAQ() {
   return (
     <section className="bg-white dark:bg-gray-900">
@@ -71,7 +73,9 @@ function FAQ() {
             </button>
           </div>
         </div>
+        <hr className="my-6 border-gray-200 dark:border-gray-700" />
       </div>
+      <Download />
     </section>
   );
 }
