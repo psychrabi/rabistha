@@ -1,3 +1,5 @@
+import Download from "../components/Download";
+
 function Contact() {
   return (
     <section class="bg-white dark:bg-gray-900">
@@ -94,6 +96,7 @@ function Contact() {
           </div>
         </div>
       </div>
+      <Download />
     </section>
   );
 }
