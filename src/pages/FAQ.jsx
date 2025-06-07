@@ -1,82 +1,46 @@
 import Download from "../components/Download";
+import { useState } from "react";
+import { Plus, Minus } from "lucide-react";
+import { faqs } from "../data/faqs";
 
 function FAQ() {
-  return (
-    <section className="bg-white dark:bg-gray-900">
-      <div className="container px-6 py-10 mx-auto">
-        <h1 className="text-2xl font-semibold text-gray-800 lg:text-3xl dark:text-white">FAQ's</h1>
+	const [openIndex, setOpenIndex] = useState(null);
 
-        <hr className="my-6 border-gray-200 dark:border-gray-700" />
+	const toggle = (idx) => {
+		setOpenIndex(openIndex === idx ? null : idx);
+	};
 
-        <div>
-          <div>
-            <button className="flex items-center focus:outline-none">
-              <svg className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg>
+	return (
+		<section className="bg-white dark:bg-gray-900 min-h-[calc(100vh-11.75rem)]">
+			<div className="container px-6 py-10 mx-auto">
+			  <h1 className="text-2xl font-semibold text-gray-800 lg:text-3xl dark:text-white">FAQ's</h1>
+				<hr className="my-6 border-gray-200 dark:border-gray-700" />
 
-              <h1 className="mx-4 text-xl text-gray-700 dark:text-white">How can I pay for my appointment ?</h1>
-            </button>
-
-            <div className="flex mt-8 md:mx-10">
-              <span className="border border-blue-500"></span>
-
-              <p className="max-w-3xl px-4 text-gray-500 dark:text-gray-300">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, eum quae. Harum officiis reprehenderit ex quia ducimus minima id provident molestias optio nam vel, quidem iure voluptatem, repellat et ipsa.
-              </p>
-            </div>
-          </div>
-
-          <hr className="my-8 border-gray-200 dark:border-gray-700" />
-
-          <div>
-            <button className="flex items-center focus:outline-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-              </svg>
-
-              <h1 className="mx-4 text-xl text-gray-700 dark:text-white">What can I expect at my first consultation ?</h1>
-            </button>
-          </div>
-
-          <hr className="my-8 border-gray-200 dark:border-gray-700" />
-
-          <div>
-            <button className="flex items-center focus:outline-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-              </svg>
-
-              <h1 className="mx-4 text-xl text-gray-700 dark:text-white">What are your opening hours ?</h1>
-            </button>
-          </div>
-
-          <hr className="my-8 border-gray-200 dark:border-gray-700" />
-
-          <div>
-            <button className="flex items-center focus:outline-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-              </svg>
-
-              <h1 className="mx-4 text-xl text-gray-700 dark:text-white">Do I need a referral ?</h1>
-            </button>
-          </div>
-
-          <hr className="my-8 border-gray-200 dark:border-gray-700" />
-
-          <div>
-            <button className="flex items-center focus:outline-none">
-              <svg xmlns="http://www.w3.org/2000/svg" className="flex-shrink-0 w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-              </svg>
-
-              <h1 className="mx-4 text-xl text-gray-700 dark:text-white">Is the cost of the appointment covered by private health insurance ?</h1>
-            </button>
-          </div>
-        </div>
-        <hr className="my-6 border-gray-200 dark:border-gray-700" />
-      </div>
-      <Download />
-    </section>
-  );
+				<div className="space-y-4">
+					{faqs.map((faq, idx) => (
+						<div key={idx} className="border-b border-gray-200 dark:border-gray-700 pb-4" >
+							<button className="flex items-center w-full text-left focus:outline-none" onClick={() => toggle(idx)} >
+								{openIndex === idx ? (
+									<Minus className="flex-shrink-0 w-6 h-6 text-blue-500" />
+								) : (
+									<Plus className="flex-shrink-0 w-6 h-6 text-blue-500" />
+								)}
+								<h2 className="mx-4 text-xl text-gray-700 dark:text-white">{faq.question}</h2>
+							</button>
+							{openIndex === idx && (
+								<div className="flex mt-4 md:mx-10">
+									<span className="border-l-2 border-blue-500 mr-4"></span>
+									<div className="prose max-w-none mb-4">
+										<div className="whitespace-pre-wrap">{faq.answer}</div>
+									</div>
+								</div>
+							)}
+						</div>
+					))}
+				</div>
+			</div>
+			<Download />
+		</section>
+	);
 }
 export default FAQ;
