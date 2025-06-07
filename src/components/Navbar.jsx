@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { ShoppingCart } from 'lucide-react'
 import useCartStore from '../store/cartStore'
+import {navLinks} from '../data/navLinks'
 
 export default function Navbar() {
   const { items, getTotal } = useCartStore()
@@ -17,28 +18,22 @@ export default function Navbar() {
           <ul
             tabIndex={0}
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-            <li><Link to="/rabistha/">Home</Link></li>
-            <li><Link to="/rabistha/features">Features</Link></li>
-            <li><Link to="/rabistha/purchase">Purchase</Link></li>
-            <li><Link to="/rabistha/faqs">FAQs</Link></li>
-            <li><Link to="/rabistha/contact">Contact</Link></li>
-            <li><Link to="/rabistha/wiki">Wiki</Link></li>
-            <li><Link to="/rabistha/blog">Blog</Link></li>
-            <li><Link to="/rabistha/news">News</Link></li>
+            {navLinks.map(link => (
+              <li key={link.to} className={link.enabled ? '' : 'hidden'}>
+                <Link to={link.to}>{link.label}</Link>
+              </li>
+            ))}
           </ul>
         </div>
         <Link to="/rabistha/" className="btn btn-ghost text-xl">ASTER Multiseat Nepal</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          <li><Link to="/rabistha/">Home</Link></li>
-          <li><Link to="/rabistha/features">Features</Link></li>
-          <li><Link to="/rabistha/purchase">Purchase</Link></li>
-          <li><Link to="/rabistha/faqs">FAQs</Link></li>
-          <li><Link to="/rabistha/contact">Contact</Link></li>
-          <li><Link to="/rabistha/wiki">Wiki</Link></li>
-          <li><Link to="/rabistha/blog">Blog</Link></li>
-          <li><Link to="/rabistha/news">News</Link></li>
+          {navLinks.map(link => (
+            <li key={link.to} className={link.enabled ? '' : 'hidden'}>
+              <Link to={link.to}>{link.label}</Link>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="navbar-end">
