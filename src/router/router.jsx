@@ -92,7 +92,7 @@ export const router = createBrowserRouter([
 		children: [
 
 			{
-				path: "/rabistha/admin/",
+				path: "/rabistha/admin/dashboard",
 				Component: Dashboard
 			},
 			{

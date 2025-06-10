@@ -11,14 +11,14 @@ export default function Download() {
 					The program will work without restrictions 14 days after which payment and activation will be required.
 				</p>
 				<div class="mt-6 mb-2 flex gap-3">
-					<button class="flex items-center text-xl  px-8 py-4 font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+					<a href="https://www.ibik.ru/download/Aster/v2_60/Setup_ASTER2605.exe" class="cursor-pointer flex items-center text-xl  px-8 py-4 font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
 						<DownloadCloud />
 						<span class="mx-1">Download ASTER v2.60.5</span>
-					</button>
-					<button class="flex items-center text-xl px-8 py-4 font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+					</a>
+					<a href="https://www.ibik.ru/download/Aster/v2_31/Setup_ASTER2311.exe" class="cursor-pointer flex items-center text-xl px-8 py-4 font-medium tracking-wide text-white uppercase transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
 						<DownloadCloud />
 						<span class="mx-1">Download ASTER v2.31.1</span>
-					</button>
+					</a>
 				</div>
 
 				<p class="block max-w-4xl mt-2 text-gray-900  text-lg" >

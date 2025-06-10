@@ -7,4 +7,5 @@ export const navLinks = [
   { label: "Wiki", to: "/rabistha/wiki", enabled: false },
   { label: "Blog", to: "/rabistha/blog", enabled: false },
   { label: "News", to: "/rabistha/news", enabled: false },
+  { label: "Login", to: "/rabistha/admin/login", enabled: true },
 ];
