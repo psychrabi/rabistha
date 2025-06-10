@@ -1,8 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
 import { ShoppingCart } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { navLinks } from '../data/navLinks'
 import useCartStore from '../store/cartStore'
-import {navLinks} from '../data/navLinks'
 
 export default function Navbar() {
   const { items, getTotal } = useCartStore()

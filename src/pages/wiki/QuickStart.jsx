@@ -1,9 +1,4 @@
-import { Book, Download, Monitor, Key, Mouse, AlertTriangle } from 'lucide-react';
-
-function getImageUrl(name) {
-    // note that this does not include files in subdirectories
-    return new URL(`/wiki/${name}.png`, import.meta.url).href
-  }
+import { AlertTriangle, Book, Download, Key, Monitor, Mouse } from 'lucide-react';
 
 function QuickStart() {
   const sections = [
@@ -21,7 +16,7 @@ function QuickStart() {
           </ol>
         </div>
       ),
-      image: `aster-installation.png`,
+      image: ['aster-installation-1.png', 'aster-installation-2.png', 'aster-installation-3.png', 'aster-installation-4.png', 'aster-installation-5.png'],
       imageAlt: "ASTER Installation Process"
     },
     {
@@ -33,9 +28,9 @@ function QuickStart() {
           <ol className="list-decimal list-inside space-y-2">
             <li>Purchase a license from the official website</li>
             <li>Open ASTER Control Panel</li>
-            <li>Click on "Activation"</li>
+            <li>Click on &ldquo;Activation&rsquo;</li>
             <li>Enter your license key</li>
-            <li>Click "Activate"</li>
+            <li>Click &ldquo;Activate&rsquo;</li>
           </ol>
         </div>
       ),
@@ -68,10 +63,10 @@ function QuickStart() {
           <p>To enable ASTER:</p>
           <ol className="list-decimal list-inside space-y-2">
             <li>Open ASTER Control Panel</li>
-            <li>Click on "Workplaces"</li>
+            <li>Click on &ldquo;Workplaces&rsquo;</li>
             <li>Configure the number of workplaces</li>
             <li>Assign monitors to each workplace</li>
-            <li>Click "Apply" to save changes</li>
+            <li>Click &ldquo;Apply&rsquo; to save changes</li>
             <li>Restart ASTER service when prompted</li>
           </ol>
         </div>
@@ -100,7 +95,7 @@ function QuickStart() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         <div className="flex items-center gap-3 mb-8">
           <Book className="w-8 h-8 text-primary" />
           <h1 className="text-4xl font-bold">Quick Start Guide</h1>
@@ -118,16 +113,40 @@ function QuickStart() {
                   {section.icon}
                   <h2 className="text-2xl font-bold">{section.title}</h2>
                 </div>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div>{section.content}</div>
-                  <div className="flex items-center justify-center">
-                    <img 
-                      src={`/wiki/${section.image}`} 
+                <div className="grid md:grid-cols-2 gap-2">
+                  <div className="w-1/2">{section.content}</div>
+
+                  {Array.isArray(section.image) ? (
+                    <div className="w-full">
+                      <div className="carousel rounded-box ">
+                        {section.image.map((img, i) => (
+                          <div className="carousel-item w-full" key={i} id={`item${i}`}>
+                            <img
+                              src={`/rabistha/images/${img}`}
+                              className="w-full"
+                              alt={section.imageAlt}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="flex w-full justify-center gap-2 py-2">
+                        <a href="#item0" className="btn btn-xs">1</a>
+                        <a href="#item1" className="btn btn-xs">2</a>
+                        <a href="#item2" className="btn btn-xs">3</a>
+                        <a href="#item3" className="btn btn-xs">4</a>
+                        <a href="#item4" className="btn btn-xs">5</a>
+                      </div>
+                    </div>
+                  ) : (
+                    <img
+                      src={`/rabistha/images/${section.image}`}
                       alt={section.imageAlt}
                       className="rounded-lg shadow-lg max-w-full h-auto"
                     />
-                  </div>
+                  )}
+
                 </div>
+
               </section>
             ))}
           </div>

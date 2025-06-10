@@ -5,7 +5,7 @@ import { DiscountForm } from "./DiscountForm"
 import ShippingDetailsForm from './ShippingDetailsForm'
 
 export default function Cart() {
-  const { items, removeItem, updateQuantity, getTotal, getSubtotal, getDiscountAmount, setDiscount, clearDiscount, discount } = useCartStore()
+  const { items, removeItem, updateQuantity, getSubtotal, getDiscountAmount, setDiscount, clearDiscount, discount } = useCartStore()
   const [showDiscount, setShowDiscount] = useState(false)
 
   const calculateFinalTotal = () => {

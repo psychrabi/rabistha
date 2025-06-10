@@ -15,11 +15,11 @@ function Blog() {
   const posts = [
     {
       id: 1,
-      title: 'ASTER v3.0 Released: Major Update with New Features',
+      title: 'ASTER v2.60.0 Released: Major Update with New Features',
       category: 'updates',
       date: '2024-03-18',
       author: 'ASTER Team',
-      content: `ASTER v3.0 brings significant improvements to multi-user computing. Key features include:
+      content: `ASTER v2.60.0 brings significant improvements to multi-user computing. Key features include:
 - Enhanced performance optimization
 - New security features
 - Improved user management

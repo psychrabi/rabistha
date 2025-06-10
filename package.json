@@ -4,7 +4,7 @@
   "name": "personal",
   "version": "0.0.0",
   "devDependencies": {
-    "@vitejs/plugin-react": "^4.5.1",
+    "@vitejs/plugin-react": "^4.5.2",
     "daisyui": "^5.0.43",
     "eslint": "^8.57.1",
     "eslint-plugin-react": "^7.37.5",

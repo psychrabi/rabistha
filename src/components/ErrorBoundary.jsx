@@ -35,15 +35,7 @@ class ErrorBoundary extends React.Component {
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
             >
               Reload Page
-            </button>
-            {process.env.NODE_ENV === 'development' && (
-              <details className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                <summary>Error Details</summary>
-                <pre className="mt-2 p-2 bg-gray-100 dark:bg-gray-700 rounded overflow-auto">
-                  {this.state.errorInfo?.componentStack}
-                </pre>
-              </details>
-            )}
+            </button>            
           </div>
         </div>
       );

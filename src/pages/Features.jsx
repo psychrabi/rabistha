@@ -11,12 +11,12 @@ function Features() {
 
         <div className="grid grid-cols-1 gap-6 mt-8 xl:mt-12 xl:gap-12 md:grid-cols-3">
           {featuresData.map((feature, index) => (
-            <div key={index} class="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
-              <span class="inline-block p-3 text-blue-500 bg-blue-100 rounded-full dark:text-white dark:bg-blue-500">
+            <div key={index} className="flex flex-col items-center p-6 space-y-3 text-center bg-gray-100 rounded-xl dark:bg-gray-800">
+              <span className="inline-block p-3 text-blue-500 bg-blue-100 rounded-full dark:text-white dark:bg-blue-500">
                 <feature.icon />
               </span>
-              <h1 class="text-xl font-semibold text-gray-700 capitalize dark:text-white">{feature.title}</h1>
-              <p class="text-gray-500 dark:text-gray-300">
+              <h1 className="text-xl font-semibold text-gray-700 capitalize dark:text-white">{feature.title}</h1>
+              <p className="text-gray-500 dark:text-gray-300">
                 {feature.description}
               </p>
             </div>
