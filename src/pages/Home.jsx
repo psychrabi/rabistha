@@ -7,7 +7,7 @@ function Home() {
 
   const handleDownload = useCallback(() => {
     navigate('/rabistha/download')
-  }, []);
+  }, [navigate]);
 
   return (
     <div>
@@ -49,15 +49,15 @@ function Home() {
       </section>
       <section>
         <div className="container px-6 py-16 mx-auto">
-          <div class="my-6 md:flex md:items-center md:justify-between">
+          <div className="my-6 md:flex md:items-center md:justify-between">
             <div>
-              <h1 class="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
+              <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
                 How it works
               </h1>
-              <div class="flex mx-auto mt-6">
-                <span class="inline-block w-40 h-1 bg-blue-500 rounded-full"></span>
-                <span class="inline-block w-3 h-1 mx-1 bg-blue-500 rounded-full"></span>
-                <span class="inline-block w-1 h-1 bg-blue-500 rounded-full"></span>
+              <div className="flex mx-auto mt-6">
+                <span className="inline-block w-40 h-1 bg-blue-500 rounded-full"></span>
+                <span className="inline-block w-3 h-1 mx-1 bg-blue-500 rounded-full"></span>
+                <span className="inline-block w-1 h-1 bg-blue-500 rounded-full"></span>
               </div>
             </div>
           </div>

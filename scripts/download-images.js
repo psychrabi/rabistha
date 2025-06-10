@@ -1,6 +1,12 @@
-const https = require('https');
-const fs = require('fs');
-const path = require('path');
+import { get } from 'https';
+import { createWriteStream, unlink } from 'fs';
+import { join, path } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+
+const __dirname = path.dirname(__filename);
+
 
 const images = [
   {
@@ -27,10 +33,10 @@ const images = [
 
 const downloadImage = (url, filename) => {
   return new Promise((resolve, reject) => {
-    const filepath = path.join(__dirname, '../src/assets/images/wiki', filename);
-    const file = fs.createWriteStream(filepath);
+    const filepath = join(__dirname, '../src/assets/images/wiki', filename);
+    const file = createWriteStream(filepath);
 
-    https.get(url, (response) => {
+    get(url, (response) => {
       response.pipe(file);
       file.on('finish', () => {
         file.close();
@@ -38,7 +44,7 @@ const downloadImage = (url, filename) => {
         resolve();
       });
     }).on('error', (err) => {
-      fs.unlink(filepath, () => {});
+      unlink(filepath, () => {});
       reject(err);
     });
   });

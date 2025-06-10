@@ -176,7 +176,7 @@ On Win7 there were all tested antiviruses gotten started on the extra workplaces
 
 Known troubles and ways of solving: Some antiviruses (AVGAntivirusFree, AviraFreeAntivirus, NortonInternetSecurity) block working of the ASTER service. Wherein extra workplaces are not getting started, ASTER is turning on with the error “service denial code: 64.000000.000000 69.000000.000001”, and antivirus can show a message about a virus threat.
 
-In order antivirus has not been blocking ASTER program working, add the folder with the installed ASTER to the exception - C:\WINDOWS\system32\mute32.dll for WinXP, C:\WINDOWS\System32\drivers\mutenx.sys for Win7/8.
+In order antivirus has not been blocking ASTER program working, add the folder with the installed ASTER to the exception - C:\\WINDOWS\\system32\\mute32.dll for WinXP, C:\\WINDOWS\\System32\\drivers\\mutenx.sys for Win7/8.
 
 While using Kaspersky Antivirus 2015 it’s necessary to disable self-defense in the antivirus settings additionally.`
     },
