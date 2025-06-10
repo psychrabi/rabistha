@@ -2,6 +2,15 @@ import { createBrowserRouter } from "react-router-dom";
 import { lazy } from "react";
 
 import MainLayout from "@/layouts/MainLayout";
+import AdminLayout from "../layouts/AdminLayout";
+
+const Sales = lazy(() => import("@/pages/admin/Sales"));
+const QuoteInvoice = lazy(() => import("@/pages/admin/QuoteInvoice"));
+const Customers = lazy(() => import("@/pages/admin/Customers"));
+const Licenses = lazy(() => import("@/pages/admin/Licenses"));
+const Dashboard = lazy(() => import("@/pages/admin/Dashboard"));
+const Login = lazy(() => import("@/pages/admin/Login"));
+
 const Cart = lazy(() => import("@/components/Cart"));
 const Home = lazy(() => import("@/pages/Home"));
 const Features = lazy(() => import("@/pages/Features"));
@@ -69,7 +78,39 @@ export const router = createBrowserRouter([
 			{
 				path: "/rabistha/*",
 				Component: NotFound
-			}
+			},
 		],
+
 	},
+	{
+		path: "/rabistha/admin/login",
+		Component: Login
+	},
+	{
+		path: "/rabistha/admin/",
+		Component: AdminLayout,
+		children: [
+
+			{
+				path: "/rabistha/admin/",
+				Component: Dashboard
+			},
+			{
+				path: "/rabistha/admin/licenses",
+				Component: Licenses
+			},
+			{
+				path: "/rabistha/admin/customers",
+				Component: Customers
+			},
+			{
+				path: "/rabistha/admin/sales",
+				Component: Sales
+			},
+			{
+				path: "/rabistha/admin/invoices",
+				Component: QuoteInvoice
+			}
+		]
+	}
 ])
