@@ -1,155 +1,155 @@
 // FAQ data as JSON array
 export const faqs = [
-    {        question: "How do I know if my computer support creating multiple workplace?",
-        answer:
+    {        title: "How do I know if my computer support creating multiple workplace?",
+        content:
             `Does your computer have additional video port to connect an additional monitor or TV ? Then yes, you can create additional workplace from your computer.`,
     },
     {
-        question: "Is Windows 10 operating system supported by ASTER?",
-        answer:
+        title: "Is Windows 10 operating system supported by ASTER?",
+        content:
             `Yes, ASTER support Windows 7/8/10/11, Windows Server 2016/2019/2022/2025. However, ASTER doesnot support any preview builds of for Windows and Windows Server`,
     },
     {
-        question: "How many users can ASTER support?",
-        answer:
+        title: "How many users can ASTER support?",
+        content:
             `ASTER can support up to 12 users simultaneously, depending on the hardware configuration and available resources.`,
     },
-    {        question: "What are the system requirements for ASTER?",
-        answer:
+    {        title: "What are the system requirements for ASTER?",
+        content:
             `ASTER requires a Windows operating system (Windows 7/8/10/11, Windows Server 2016/2019/2022/2025) and a compatible hardware configuration that includes a CPU, RAM, and video outputs to connect multiple monitors. For detailed requirements, please refer to the "System Requirements" section in the ASTER documentation.`,
     },
     {
-        question: "How do I install ASTER?",
-        answer:
+        title: "How do I install ASTER?",
+        content:
             `To install ASTER, download the installation package from the official website, run the installer, and follow the on-screen instructions. Make sure to have administrative privileges during installation.`,
     },
     {
-        question: "Can I use ASTER with virtual machines?",
-        answer:
+        title: "Can I use ASTER with virtual machines?",
+        content:
             `Yes, ASTER can be used with virtual machines, but performance may vary depending on the virtualization software and hardware resources allocated to the virtual machine.`,
     },
-    {        question: "How do I configure ASTER for multiple users?",
-        answer:
+    {        title: "How do I configure ASTER for multiple users?",
+        content:
             `After installing ASTER, you can configure it for multiple users by accessing the ASTER Control Panel. From there, you can add additional users, assign monitors to each user, and customize settings for each workplace.`,
     },
     {
-        question: "What is the difference between ASTER Pro and ASTER Annual licenses?",
-        answer:
+        title: "What is the difference between ASTER Pro and ASTER Annual licenses?",
+        content:
             `ASTER Pro is designed for professional use with advanced features and support for more users, while ASTER Home is intended for personal use with basic features and a limited number of users.`,
     },
     {
-        question: "How do I troubleshoot common issues with ASTER?",
-        answer:
+        title: "How do I troubleshoot common issues with ASTER?",
+        content:
             `Common issues with ASTER can often be resolved by checking the hardware connections, ensuring that the video drivers are up to date, and reviewing the settings in the ASTER Control Panel. For specific troubleshooting steps, refer to the "Troubleshooting" section in the ASTER documentation.`,
     },
-    {        question: "How do I get support for ASTER?",
-        answer:
+    {        title: "How do I get support for ASTER?",
+        content:
             `You can get support for ASTER by visiting the official website and accessing the support section. There, you can find documentation, FAQs, and contact information for technical support.`,
     },
     {
-        question: "Can I use ASTER with different types of monitors?",
-        answer:
+        title: "Can I use ASTER with different types of monitors?",
+        content:
             `Yes, ASTER supports various types of monitors, including LCD, LED, and CRT monitors. However, it is recommended to use monitors with compatible resolutions and refresh rates for optimal performance.`,
     },
-    {        question: "How do I activate ASTER?",
-        answer:
+    {        title: "How do I activate ASTER?",
+        content:
             `To activate ASTER, you need to enter the activation key provided with your purchase. This can be done through the ASTER Control Panel under the "Activation" section. Make sure you have an internet connection during the activation process.`,
     },
     {
-        question: "Can I use ASTER on a laptop?",
-        answer:
+        title: "Can I use ASTER on a laptop?",
+        content:
             `Yes, ASTER can be used on laptops, but it is important to ensure that the laptop has sufficient hardware resources and video outputs to support multiple monitors.`,
     },
-    {        question: "What is the maximum number of monitors that can be connected with ASTER?",
-        answer:
+    {        title: "What is the maximum number of monitors that can be connected with ASTER?",
+        content:
             `The maximum number of monitors that can be connected with ASTER depends on the hardware configuration and the number of available video outputs. Typically, ASTER supports up to 12 monitors, but this may vary based on the specific setup.`,
     },
     {
-        question: "Can I use ASTER with remote desktop applications?",
-        answer:
+        title: "Can I use ASTER with remote desktop applications?",
+        content:
             `Yes, ASTER can be used with remote desktop applications, allowing users to access their workplaces remotely while maintaining the multi-user functionality.`,
     },
-    {        question: "How do I uninstall ASTER?",
-        answer:
+    {        title: "How do I uninstall ASTER?",
+        content:
             `To uninstall ASTER, go to the Control Panel, select "Programs and Features," find ASTER in the list of installed programs, and click "Uninstall." Follow the prompts to complete the uninstallation process.`,
     },
     {
-        question: "Is there a trial version of ASTER available?",
-        answer:
+        title: "Is there a trial version of ASTER available?",
+        content:
             `Yes, a trial version of ASTER is available for download from the official website. The trial version allows you to test the software with limited features for a specified period.`,
     },
        {
-        question: "Is it easy to setup?",
-        answer: `ASTER has a wizard which starts once you have installed ASTER, which will help you to setup the workplaces.`,
+        title: "Is it easy to setup?",
+        content: `ASTER has a wizard which starts once you have installed ASTER, which will help you to setup the workplaces.`,
     },
     {
-        question: "How can I transfer the license to another computer?",
-        answer: `You should perform the deactivation procedure from ASTER Control to deactivate the license. Once deactivation has been confirmed in ASTER Control, you will get a new key to use on your new computer.`,
+        title: "How can I transfer the license to another computer?",
+        content: `You should perform the deactivation procedure from ASTER Control to deactivate the license. Once deactivation has been confirmed in ASTER Control, you will get a new key to use on your new computer.`,
     },
       {
-        question: "Can I use ASTER for gaming setups?",
-        answer: `Yes, ASTER can be used for gaming setups where multiple users want to play games on the same PC. However, performance will depend on your hardware resources, especially the graphics card and CPU. Some games may require additional configuration for controllers or network settings.`,
+        title: "Can I use ASTER for gaming setups?",
+        content: `Yes, ASTER can be used for gaming setups where multiple users want to play games on the same PC. However, performance will depend on your hardware resources, especially the graphics card and CPU. Some games may require additional configuration for controllers or network settings.`,
     },
     {
-        question: "Does ASTER support audio separation for each workplace?",
-        answer: `Yes, ASTER supports audio separation. You can assign different audio devices (such as USB sound cards or headsets) to each workplace, allowing each user to have independent audio output.`,
+        title: "Does ASTER support audio separation for each workplace?",
+        content: `Yes, ASTER supports audio separation. You can assign different audio devices (such as USB sound cards or headsets) to each workplace, allowing each user to have independent audio output.`,
     },
     {
-        question: "Can I use different languages or keyboard layouts for each workplace?",
-        answer: `Yes, each workplace can have its own language and keyboard layout settings. Configure these in the Windows settings for each user account.`,
+        title: "Can I use different languages or keyboard layouts for each workplace?",
+        content: `Yes, each workplace can have its own language and keyboard layout settings. Configure these in the Windows settings for each user account.`,
     },
     {
-        question: "Is there a limit to the number of USB devices per workplace?",
-        answer: `There is no strict software limit, but the number of USB devices per workplace is limited by your hardware (number of USB ports and controllers). Each workplace can use its own keyboard, mouse, and other USB peripherals.`,
+        title: "Is there a limit to the number of USB devices per workplace?",
+        content: `There is no strict software limit, but the number of USB devices per workplace is limited by your hardware (number of USB ports and controllers). Each workplace can use its own keyboard, mouse, and other USB peripherals.`,
     },
     {
-        question: "Can I use ASTER in a school or classroom environment?",
-        answer: `Yes, ASTER is widely used in schools, classrooms, and training centers to maximize computer usage and reduce costs. Each student can have their own workplace using a single PC.`,
+        title: "Can I use ASTER in a school or classroom environment?",
+        content: `Yes, ASTER is widely used in schools, classrooms, and training centers to maximize computer usage and reduce costs. Each student can have their own workplace using a single PC.`,
     },
     {
-        question: "How do I update ASTER to the latest version?",
-        answer: `To update ASTER, download the latest installer from the official website and run it. Your license will remain valid if you are within the free upgrade period or have purchased an upgrade license.`,
+        title: "How do I update ASTER to the latest version?",
+        content: `To update ASTER, download the latest installer from the official website and run it. Your license will remain valid if you are within the free upgrade period or have purchased an upgrade license.`,
     },
     {
-        question: "What happens if my hardware changes after activation?",
-        answer: `Significant hardware changes (such as replacing the motherboard or CPU) may require reactivation of your ASTER license. Use the deactivation feature before making hardware changes, or contact support if you are unable to deactivate in advance.`,
+        title: "What happens if my hardware changes after activation?",
+        content: `Significant hardware changes (such as replacing the motherboard or CPU) may require reactivation of your ASTER license. Use the deactivation feature before making hardware changes, or contact support if you are unable to deactivate in advance.`,
     },
     {
-        question: "Can I use ASTER with macOS or Linux?",
-        answer: `No, ASTER is designed for Windows operating systems only. But, recently we have added support for some linux distribution like Ubuntu, Debian, Fedora, etc.`,
+        title: "Can I use ASTER with macOS or Linux?",
+        content: `No, ASTER is designed for Windows operating systems only. But, recently we have added support for some linux distribution like Ubuntu, Debian, Fedora, etc.`,
     },
     {
-        question: "Is technical support available in languages other than English?",
-        answer: `Technical support is primarily provided in English and Russian. User interface is available in multiple languages. For other languages, please check with your local distributor or reseller.`,
+        title: "Is technical support available in languages other than English?",
+        content: `Technical support is primarily provided in English and Russian. User interface is available in multiple languages. For other languages, please check with your local distributor or reseller.`,
     },
     {
-        question: "Does ASTER work with touchscreens and drawing tablets?",
-        answer: `ASTER supports most touchscreens and drawing tablets, but compatibility may depend on the device drivers. It is recommended to test your devices during the trial period.`,
+        title: "Does ASTER work with touchscreens and drawing tablets?",
+        content: `ASTER supports most touchscreens and drawing tablets, but compatibility may depend on the device drivers. It is recommended to test your devices during the trial period.`,
     },
     {
-        question: "What are the minimum hardware specification required for 6 workplaces setup?",
-        answer: `CPU: Intel Core i7 or AMD Ryzen 7 (with integrated graphics preferred)
+        title: "What are the minimum hardware specification required for 6 workplaces setup?",
+        content: `CPU: Intel Core i7 or AMD Ryzen 7 (with integrated graphics preferred)
 Motherboard: Compatible to your choice of CPU (2-3 video ports)
 RAM: 16 GB or more (Compatible with the choice of Motherboard)
 Storage: 256GB SSD (SSD for OS and program)`,
     },
     {
-        question: "Can I create a workplace even without a monitor?",
-        answer: `Yes, you can create additional workplace with the help of dummy video adapter. These video adapters simulate a monitor and allow it to run headless.`,
+        title: "Can I create a workplace even without a monitor?",
+        content: `Yes, you can create additional workplace with the help of dummy video adapter. These video adapters simulate a monitor and allow it to run headless.`,
     },
-    {        question: "Can I use ASTER with a touchscreen monitor?",
-        answer: `Yes, ASTER can be used with touchscreen monitors. However, the touchscreen functionality may vary depending on the specific monitor and drivers used. It is recommended to test the touchscreen features after setting up ASTER.`,
+    {        title: "Can I use ASTER with a touchscreen monitor?",
+        content: `Yes, ASTER can be used with touchscreen monitors. However, the touchscreen functionality may vary depending on the specific monitor and drivers used. It is recommended to test the touchscreen features after setting up ASTER.`,
     },
-    {        question: "Can I use ASTER with a wireless monitor?",
-        answer: `Yes, ASTER can be used with wireless monitors that support Miracast or WiDi technology. However, performance may vary based on the wireless connection quality and monitor specifications.`,
-    },
-    {
-        question: "Can I use ASTER with a virtual machine?",
-        answer: `Yes, ASTER can be used with virtual machines, but performance may vary depending on the virtualization software and hardware resources allocated to the virtual machine.`,
+    {        title: "Can I use ASTER with a wireless monitor?",
+        content: `Yes, ASTER can be used with wireless monitors that support Miracast or WiDi technology. However, performance may vary based on the wireless connection quality and monitor specifications.`,
     },
     {
-        question: "What is the baseline PC configuration for 6 users?",
-        answer:
+        title: "Can I use ASTER with a virtual machine?",
+        content: `Yes, ASTER can be used with virtual machines, but performance may vary depending on the virtualization software and hardware resources allocated to the virtual machine.`,
+    },
+    {
+        title: "What is the baseline PC configuration for 6 users?",
+        content:
             `The performance of your PC depends on its software.
 
 The only obligatory requirement for the hardware is the possibility of connecting at least six monitors. You can do it by using one video card with four outputs (if your motherboard has 2-3 outputs and your CPU has integrated video) or two-three video cards with two video outputs (For motherboards with at least three PCIx16b slots). It is essential that you use the power supply board with sufficient capacity (which should 1,5 times exceed the total capacity of your hardware). A separate video card should be used for the working station with several monitors.
@@ -164,8 +164,8 @@ Power supply board - at least 600 W
 This is an approximate configuration for assembling the desktop tower with the possibility of connecting six monitors.`
     },
     {
-        question: "Antiviruses compatibility",
-        answer:
+        title: "Antiviruses compatibility",
+        content:
             `General recommendations: install antiviruses while ASTER program is turned off, with mandatory reboot, and it is desirable only for the account of the first workplace.
 
 Following antiviruses are tested: Kaspersky Antivirus for WindowsWorkstations, AVGAntivirusFree, AviraFreeAntivirus, G-Data, AvastFreeAntivirus, NortonInternetSecurity, Nod 32, Dr. Web.
@@ -181,12 +181,12 @@ In order antivirus has not been blocking ASTER program working, add the folder w
 While using Kaspersky Antivirus 2015 it’s necessary to disable self-defense in the antivirus settings additionally.`
     },
     {
-        question: "Compatible with external graphics cards",
-        answer: `Presently Aster operates with all video cards based on ATI/Nvidia/Intel chipsets. Monitors may be connected also via external USB video adapters on chipsets from FrescoLogic (Win7/8/10) and DispalyLink (Win10 only!), and as a wireless monitor (WiDi) (Miracast/WiDi). Others external USB video adapters as well as software emulations of displays (alike AirDisplay or IDisplay) was not tested.`,
+        title: "Compatible with external graphics cards",
+        content: `Presently Aster operates with all video cards based on ATI/Nvidia/Intel chipsets. Monitors may be connected also via external USB video adapters on chipsets from FrescoLogic (Win7/8/10) and DispalyLink (Win10 only!), and as a wireless monitor (WiDi) (Miracast/WiDi). Others external USB video adapters as well as software emulations of displays (alike AirDisplay or IDisplay) was not tested.`,
     },
     {
-        question: "Launching Google Chrome, Mozilla Firefox browsers at the extra workplaces",
-        answer: `First of all, create a personal account for every computer user. To make it, choose the option “Control panel” at the Start menu, and then click an element “Users’ accounts” twice.
+        title: "Launching Google Chrome, Mozilla Firefox browsers at the extra workplaces",
+        content: `First of all, create a personal account for every computer user. To make it, choose the option “Control panel” at the Start menu, and then click an element “Users’ accounts” twice.
 
 Also you can set an automatic login with an account data of the certain user. You can do it at the “Enter” tab of the ASTER V7 Control panel.
 
@@ -195,8 +195,8 @@ To start Mozilla Firefox it has to be enough, and you’d better reinstall Chrom
 * Note: It is recommended to install plugin AdBlock for any browser in order to avoid ads and some other stuff.`,
     },
     {
-        question: "How do I get remote access to the computer?",
-        answer:
+        title: "How do I get remote access to the computer?",
+        content:
             `1. RDP connection.
 The terminal computer access will work correctly only when TS is unblocked, i.e. the local user is not disabled when the login is remote. * The personal profile for RDP connection must have a password (RDP connection peculiarity)
 
@@ -214,8 +214,8 @@ TeamViewer works properly in all working stations. You should by no means instal
 UltraVNC and similar software allows connecting to working stations independently. However, a further setting of the software might be required in order to be able to use different ports / connection screens, as well as ASTER setting for the application of different IP-аddresses.`,
     },
     {
-        question: "How to reactivate Aster?",
-        answer:
+        title: "How to reactivate Aster?",
+        content:
             `Two ways of Aster reactivation are possible.
 
 1. By spending the limit of serial number activations. It occurs always when Aster is activated via Internet as defined in User’s Manual Clause 3 . This method is acceptable only in case of PC replacement or replacement of your PC’s processor.
@@ -225,15 +225,15 @@ UltraVNC and similar software allows connecting to working stations independentl
 You have to use this method when there have been no changes in equipment configuration. It may be required after OS reinstallation. For Aster reactivation in this case it is sufficient in a new OS to run reg file that Aster offers to store after reactivation by the first method. Make sure to store it in order not to spend activations in future, after OS reinstallation. A good choice is generation of an image of HD system partition from OS (adjusted if possible) which will allow in a matter of minutes to restore the system after any malfunctions including virus infection etc. and gain time on restoration. A number of activations fulfilled is given on page in section Serial number parameters.`,
     },
     {
-        question: "How to run the application Steam on2 additional work places",
-        answer:
+        title: "How to run the application Steam on2 additional work places",
+        content:
             `Simultaneous start-up of the application Steam two or more times is possible using a special program (so called “sandbox”). There are several programs of this type including embedded in antivirus. Launching was tested by means of the program Sandboxie. Upon its installation in the shortcut context menu appears the menu item "Launch in sandbox". In the free version you can use only one sandbox at a time, however this is enough to start two copies of the Steam. For example, on the first work place we start the Steam in the usual fashion, and on the second in the sandbox. As a result, we get one copy of the Steam client on each work place (for each copy its own Steam account is required). In that manner you can also launch certain applications/games which don’t directly support the start-up of several their copies.
 
 When problems appear, especially with online games, when you run Steam, in Sandboxie you should check the box "Run as UAC Administrator" . Game "Dota2" can serve as an example. Here you cannot start searching for the game while the players from Aster workstations are united in one group.`,
     },
     {
-        question: "What are system requirements to PC with the installed ASTER software?",
-        answer:
+        title: "What are system requirements to PC with the installed ASTER software?",
+        content:
             `8.1 A PC-architecture computer, a notebook
 It is recommended to use a notebook either with the discrete video adapter or the integrated video adapter.
 
@@ -350,8 +350,8 @@ for 3-6 users it is a good idea to have CPU with a performance level 1-2 times h
 For a greater number of workplaces you need anyway the preliminary system testing and adjustment. Free downloading the 30-day version of Aster you may here: https://www.ibik.ru/ru/downloads, a tryout version has no functionality restrictions and is limited just by a free to use time.`,
     },
     {
-        question: "Important notes and known issues (only related to running on Windows 10).",
-        answer:
+        title: "Important notes and known issues (only related to running on Windows 10).",
+        content:
             `1.Before you enable the ASTER V7 software on Windows 10, it is necessary to extend the desktop on all the displays and set desired resoluiton for each display.
 
 2.Applications that change screen resolution may work improperly, particularly game applications may fail to enter fullscreen mode. For running games please use their windowed mode.
@@ -359,8 +359,8 @@ For a greater number of workplaces you need anyway the preliminary system testin
 `,
     },
     {
-        question: "Terms of licensing and updating of ASTER",
-        answer:
+        title: "Terms of licensing and updating of ASTER",
+        content:
             `There are different types of licenses for ASTER software:
 
 Main – Pro licenses for2 or 6 workplaces. These licenses are indefinitely valid and in the course of a year are free for upgrading ASTER up to the latest version, if necessary, adding workplaces, or transferring the license (see the note) to another PC. Main licenses for 2 or 6 workplaces can be activated or transferred as one piece only – the partial activation on several computers is not supported.
@@ -375,8 +375,8 @@ Note. You have to get right the sentence «Transfer of a license to another comp
 Attention! A maximum number of ASTER workplaces on one base unit - 12. In order to connect additional workplaces activate any Pro license x1/x2/x6, (the number of workplaces from several licenses is summed up to the full extent), but please be aware that the limit is 12 units. Prior to payment, you have to switch additional workplaces on in the test mode and check their operability with a specific configuration of hardware and software.`,
     },
     {
-        question: "Transfer of license / ASTER v2 reactivation",
-        answer:
+        title: "Transfer of license / ASTER v2 reactivation",
+        content:
             `1. The new ASTER version allows for deactivating the license, for example, for transferring to the other hardware.
 Below are listed the events when you have to perform deactivation on which completion the current keys become invalid and you will obtain new ones instead:
 
@@ -397,25 +397,25 @@ IMPORTANT!!!The deactivation procedure is applicable only for Pro license, HOME 
 2. Software reactivation in cases when deactivation is not required (for example, after reinstallation of operating system on the same HDD) may be carried out as many times as you wish using the available key (i.e. the same as during the first ASTER installation).`,
     },
     {
-        question: "Why do the working stations have identical desktops?",
-        answer:
+        title: "Why do the working stations have identical desktops?",
+        content:
             `Personalization parameters are not linked with the working station and can be adjusted individually for each user account. Therefore, if you wish to have individual personalization settings, use a separate user account for each working station.`,
     },
     {
-        question: "How can a workplace be made without the monitor?",
-        answer:
+        title: "How can a workplace be made without the monitor?",
+        content:
             `To run workplaces you have to link a monitor. However you may simulate a connected monitor by means of a dummy panel, or if the monitor has several interfaces (for example, VGA+DVI), you may connect one monitor several times, in doing so you may switch between workplaces just by selecting a required signal on the monitor.`
     },
     {
-        question: "How can to assign several monitors to one working station?",
-        answer:
+        title: "How can to assign several monitors to one working station?",
+        content:
             `In order to assign several monitors to one working station, you have to use a separate graphic card for it, as a working station with several monitors cannot share its graphic cards with another working station. However, NVIDIA Surround and AMD Eyefinity technologies give us a possibility to use extra monitors for a working station on the shared video card, and the working station can use only the monitors with the shared video card.
 
 These technologies allow uniting several monitors, with the system treating it as one monitor, which might be assigned to one of the working stations in ASTER settings. However, one has to realize that the monitors, “grouped” in this way, present a single continuous screen and, consequently, cannot work in different modes.`,
     },
     {
-        question: "Troubleshooting",
-        answer:
+        title: "Troubleshooting",
+        content:
             `Troubles with the PC operation, for instance, BSOD / freeze at the OS start or a blank black screen when turning on the PC, can be repaired in the following ways.
 
 For Win 8-10:
@@ -441,8 +441,8 @@ After the normal boot of your PC you should send to the to the support service t
 Safe mode reboot options from the working OS are not presented here.`
     },
     {
-        question: "Incompatible software.",
-        answer:
+        title: "Incompatible software.",
+        content:
             `The software which is incompatible with ASTER can be conveniently divided into two groups:
 
 1. The software which has to be obligatorily uninstalled before installing /starting ASTER. This group includes the whole list of ASTER analogues: BeTwin, SoftXpand, WM Program and other similar software.

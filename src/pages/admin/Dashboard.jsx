@@ -5,7 +5,7 @@ import { useAdminStore } from '../../store/adminStore';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { isAuthenticated, licenses, sales, users, fetchLicenses, fetchSales, fetchUsers, logout } = useAdminStore();
+  const { isAuthenticated, licenses, sales, users, fetchLicenses, fetchSales, fetchUsers } = useAdminStore();
 
   useEffect(() => {
     if (!isAuthenticated) {

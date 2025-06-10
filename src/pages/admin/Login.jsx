@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminStore } from '@/store/adminStore';
 
 export default function Login() {
 	const [credentials, setCredentials] = useState({ username: '', password: '' });
 	const navigate = useNavigate();
-	const { login } = useAdminStore();
+	const { login, isAuthenticated } = useAdminStore();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -14,6 +14,13 @@ export default function Login() {
 			navigate('/rabistha/admin/dashboard');
 		}
 	};
+
+
+	useEffect(() => {
+		if (isAuthenticated) {
+			navigate('/rabistha/admin/dashboard');
+		}
+	}, [isAuthenticated]);
 
 	return (
 		<div className="min-h-screen flex items-center justify-center ">
