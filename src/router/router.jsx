@@ -1,5 +1,5 @@
-import { createBrowserRouter } from "react-router-dom";
 import { lazy } from "react";
+import { createBrowserRouter } from "react-router-dom";
 
 import MainLayout from "@/layouts/MainLayout";
 import AdminLayout from "../layouts/AdminLayout";
@@ -90,10 +90,10 @@ export const router = createBrowserRouter([
 		path: "/rabistha/admin/",
 		Component: AdminLayout,
 		children: [
-
 			{
 				path: "/rabistha/admin/dashboard",
-				Component: Dashboard
+				Component: Dashboard,
+				index: true
 			},
 			{
 				path: "/rabistha/admin/licenses",
@@ -110,7 +110,11 @@ export const router = createBrowserRouter([
 			{
 				path: "/rabistha/admin/invoices",
 				Component: QuoteInvoice
-			}
+			},
+			{
+				path: "/rabistha/admin/*",
+				Component: NotFound
+			},
 		]
 	}
 ])

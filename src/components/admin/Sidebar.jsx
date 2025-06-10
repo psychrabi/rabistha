@@ -1,12 +1,16 @@
-import React from 'react';
+import { ChartBar, File, Home, List, Settings, Users } from 'lucide-react';
+import { useCallback } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAdminStore } from '../../store/adminStore';
-import { ChartArea, ChartAreaIcon, ChartBar, File, Home, List, Settings, Settings2, Users } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const Navbar = () => {
+	const { logout, isAuthenticated } = useAdminStore();
+	const navigate = useNavigate();
 
+	const handleLogout = useCallback(() => {
+		logout();			
+	}, []);
 
-	const {logout } = useAdminStore();
 
 	return (
 		<aside class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
@@ -55,7 +59,7 @@ const Navbar = () => {
 							<img class="object-cover rounded-full h-7 w-7" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&h=634&q=80" alt="avatar" />
 							<span class="text-sm font-medium text-gray-700 dark:text-gray-200">John Doe</span>
 						</a>
-						<button class="text-gray-500 transition-colors duration-200 rotate-180 dark:text-gray-400 rtl:rotate-0 hover:text-blue-500 dark:hover:text-blue-400" onClick={logout}>
+						<button class="text-gray-500 transition-colors duration-200 rotate-180 dark:text-gray-400 rtl:rotate-0 hover:text-blue-500 dark:hover:text-blue-400" onClick={() => handleLogout()}>
 							<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
 								<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
 							</svg>

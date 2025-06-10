@@ -35,6 +35,7 @@ export const useAdminStore = create(
         const mockSales = [
           { id: 1, salesPrice: 45.99, license: "64719-88274-58498-09302-42575", type: "Pro-2", fullName: "Arniko Internationa", email: "arnikointernational@gmail.com", contact: "977165487955", address: "lalitpur, chakrapath", paymentMethod: "cash", date: '2025-01-12' },
           { id: 2, salesPrice: 45.99, license: "89043-15109-40456-83712-01445", type: "Pro-2", fullName: "Arniko Internationa", email: "arnikointernational@gmail.com", contact: "977165487955", address: "lalitpur, chakrapath", paymentMethod: "card", date: '2025-01-12' },
+          { id: 2, salesPrice: 45.99, license: "36221-90869-63073-94256-93158", type: "Pro-2", fullName: "Rabi Shrestha", email: "psychrabi@gmail.com", contact: "9779813098760", address: "Kathmandu, Tokha", paymentMethod: "card", date: '2025-06-6' },
         ];
         set({ sales: mockSales });
       },
