@@ -1,24 +1,21 @@
+import { BarChart3, DollarSign, Eye, Key, Users } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BarChart3, Users, Key, DollarSign, Eye } from 'lucide-react';
 import { useAdminStore } from '../../store/adminStore';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { isAuthenticated, licenses, sales, users, fetchLicenses, fetchSales, fetchUsers } = useAdminStore();
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate('/rabistha/admin/login');
-      return;
-    }
-    fetchLicenses();
-    fetchSales();
-    fetchUsers();
-  }, [isAuthenticated]);
-
+  const { licenses, sales, users } = useAdminStore();
+  const { isAuthenticated, fetchLicenses, fetchSales, fetchUsers } = useAdminStore();
   const totalRevenue = sales.reduce((sum, sale) => sum + sale.salesPrice, 0);
   const activeLicenses = licenses.filter(l => l.status === 'active').length;
+
+	useEffect(() => {
+
+		fetchLicenses();
+		fetchSales();
+		fetchUsers();
+	}, [isAuthenticated]);
 
   return (
     <div className="h-[calc(100vh-68px)]  py-6 sm:px-6 lg:px-8 overflow-y-auto">

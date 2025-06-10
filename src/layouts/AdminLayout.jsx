@@ -1,8 +1,20 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import Sidebar from '../components/admin/Sidebar';
 import Footer from '../components/Footer';
+import { useEffect } from 'react';
+import { useAdminStore } from '../store/adminStore';
 
 const AdminLayout = () => {
+	const { isAuthenticated } = useAdminStore();
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!isAuthenticated) {
+			navigate('/rabistha/admin/login');
+			return;
+		}
+	}, [isAuthenticated]);
+
 	return (
 		<div className="flex min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-0 font-sans">
 			<Sidebar />
