@@ -25,19 +25,16 @@ export const useAdminStore = create(
       },
 
       fetchLicenses: async () => {
-        // TODO: Implement API call
-        const mockLicenses = [
-          { id: 1, key: 'LICENSE-123', status: 'active', userId: 1, createdAt: '2024-03-20' },
-          { id: 2, key: 'LICENSE-456', status: 'expired', userId: 2, createdAt: '2024-03-19' },
-        ];
-        set({ licenses: mockLicenses });
+
+        const licenses = JSON.parse(localStorage.getItem('licenses')) || [];
+        set({ licenses });
       },
 
       fetchSales: async () => {
         // TODO: Implement API call
         const mockSales = [
-          { id: 1, amount: 99.99, licenseId: 1, date: '2024-03-20' },
-          { id: 2, amount: 99.99, licenseId: 2, date: '2024-03-19' },
+          { id: 1, salesPrice: 45.99, license: "64719-88274-58498-09302-42575", type: "Pro-2", fullName: "Arniko Internationa", email: "arnikointernational@gmail.com", contact: "977165487955", address: "lalitpur, chakrapath", paymentMethod: "cash", date: '2025-01-12' },
+          { id: 2, salesPrice: 45.99, license: "89043-15109-40456-83712-01445", type: "Pro-2", fullName: "Arniko Internationa", email: "arnikointernational@gmail.com", contact: "977165487955", address: "lalitpur, chakrapath", paymentMethod: "card", date: '2025-01-12' },
         ];
         set({ sales: mockSales });
       },
@@ -45,8 +42,8 @@ export const useAdminStore = create(
       fetchUsers: async () => {
         // TODO: Implement API call
         const mockUsers = [
-          { id: 1, email: 'user1@example.com', licenseId: 1 },
-          { id: 2, email: 'user2@example.com', licenseId: 2 },
+          { id: 1, email: 'user1', licenseId: 1 },
+          { id: 2, email: 'user2', licenseId: 2 },
         ];
         set({ users: mockUsers });
       },
@@ -59,6 +56,15 @@ export const useAdminStore = create(
           ),
         }));
       },
+
+      addLicense: async (license) => {
+        set((state) => {
+          const updatedLicenses = [...state.licenses, license];
+          // Store licenses in localStorage
+          localStorage.setItem('licenses', JSON.stringify(updatedLicenses));
+          return { licenses: updatedLicenses };
+        });
+      }
     }),
     {
       name: 'admin-storage',
