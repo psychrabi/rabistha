@@ -30,12 +30,12 @@ class ErrorBoundary extends React.Component {
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               {this.state.error?.message || 'An unexpected error occurred'}
             </p>
-            <button
-              onClick={() => window.location.reload()}
+            <button type="button"
+              onClick={() => globalThis.location.reload()}
               className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
             >
               Reload Page
-            </button>            
+            </button>
           </div>
         </div>
       );

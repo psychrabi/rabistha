@@ -45,70 +45,70 @@ function Purchase() {
 
   return (
     <>
-    <div className="flex flex-col gap-8 items-center pb-12">
-      <Toast
-        message={toastMessage}
-        isVisible={showToast}
-        onClose={() => setShowToast(false)}
-      />      
-      <div className="flex flex-col gap-2 text-center">
-        <h1 className="font-bold text-3xl">Pricing</h1>
-        <span>Whatever your status, our offers evolve according to your needs</span>
-      </div>
-
-      <div className="flex gap-2">
-        <span>Annual</span>
-        <input
-          type="checkbox"
-          className="toggle toggle-secondary"
-          checked={isPerpetual}
-          onChange={(e) => setIsPerpetual(e.target.checked)}
+      <div className="flex flex-col gap-8 items-center pb-12">
+        <Toast
+          message={toastMessage}
+          isVisible={showToast}
+          onClose={() => setShowToast(false)}
         />
-        <span className="flex flex-col">Perpetual</span>
-      </div>
+        <div className="flex flex-col gap-2 text-center">
+          <h1 className="font-bold text-3xl">Pricing</h1>
+          <span>Whatever your status, our offers evolve according to your needs</span>
+        </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 items-end px-2 gap-8">
-        {Object.entries(currentPricing).map(([plan, data]) => (
-          <div
-            key={plan}
-            className={`flex flex-col gap-6 bg-base-200 rounded-box p-8 w-90 ${data.is_popular ? 'border border-primary shadow' : ''}`}
-          >
-            {data.is_popular && (
-              <div className="badge badge-primary self-center badge-lg">
-                Most popular
-              </div>
-            )}
-            <div className="flex flex-col gap-4 text-center">
-              <h2 className="text-xl">{plan}</h2>
-              <h1 className="text-5xl font-bold">${data.price}</h1>
-              <span className="text-sm">
-                {(plan === 'Pro-2' || plan === "Annual-2") ? 'Share PC with 2 users' : `Share PC with up to ${data.users} users`}
-              </span>
-            </div>
-            <div className="flex flex-col">
-              {data.features.map((feature, i) => (
-                <div key={i} className="flex gap-4 py-3 items-center">
-                  {getFeatureIcon(feature)}
-                  {feature}
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => handleAddToCart(data)}
-              className={`btn ${data.is_popular ? 'btn-primary' : 'btn-neutral'}`}
+        <div className="flex gap-2">
+          <span>Annual</span>
+          <input
+            type="checkbox"
+            className="toggle toggle-secondary"
+            checked={isPerpetual}
+            onChange={(e) => setIsPerpetual(e.target.checked)}
+          />
+          <span className="flex flex-col">Perpetual</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 items-end px-2 gap-8">
+          {Object.entries(currentPricing).map(([plan, data]) => (
+            <div
+              key={plan}
+              className={`flex flex-col gap-6 bg-base-200 rounded-box p-8 w-90 ${data.is_popular ? 'border border-primary shadow' : ''}`}
             >
-              Add to Cart
-            </button>
-          </div>
-        ))}
+              {data.is_popular && (
+                <div className="badge badge-primary self-center badge-lg">
+                  Most popular
+                </div>
+              )}
+              <div className="flex flex-col gap-4 text-center">
+                <h2 className="text-xl">{plan}</h2>
+                <h1 className="text-5xl font-bold">${data.price}</h1>
+                <span className="text-sm">
+                  {(plan === 'Pro-2' || plan === "Annual-2") ? 'Share PC with 2 users' : `Share PC with up to ${data.users} users`}
+                </span>
+              </div>
+              <div className="flex flex-col">
+                {data.features.map((feature, i) => (
+                  <div key={i} className="flex gap-4 py-3 items-center">
+                    {getFeatureIcon(feature)}
+                    {feature}
+                  </div>
+                ))}
+              </div>
+              <button type="button"
+                onClick={() => handleAddToCart(data)}
+                className={`btn ${data.is_popular ? 'btn-primary' : 'btn-neutral'}`}
+              >
+                Add to Cart
+              </button>
+            </div>
+          ))}
+        </div>
+        <div>
+          <p>
+            * Multiple licenses can be activated in the same computer to get total combined number of workplaces
+          </p>
+        </div>
       </div>
-      <div>
-        <p>
-          * Multiple licenses can be activated in the same computer to get total combined number of workplaces
-        </p>
-      </div>
-    </div>
-    <Download />
+      <Download />
     </>
   );
 }

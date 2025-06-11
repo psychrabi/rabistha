@@ -2,16 +2,16 @@ import { ArrowLeft, Edit2 } from "lucide-react";
 import { useAdminStore } from "../../store/adminStore";
 
 const Customers = () => {
- const { sales } = useAdminStore();
-const uniqueCustomers = [];
-const seenEmails = new Set();
+  const { sales } = useAdminStore();
+  const uniqueCustomers = [];
+  const seenEmails = new Set();
 
-sales.forEach((license) => {
-  if (!seenEmails.has(license.email)) {
-    seenEmails.add(license.email);
-    uniqueCustomers.push(license);
-  }
-});
+  sales.forEach((license) => {
+    if (!seenEmails.has(license.email)) {
+      seenEmails.add(license.email);
+      uniqueCustomers.push(license);
+    }
+  });
   return (
     <section className="w-full p-6 overflow-y-auto">
       <div className="sm:flex sm:items-center sm:justify-between">
@@ -20,7 +20,7 @@ sales.forEach((license) => {
           {/* <button className="w-1/2 px-5 py-2 text-sm text-gray-800 transition-colors duration-200 bg-white border rounded-lg sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-white dark:border-gray-700">
                 View Sales
             </button> */}
-          <button onClick={() => document.getElementById('addLicenseModal').showModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+          <button type="button" onClick={() => document.getElementById('addLicenseModal').showModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
             <ArrowLeft className="w-5 h-5" />
             <span>Back to Dashboard</span>
           </button>
@@ -32,7 +32,7 @@ sales.forEach((license) => {
             <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
               <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead className="bg-gray-50 dark:bg-gray-800">
-                  <tr>                    
+                  <tr>
                     <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
                       Customer&lsquo;s Name
                     </th>
@@ -52,12 +52,12 @@ sales.forEach((license) => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                   {uniqueCustomers.map((license, index) => (
-                    <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-800">                     
+                    <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-800">
                       <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{license.fullName}</td>
                       <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{license.email}</td>
                       <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{license.date}</td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        <button className="relative z-10 block p-2 text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+                        <button type="button" className="relative z-10 block p-2 text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                           <Edit2 className="w-5 h-5" />
                         </button>
                       </td>

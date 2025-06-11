@@ -18,7 +18,7 @@ export default function Testimonials() {
 	// Set highlight true for the current "main" testimonial (center one)
 	const getHighlightArray = () => {
 		const visible = getVisibleTestimonials();
-		return visible.map((idx, i) => i === 1); // Only the center one is highlighted
+		return visible.map((_idx, i) => i === 1); // Only the center one is highlighted
 	};
 
 	const handlePrev = () => {
@@ -55,14 +55,14 @@ export default function Testimonials() {
 						</div>
 					</div>
 					<div className="flex justify-between mt-8 md:mt-0">
-						<button
+						<button type="button"
 							title="left arrow"
 							className="p-2 mx-3 text-gray-800 transition-colors duration-300 border rounded-full rtl:-scale-x-100 dark:text-gray-200 dark:hover:bg-gray-800 dark:border-gray-700 hover:bg-gray-100"
 							onClick={handlePrev}
 						>
 							<ArrowLeft className="w-6 h-6" />
 						</button>
-						<button
+						<button type="button"
 							title="right arrow"
 							className="p-2 text-gray-800 transition-colors duration-300 border rounded-full rtl:-scale-x-100 dark:text-gray-200 dark:hover:bg-gray-800 dark:border-gray-700 hover:bg-gray-100"
 							onClick={handleNext}

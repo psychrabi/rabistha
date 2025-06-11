@@ -15,11 +15,11 @@ export default function Toast({ message, isVisible, onClose }) {
 
   return (
 
-    <div className="fixed top-18 right-4 z-50">      
+    <div className="fixed top-18 right-4 z-50">
       <div className="alert alert-info text-lg font-bold" role="alert">
         <Info />
         <span>{message}</span>
-        <button onClick={onClose} className="ml-2 hover:text-gray-200">
+        <button onClick={onClose} className="ml-2 hover:text-gray-200" type="button">
           <X className="w-4 h-4" />
         </button>
       </div>

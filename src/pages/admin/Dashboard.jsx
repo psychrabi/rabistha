@@ -8,12 +8,11 @@ export default function Dashboard() {
   const totalRevenue = sales.reduce((sum, sale) => sum + sale.salesPrice, 0);
   const activeLicenses = licenses.filter(l => l.status === 'active').length;
 
-	useEffect(() => {
-
-		fetchLicenses();
-		fetchSales();
-		fetchUsers();
-	}, [isAuthenticated, fetchUsers, fetchSales, fetchLicenses]);
+  useEffect(() => {
+    fetchLicenses();
+    fetchSales();
+    fetchUsers();
+  }, [isAuthenticated, fetchUsers, fetchSales, fetchLicenses]);
 
   return (
     <div className="h-[calc(100vh-68px)]  py-6 sm:px-6 lg:px-8 overflow-y-auto">
@@ -89,7 +88,6 @@ export default function Dashboard() {
                   <tr>
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer&apos;s Name</th>
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                    
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
                     <th className="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
@@ -101,7 +99,7 @@ export default function Dashboard() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{sales.email}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{sales.purchaseDate}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        <button className="text-green-600 hover:text-red-900">
+                        <button type="button" className="text-green-600 hover:text-red-900">
                           <Eye />
                         </button>
                       </td>

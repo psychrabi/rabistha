@@ -54,15 +54,15 @@ export default function Cart() {
                   </div>
                   <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="p-1 hover:bg-base-300 rounded">
+                      <button type="button" onClick={() => updateQuantity(item.id, item.quantity - 1)} className="p-1 hover:bg-base-300 rounded">
                         <Minus className="w-4 h-4" />
                       </button>
                       <span>{item.quantity}</span>
-                      <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-1 hover:bg-base-300 rounded">
+                      <button type="button" onClick={() => updateQuantity(item.id, item.quantity + 1)} className="p-1 hover:bg-base-300 rounded">
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
-                    <button onClick={() => removeItem(item.id)} className="p-2 text-red-500 hover:bg-red-100 rounded">
+                    <button type="button" onClick={() => removeItem(item.id)} className="p-2 text-red-500 hover:bg-red-100 rounded">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
@@ -118,7 +118,7 @@ export default function Cart() {
           <ShippingDetailsForm />
         </div>
         <div className="mt-8 flex justify-end">
-          <button className="btn btn-primary">
+          <button type="button" className="btn btn-primary">
             Proceed to Checkout
           </button>
         </div>
