@@ -65,12 +65,12 @@ function Blog() {
       {/* Categories */}
       <div className="flex gap-4 mb-8 overflow-x-auto pb-2">
         {categories.map(category => (
-          <button
+          <button type="button"
             key={category.id}
             onClick={() => setActiveCategory(category.id)}
             className={`px-4 py-2 rounded-full whitespace-nowrap ${activeCategory === category.id
-                ? 'bg-primary text-primary-content'
-                : 'bg-base-200 hover:bg-base-300'
+              ? 'bg-primary text-primary-content'
+              : 'bg-base-200 hover:bg-base-300'
               }`}
           >
             {category.name}

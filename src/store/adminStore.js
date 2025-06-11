@@ -14,7 +14,7 @@ export const useAdminStore = create(
         // TODO: Implement actual authentication
         // For now, using a mock authentication
         if (credentials.username === 'admin' && credentials.password === 'admin123') {
-          set({ isAuthenticated: true, admin: { username: credentials.username } });
+          await set({ isAuthenticated: true, admin: { username: credentials.username } });
           return true;
         }
         return false;
@@ -26,7 +26,7 @@ export const useAdminStore = create(
 
       fetchLicenses: async () => {
 
-        const licenses = JSON.parse(localStorage.getItem('licenses')) || [];
+        const licenses = await JSON.parse(localStorage.getItem('licenses')) || [];
         set({ licenses });
       },
 
@@ -37,7 +37,7 @@ export const useAdminStore = create(
           { id: 2, salesPrice: 45.99, license: "89043-15109-40456-83712-01445", type: "Pro-2", fullName: "Arniko Internationa", email: "arnikointernational@gmail.com", contact: "977165487955", address: "lalitpur, chakrapath", paymentMethod: "card", date: '2025-01-12' },
           { id: 2, salesPrice: 45.99, license: "36221-90869-63073-94256-93158", type: "Pro-2", fullName: "Rabi Shrestha", email: "psychrabi@gmail.com", contact: "9779813098760", address: "Kathmandu, Tokha", paymentMethod: "card", date: '2025-06-6' },
         ];
-        set({ sales: mockSales });
+        await set({ sales: mockSales });
       },
 
       fetchUsers: async () => {
@@ -46,12 +46,12 @@ export const useAdminStore = create(
           { id: 1, email: 'user1', licenseId: 1 },
           { id: 2, email: 'user2', licenseId: 2 },
         ];
-        set({ users: mockUsers });
+        await set({ users: mockUsers });
       },
 
       revokeLicense: async (licenseId) => {
         // TODO: Implement API call
-        set((state) => ({
+        await set((state) => ({
           licenses: state.licenses.map((license) =>
             license.id === licenseId ? { ...license, status: 'revoked' } : license
           ),
@@ -59,7 +59,7 @@ export const useAdminStore = create(
       },
 
       addLicense: async (license) => {
-        set((state) => {
+        await set((state) => {
           const updatedLicenses = [...state.licenses, license];
           // Store licenses in localStorage
           localStorage.setItem('licenses', JSON.stringify(updatedLicenses));
