@@ -1,17 +1,37 @@
 import { Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react'
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useCartStore from '../store/cartStore'
 import { DiscountForm } from "./DiscountForm"
 import ShippingDetailsForm from './ShippingDetailsForm'
 
 export default function Cart() {
+  const navigate = useNavigate()
   const { items, removeItem, updateQuantity, getSubtotal, getDiscountAmount, setDiscount, clearDiscount, discount } = useCartStore()
   const [showDiscount, setShowDiscount] = useState(false)
+  const [shippingDetails, setShippingDetails] = useState(null)
 
   const calculateFinalTotal = () => {
     const subtotal = getSubtotal()
     const discountAmount = discount ? getDiscountAmount() : 0
     return subtotal - discountAmount
+  }
+
+  const handleProceedToCheckout = () => {
+    if (!shippingDetails) {
+      alert('Please fill in shipping details first')
+      return
+    }
+
+    const orderDetails = {
+      items,
+      subtotal: getSubtotal(),
+      discount: discount ? getDiscountAmount() : 0,
+      total: calculateFinalTotal(),
+      shippingDetails
+    }
+
+    navigate('/rabistha/checkout', { state: orderDetails })
   }
 
   if (items.length === 0) {
@@ -115,10 +135,10 @@ export default function Cart() {
             </div>
           </div>
           {/* Shipping Details Form */}
-          <ShippingDetailsForm />
+          <ShippingDetailsForm onDetailsSubmit={setShippingDetails} />
         </div>
         <div className="mt-8 flex justify-end">
-          <button type="button" className="btn btn-primary">
+          <button type="button" className="btn btn-primary" onClick={handleProceedToCheckout}>
             Proceed to Checkout
           </button>
         </div>

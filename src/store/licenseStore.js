@@ -129,7 +129,7 @@ export const useAdminStore = create(
       }
     }),
     {
-      name: 'admin-storage',
+      name: 'license-storage',
     }
   )
 );

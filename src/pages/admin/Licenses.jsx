@@ -19,21 +19,22 @@ export default function Licenses() {
 
 	const handleMultiChange = e => setMulti(e.target.value);
 
-	const handleSubmit = e => {
+	const handleSubmit = async e => {
 		e.preventDefault();
 		if (!multi.trim()) {
 			setError("Enter at least one license key.");
 			return;
 		}
-		const licenses = multi.split(/[\s,]+/).filter(Boolean);
-		licenses.forEach(licenseKey => {
-			addLicense({
-				...form,
-				license: licenseKey,
-				status: "active", // Default status
-			});
-		});
-		navigate("/rabistha/admin");
+		const licenseKeys = multi.split(/[\s,]+/).filter(Boolean);
+		const licenses = licenseKeys.map(licenseKey => ({
+			...form,
+			license: licenseKey,
+			status: "available", // Default status
+		}));
+
+		// Call your API or store method with all licenses at once
+		await addLicense(licenses);
+		navigate("/rabistha/admin/licenses");
 	};
 
 	return (

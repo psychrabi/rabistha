@@ -12,6 +12,10 @@ const Dashboard = lazy(() => import("@/pages/admin/Dashboard"));
 const Login = lazy(() => import("@/pages/admin/Login"));
 
 const Cart = lazy(() => import("@/components/Cart"));
+const Checkout = lazy(() => import("@/components/Checkout"));
+const OrderConfirmation = lazy(() => import("@/pages/OrderConfirmation"));
+const QRPayment = lazy(() => import("@/pages/QRPayment"));
+const PaymentSuccess = lazy(() => import("@/pages/PaymentSuccess"));
 const Home = lazy(() => import("@/pages/Home"));
 const Features = lazy(() => import("@/pages/Features"));
 const Purchase = lazy(() => import("@/pages/Purchase"));
@@ -46,6 +50,22 @@ export const router = createBrowserRouter([
 			{
 				path: "/rabistha/cart",
 				Component: Cart,
+			},
+			{
+				path: "/rabistha/checkout",
+				Component: Checkout,
+			},
+			{
+				path: "/rabistha/order-confirmation",
+				Component: OrderConfirmation,
+			},
+			{
+				path: "/rabistha/qr-payment",
+				Component: QRPayment,
+			},
+			{
+				path: "/rabistha/payment-success",
+				Component: PaymentSuccess,
 			},
 			{
 				path: "/rabistha/faqs",

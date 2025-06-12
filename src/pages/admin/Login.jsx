@@ -1,16 +1,22 @@
-import { useState, useEffect } from 'react';
+'use server'
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAdminStore } from '@/store/adminStore';
+import prisma from "@/db/db"
+import { useForm } from "react-hook-form"
 
 export default function Login() {
-	const [credentials, setCredentials] = useState({ username: 'admin', password: 'admin123' });
 	const navigate = useNavigate();
 	const { login, isAuthenticated } = useAdminStore();
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		const success = await login(credentials);
-		if (success) {
+	const { register, control, handleSubmit, formState: { errors } } = useForm()
+	const onSubmit = async (data) => {
+		// Example: Check admin credentials using Prisma (pseudo-code, not for client-side)
+		const admin = login(data)
+		if (!admin) {
+			alert('Invalid credentials');
+			return;
+		} else {
 			navigate('/rabistha/admin/dashboard');
 		}
 	};
@@ -31,18 +37,12 @@ export default function Login() {
 					</div>
 					<h3 className="mt-3 text-xl font-medium text-center text-gray-600 dark:text-gray-200">Welcome Back</h3>
 					<p className="mt-1 text-center text-gray-500 dark:text-gray-400">Login or create account</p>
-					<form onSubmit={handleSubmit} >
+					<form onSubmit={handleSubmit(onSubmit)} >
 						<div className="w-full mt-4">
-							<input className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" type="text" placeholder="Username" aria-label="Username"
-								value={credentials.username}
-								onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-							/>
+							<input 	{...register('username')} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" type="text" placeholder="Username" aria-label="Username" />
 						</div>
 						<div className="w-full mt-4">
-							<input className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" type="password" placeholder="Password" aria-label="Password"
-								value={credentials.password}
-								onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-							/>
+							<input {...register('password')} className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border rounded-lg dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" type="password" placeholder="Password" aria-label="Password" />
 						</div>
 						<div className="flex items-center justify-between mt-4">
 							<a href="#" className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Forget Password?</a>
