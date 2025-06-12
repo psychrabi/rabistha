@@ -6,7 +6,7 @@ export default function Dashboard() {
   const { licenses, sales, users } = useAdminStore();
   const { isAuthenticated, fetchLicenses, fetchSales, fetchUsers } = useAdminStore();
   const totalRevenue = sales.reduce((sum, sale) => sum + sale.salesPrice, 0);
-  const activeLicenses = licenses.filter(l => l.status === 'active').length;
+  const activeLicenses = licenses.filter(l => l.status === 'available').length;
 
   useEffect(() => {
     fetchLicenses();
