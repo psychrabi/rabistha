@@ -1,0 +1,21 @@
+import{c as t,r,j as e,L as n}from"./index-Do0Ft_NV.js";import{C as c}from"./circle-help-CbanT2Jy.js";import{F as d}from"./file-text-Cmro7Xrh.js";import{B as h}from"./book-58uLrLFC.js";/**
+ * @license lucide-react v0.513.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const m=[["path",{d:"m9 18 6-6-6-6",key:"mthhwq"}]],p=t("chevron-right",m);/**
+ * @license lucide-react v0.513.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const x=[["path",{d:"M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8",key:"1357e3"}],["path",{d:"M3 3v5h5",key:"1xhq8a"}],["path",{d:"M12 7v5l4 2",key:"1fdv2h"}]],u=t("history",x);/**
+ * @license lucide-react v0.513.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const k=[["path",{d:"M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71",key:"1cjeqo"}],["path",{d:"M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71",key:"19qd67"}]],b=t("link",k);/**
+ * @license lucide-react v0.513.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const f=[["path",{d:"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z",key:"r04s7s"}]],j=t("star",f);function y(){const[o,l]=r.useState("quick-start"),i={"quick-start":{title:"Quick Start Guide",icon:e.jsx(h,{className:"w-5 h-5"}),path:"/rabistha/wiki/quick-start",description:"Get started with ASTER quickly and efficiently"},"user-manual":{title:"User Manual",icon:e.jsx(d,{className:"w-5 h-5"}),path:"/rabistha/wiki/user-manual",description:"Comprehensive guide to ASTER features and functionality"},faq:{title:"FAQ",icon:e.jsx(c,{className:"w-5 h-5"}),path:"/rabistha/wiki/faq",description:"Frequently asked questions and answers"},solutions:{title:"Solutions",icon:e.jsx(j,{className:"w-5 h-5"}),path:"/rabistha/wiki/solutions",description:"Troubleshooting guides and solutions"},"version-history":{title:"Version History",icon:e.jsx(u,{className:"w-5 h-5"}),path:"/rabistha/wiki/version-history",description:"Release notes and version updates"},"useful-links":{title:"Useful Links",icon:e.jsx(b,{className:"w-5 h-5"}),path:"/rabistha/wiki/useful-links",description:"Additional resources and external links"}};return e.jsxs("div",{className:"flex min-h-screen",children:[e.jsxs("div",{className:"w-64 bg-base-200 p-4",children:[e.jsx("h2",{className:"text-xl font-bold mb-4",children:"Wiki Navigation"}),e.jsx("div",{className:"flex flex-col gap-2",children:Object.entries(i).map(([a,s])=>e.jsxs(n,{to:s.path,className:`flex items-center gap-2 p-2 rounded-lg hover:bg-base-300 ${o===a?"bg-primary text-primary-content":""}`,onClick:()=>l(a),children:[s.icon,e.jsx("span",{children:s.title})]},a))})]}),e.jsx("div",{className:"flex-1 p-8",children:e.jsxs("div",{className:"prose max-w-none",children:[e.jsx("h1",{className:"text-4xl font-bold mb-8",children:"ASTER Documentation"}),e.jsx("p",{className:"text-lg mb-8",children:"Welcome to the ASTER documentation. Choose a section from the sidebar to learn more about ASTER‘s features and functionality."}),e.jsx("div",{className:"grid grid-cols-1 md:grid-cols-2 gap-6",children:Object.entries(i).map(([a,s])=>e.jsxs(n,{to:s.path,className:"block p-6 bg-base-200 rounded-lg hover:bg-base-300 transition-colors",children:[e.jsxs("div",{className:"flex items-center gap-3 mb-3",children:[s.icon,e.jsx("h2",{className:"text-xl font-bold",children:s.title})]}),e.jsx("p",{className:"text-base-content/70",children:s.description}),e.jsxs("div",{className:"flex items-center gap-2 mt-4 text-primary",children:[e.jsx("span",{children:"Read more"}),e.jsx(p,{className:"w-4 h-4"})]})]},a))})]})})]})}export{y as default};
