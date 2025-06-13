@@ -23,6 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .cursor/*
+.env
 
 /src/generated/prisma
 
