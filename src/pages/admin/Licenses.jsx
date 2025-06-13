@@ -33,8 +33,13 @@ export default function Licenses() {
 		}));
 
 		// Call your API or store method with all licenses at once
-		await addLicense(licenses);
-		navigate("/rabistha/admin/licenses");
+		addLicense(licenses).then(response =>{
+			console.log(response)
+			navigate("/rabistha/admin/licenses");
+		})
+		
+			
+		
 	};
 
 	return (

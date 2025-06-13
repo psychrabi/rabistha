@@ -8,6 +8,7 @@ export const useAdminStore = create(
     (set) => ({
       isAuthenticated: false,
       admin: null,
+      token: null,
       licenses: [],
       sales: [],
       users: [],
@@ -21,8 +22,8 @@ export const useAdminStore = create(
           });
           const result = await response.json();
           
-          if (result.success) {
-            set({ isAuthenticated: true, admin: result.admin });
+          if (result.token) {
+            set({ isAuthenticated: true, admin: result.adminWithoutPassword, token: result.token });
             return true;
           }
           return false;
@@ -33,12 +34,16 @@ export const useAdminStore = create(
       },
 
       logout: () => {
-        set({ isAuthenticated: false, admin: null });
+        set({ isAuthenticated: false, admin: null, token: null });
       },
 
       fetchLicenses: async () => {
         try {
-          const response = await fetch(`${API_URL}/admin/licenses`);
+          const response = await fetch(`${API_URL}/admin/licenses`, {
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
           if (!response.ok) throw new Error("Failed to fetch licenses");
           
           const licenses = await response.json();
@@ -64,7 +69,11 @@ export const useAdminStore = create(
 
       fetchSales: async () => {
         try {
-          const response = await fetch(`${API_URL}/admin/sales`);
+          const response = await fetch(`${API_URL}/admin/sales`, {
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
           if (!response.ok) throw new Error("Failed to fetch sales");
           
           const sales = await response.json();
@@ -77,7 +86,11 @@ export const useAdminStore = create(
 
       fetchUsers: async () => {
         try {
-          const response = await fetch(`${API_URL}/admin/users`);
+          const response = await fetch(`${API_URL}/admin/users`, {
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
           if (!response.ok) throw new Error("Failed to fetch users");
           
           const users = await response.json();
@@ -91,7 +104,10 @@ export const useAdminStore = create(
       revokeLicense: async (licenseId) => {
         try {
           const response = await fetch(`${API_URL}/admin/licenses/${licenseId}/deactivate`, {
-            method: "POST"
+            method: "POST",
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
           });
           if (!response.ok) throw new Error("Failed to revoke license");
           
@@ -112,7 +128,10 @@ export const useAdminStore = create(
         try {
           const response = await fetch(`${API_URL}/admin/licenses`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+              "Content-Type": "application/json",
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            },
             body: JSON.stringify({ licenses })
           });
           
@@ -122,7 +141,8 @@ export const useAdminStore = create(
           if (result.success) {
             // Refresh the licenses list after adding new ones
             await set((state) => ({ ...state })).fetchLicenses();
-          }
+            
+          } 
         } catch (error) {
           console.error("Error adding licenses:", error);
         }

@@ -11,9 +11,8 @@ export default function Login() {
 
 	const { register, control, handleSubmit, formState: { errors } } = useForm()
 	const onSubmit = async (data) => {
-		// Example: Check admin credentials using Prisma (pseudo-code, not for client-side)
-		const admin = login(data)
-		if (!admin) {
+		const success = await login(data);
+		if (!success) {
 			alert('Invalid credentials');
 			return;
 		} else {
