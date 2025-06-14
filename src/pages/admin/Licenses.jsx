@@ -1,61 +1,198 @@
 import { useState } from "react";
 import { useAdminStore } from "../../store/adminStore";
 import { useNavigate } from "react-router-dom";
-import { Edit2, Plus } from "lucide-react";
+import { Edit2, Key, Plus, Search } from "lucide-react";
+import AddLicenseModal from "../../components/AddLicenseModal";
+
 
 export default function Licenses() {
-	const [form, setForm] = useState({
-		license: "",
-		type: "",
-		costPrice: "",
-		purchaseDate: "",
-	});
+
 	const [multi, setMulti] = useState("");
 	const [error, setError] = useState("");
 	const navigate = useNavigate();
-	const { addLicense, licenses } = useAdminStore();
+	const { licenses } = useAdminStore();
+	const [searchTerm, setSearchTerm] = useState("");
+	const [filterType, setFilterType] = useState("all");
+	const [filterStatus, setFilterStatus] = useState("all");
 
-	const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+	const filteredLicenses = licenses.filter(license => {
 
-	const handleMultiChange = e => setMulti(e.target.value);
+		const matchesSearch = license.license.toLowerCase().includes(searchTerm.toLowerCase()) ||
+			license.type.toLowerCase().includes(searchTerm.toLowerCase());
 
-	const handleSubmit = async e => {
-		e.preventDefault();
-		if (!multi.trim()) {
-			setError("Enter at least one license key.");
-			return;
-		}
-		const licenseKeys = multi.split(/[\s,]+/).filter(Boolean);
-		const licenses = licenseKeys.map(licenseKey => ({
-			...form,
-			license: licenseKey,
-			status: "available", // Default status
-		}));
+		const matchesType = license.type === filterType;
 
-		// Call your API or store method with all licenses at once
-		addLicense(licenses).then(response =>{
-			console.log(response)
-			navigate("/rabistha/admin/licenses");
-		})
-		
-			
-		
+		const matchesStatus = filterStatus === "all" ||
+			(filterStatus === "available" && !license.isSold && license.isActive) ||
+			(filterStatus === "sold" && license.isSold) ||
+			(filterStatus === "deactivated" && !license.isActive);
+
+		return matchesSearch && matchesType && matchesStatus;
+	});
+
+	const formatCurrency = (amount) => {
+		return new Intl.NumberFormat('en-US', {
+			style: 'currency',
+			currency: 'USD'
+		}).format(parseFloat(amount));
 	};
+
+	const formatDate = (dateString) => {
+		return new Date(dateString).toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric'
+		});
+	};
+
+	const getStatusBadge = (license) => {
+		if (license.status == 'sold') {
+			return <div className="px-4 py-2 badge badge-secondary border-transparent bg-secondary text-secondary-foreground hover:bg-secondary/80">Sold</div>;
+		}
+		if (!license.status === 'deactivated') {
+			return <div className="px-4 py-2 badge badge-error border-transparent bg-destructive text-destructive-foreground hover:bg-destructive/80">Inactive</div>;
+		}
+		return <div className="px-4 py-2 badge badge-success border-transparent bg-primary text-primary-foreground hover:bg-primary/80">Available</div>;
+	};
+
+	const licenseTypes = Array.from(new Set(licenses.map(l => l.type)));
+
+
+
+	// if (isLoading) {
+	// 	return (
+	// 	  <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+	// 		<div className="text-center">
+	// 		  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+	// 		  <p className="text-slate-600">Loading licenses...</p>
+	// 		</div>
+	// 	  </div>
+	// 	);
+	//   }
 
 	return (
 		<section className="w-full p-6 overflow-y-auto">
-			<div className="sm:flex sm:items-center sm:justify-between">
-				<h2 className="text-lg font-medium text-gray-800 dark:text-white">Licenses</h2>
-				<div className="flex items-center mt-4 gap-x-3">
-					{/* <button className="w-1/2 px-5 py-2 text-sm text-gray-800 transition-colors duration-200 bg-white border rounded-lg sm:w-auto dark:hover:bg-gray-800 dark:bg-gray-900 hover:bg-gray-100 dark:text-white dark:border-gray-700">
-                View Sales
-            </button> */}
+			{/* Header */}
+			<div className="mb-8">
+				<div className="sm:flex sm:items-center sm:justify-between">
+					<div>
+						<h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">License Management</h1>
+						<p className="text-slate-600 dark:text-gray-300">Manage your ASTER license inventory</p>
+					</div>
 					<button type="button" onClick={() => document.getElementById('addLicenseModal').showModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
 						<Plus className="w-5 h-5" />
 						<span>Add Licenses</span>
 					</button>
+					<AddLicenseModal />
 				</div>
 			</div>
+			<div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+				<div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+					<div className="p-6">
+						<div className="flex items-center justify-between">
+							<div>
+
+								<p className="text-sm font-medium text-slate-600">Total Licenses</p>
+								<p className="text-3xl font-bold text-slate-900">{licenses.length}</p>
+							</div>
+							<div className="bg-blue-100 p-3 rounded-lg">
+								<Key className="text-blue-600 h-6 w-6" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+					<div className="p-6">
+						<div className="flex items-center justify-between">
+							<div >
+
+
+								<p className="text-sm font-medium text-slate-600">Available</p>
+								<p className="text-3xl font-bold text-slate-900">
+									{licenses.filter(l => !l.isSold && l.isActive).length}
+								</p>
+							</div>
+							<div className="bg-green-100 p-3 rounded-lg">
+								<Key className="text-green-600 h-6 w-6" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+					<div className="p-6">
+						<div className="flex items-center justify-between">
+							<div>
+								<p className="text-sm font-medium text-slate-600">Sold</p>
+								<p className="text-3xl font-bold text-slate-900">
+									{licenses.filter(l => l.isSold).length}
+								</p>
+							</div>
+							<div className="bg-purple-100 p-3 rounded-lg">
+								<Key className="text-purple-600 h-6 w-6" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+					<div className="p-6">
+						<div className="flex items-center justify-between">
+							<div>
+								<p className="text-sm font-medium text-slate-600">Inactive</p>
+								<p className="text-3xl font-bold text-slate-900">
+									{licenses.filter(l => !l.isActive).length}
+								</p>
+							</div>
+							<div className="bg-red-100 p-3 rounded-lg">
+								<Key className="text-red-600 h-6 w-6" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className="rounded-lg border bg-card text-card-foreground shadow-sm mb-8">
+				<div className="p-6">
+					<div className="flex flex-col md:flex-row gap-4">
+						<div className="flex-1">
+							<div className="relative">
+								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+								<input
+									placeholder="Search by license key or type..."
+									value={searchTerm}
+									onChange={(e) => setSearchTerm(e.target.value)}
+									className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+								/>
+							</div>
+						</div>
+						<select value={filterType} onChange={setFilterType} className="select bg-gray-100">
+							{/* <div className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                  <SelectValue placeholder="Filter by type" />
+                </div> */}
+
+							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="all">All Types</option>
+							{licenseTypes.map(type => (
+								<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" key={type} value={type}>{type}</option>
+							))}
+
+						</select>
+						<select value={filterStatus} onChange={setFilterStatus} className="select  bg-gray-100">
+							{/* <div className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+                  <SelectValue placeholder="Filter by status" />
+                </div> */}
+
+							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="all">All Status</option>
+							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="available">Available</option>
+							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="sold">Sold</option>
+							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="inactive">Inactive</option>
+
+						</select>
+					</div>
+				</div>
+			</div>
+
 			<div className="flex flex-col mt-6">
 				<div className="overflow-x-auto">
 					<div className="inline-block min-w-full py-2 align-middle ">
@@ -69,7 +206,6 @@ export default function Licenses() {
 												<span>License</span>
 											</div>
 										</th>
-
 										<th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
 											Type
 										</th>
@@ -92,26 +228,36 @@ export default function Licenses() {
 									</tr>
 								</thead>
 								<tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-									{licenses.map((license, index) => (
-										<tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-											<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-												{license.license}
+									{filteredLicenses.length > 0 ? (
+										filteredLicenses.map((license, index) => (
+											<tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+												<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+													{license.license}
+												</td>
+												<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+													{license.type}
+												</td>
+												<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"> {formatCurrency(license.costPrice)}</td>
+												<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{formatDate(license.purchaseDate.toString())}</td>
+												<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap capitalize">{getStatusBadge(license.status)}</td>
+												<td className="px-4 py-4 text-sm whitespace-nowrap">
+													<button type="button" className="relative z-10 block p-2 text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
+														<Edit2 className="w-5 h-5" />
+													</button>
+												</td>
+											</tr>
+										))
+									) : (
+										<tr>
+											<td colSpan={6} className="text-center py-8 text-slate-500">
+												{searchTerm || filterType !== "all" || filterStatus !== "all"
+													? "No licenses match your filters."
+													: "No licenses available. Add some licenses to get started."
+												}
 											</td>
-											<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-												{license.type}
-											</td>
-											<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">$ {license.costPrice}</td>
-											<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{license.purchaseDate}</td>
-											<td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap capitalize">{license.status}</td>
-											<td className="px-4 py-4 text-sm whitespace-nowrap">
-												<button type="button" className="relative z-10 block p-2 text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
-													<Edit2 className="w-5 h-5" />
-												</button>
-											</td>
+
 										</tr>
-									))}
-
-
+									)}
 								</tbody>
 							</table>
 						</div>
@@ -145,53 +291,7 @@ export default function Licenses() {
 					</svg>
 				</a>
 			</div> */}
-			<dialog className="modal" id="addLicenseModal">
-				<div className="modal-box">
-					<form onSubmit={handleSubmit} className="space-y-4">
-						<div>
-							<label className="block text-sm text-gray-500 dark:text-gray-300">License Key(s) (comma or newline separated)</label>
-							<textarea
-								name="multi"
-								value={multi}
-								onChange={handleMultiChange}
-								rows={3}
-								className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-								required
-							/>
-						</div>
-						<div>
-							<label className="block text-sm text-gray-500 dark:text-gray-300">Type</label>
-							<select
-								name="type"
-								value={form.type}
-								onChange={handleChange}
-								className="select block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300"
-								required
-							>
-								<option value="" disabled>Select type</option>
-								<option value="Pro-2">Pro-2</option>
-								<option value="Pro-3">Pro-3</option>
-								<option value="Pro-6">Pro-6</option>
-								<option value="Annual-2">Annual-2</option>
-								<option value="Annual-3">Annual-3</option>
-								<option value="Annual-6">Annual-6</option>
-							</select>
-						</div>
-						<div className="grid grid-cols-2 gap-4">
-							<div>
-								<label className="block text-sm text-gray-500 dark:text-gray-300">Cost Price</label>
-								<input name="costPrice" value={form.costPrice} onChange={handleChange} className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" required />
-							</div>
-							<div>
-								<label className="block text-sm text-gray-500 dark:text-gray-300">Purchase Date</label>
-								<input type="date" name="purchaseDate" value={form.purchaseDate} onChange={handleChange} className="block  mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-							</div>
-						</div>
-						{error && <div className="text-red-600">{error}</div>}
-						<button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Add Licenses</button>
-					</form>
-				</div>
-			</dialog>
+
 		</section>
 	);
 }
