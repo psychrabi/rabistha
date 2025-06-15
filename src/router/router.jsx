@@ -28,6 +28,8 @@ const News = lazy(() => import("@/pages/News"));
 const NotFound = lazy(() => import("@/components/NotFound"));
 
 // Wiki pages
+const WikiManager = lazy(() => import("@/pages/admin/Wiki"));
+const ViewWiki = lazy(() => import("@/pages/wiki/viewWiki"));
 const QuickStart = lazy(() => import("@/pages/wiki/QuickStart"));
 const UserManual = lazy(() => import("@/pages/wiki/UserManual"));
 
@@ -81,12 +83,8 @@ export const router = createBrowserRouter([
 				Component: Wiki,
 			},
 			{
-				path: "/wiki/quick-start",
-				Component: QuickStart,
-			},
-			{
-				path: "/wiki/user-manual",
-				Component: UserManual,
+				path: "/wiki/:slug",
+				Component: ViewWiki,
 			},
 			{
 				path: "/blog",
@@ -131,6 +129,10 @@ export const router = createBrowserRouter([
 			{
 				path: "/admin/invoices",
 				Component: QuoteInvoice
+			},
+			{
+				path: "/admin/wikis",
+				Component: WikiManager
 			},
 			{
 				path: "/admin/*",

@@ -12,7 +12,8 @@ export const useAdminStore = create(
       licenses: [],
       sales: [],
       users: [],
-
+      wikis: [],
+      
       login: async (data) => {
         try {
           const response = await fetch(`${API_URL}/admin/login`, {
@@ -21,7 +22,6 @@ export const useAdminStore = create(
             body: JSON.stringify(data)
           });
           const result = await response.json();
-          
           if (result.token) {
             set({ isAuthenticated: true, admin: result.adminWithoutPassword, token: result.token });
             return true;
@@ -66,7 +66,31 @@ export const useAdminStore = create(
           set({ licenses: [] });
         }
       },
+      fetchWikis: async () => {
+        try {
+          const response = await fetch('http://localhost:4000/api/admin/wikis', {
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
+          const data = await response.json();
+          set({ wikis: data });
+        } catch (error) {
+          console.error('Error fetching wikis:', error);
+        }
+      },
+      deleteWiki: async (wiki) => {
 
+        if (confirm('Are you sure you want to delete this wiki?')) {
+          await fetch(`http://localhost:4000/api/admin/wikis/${wiki.id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
+          fetchWikis();
+        }
+      },
       fetchSales: async () => {
         try {
           const response = await fetch(`${API_URL}/admin/sales`, {
