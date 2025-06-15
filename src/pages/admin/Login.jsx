@@ -1,29 +1,29 @@
 'use server'
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAdminStore } from '@/store/adminStore';
-import prisma from "@/db/db"
+
 import { useForm } from "react-hook-form"
 
 export default function Login() {
 	const navigate = useNavigate();
 	const { login, isAuthenticated } = useAdminStore();
 
-	const { register, control, handleSubmit, formState: { errors } } = useForm()
+	const { register, handleSubmit, formState: { errors } } = useForm()
 	const onSubmit = async (data) => {
 		const success = await login(data);
 		if (!success) {
-			alert('Invalid credentials');
+			console.log(errors)			
 			return;
 		} else {
-			navigate('/rabistha/admin/dashboard');
+			navigate('/admin/dashboard');
 		}
 	};
 
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			navigate('/rabistha/admin/dashboard');
+			navigate('/admin/dashboard');
 		}
 	}, [isAuthenticated, navigate]);
 
@@ -50,6 +50,9 @@ export default function Login() {
 							</button>
 						</div>
 					</form>
+
+					<Link to="/" className="text-sm text-gray-600 dark:text-gray-200 hover:text-gray-500">Go to homepage</Link>
+
 				</div>
 			</div>
 		</div>

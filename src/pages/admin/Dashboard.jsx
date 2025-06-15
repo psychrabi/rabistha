@@ -1,6 +1,7 @@
-import { BarChart3, DollarSign, Eye, Key, Users } from 'lucide-react';
+import { BarChart3, DollarSign, Eye, Key, Plus, Users } from 'lucide-react';
 import { useEffect } from 'react';
 import { useAdminStore } from '../../store/adminStore';
+import AddLicenseModal from '../../components/AddLicenseModal';
 
 export default function Dashboard() {
   const { licenses, sales, users } = useAdminStore();
@@ -15,7 +16,21 @@ export default function Dashboard() {
   }, [isAuthenticated, fetchUsers, fetchSales, fetchLicenses]);
 
   return (
-    <div className="h-[calc(100vh-68px)]  py-6 sm:px-6 lg:px-8 overflow-y-auto">
+		<section className="w-full p-6 overflow-y-auto">
+      <div className="mb-8">
+				<div className="sm:flex sm:items-center sm:justify-between">
+					<div>
+						<h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">License Management</h1>
+						<p className="text-slate-600 dark:text-gray-300">Manage your ASTER license inventory</p>
+					</div>
+					<button type="button" onClick={() => document.getElementById('addLicenseModal').showModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+						<Plus
+             className="w-5 h-5" />
+						<span>Add Licenses</span>
+					</button>
+					<AddLicenseModal />
+				</div>
+			</div>
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
         <div className="bg-white overflow-hidden shadow rounded-lg">
           <div className="p-5">
@@ -111,6 +126,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 } 

@@ -2,7 +2,8 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import MainLayout from "@/layouts/MainLayout";
-import AdminLayout from "../layouts/AdminLayout";
+
+const AdminLayout = lazy(() => import("@/layouts/AdminLayout"));
 
 const Sales = lazy(() => import("@/pages/admin/Sales"));
 const QuoteInvoice = lazy(() => import("@/pages/admin/QuoteInvoice"));
@@ -36,103 +37,103 @@ export const router = createBrowserRouter([
 		Component: MainLayout,
 		children: [
 			{
-				path: "/rabistha/",
+				path: "/",
 				Component: Home,
 			},
 			{
-				path: "/rabistha/features",
+				path: "/features",
 				Component: Features,
 			},
 			{
-				path: "/rabistha/purchase",
+				path: "/purchase",
 				Component: Purchase,
 			},
 			{
-				path: "/rabistha/cart",
+				path: "/cart",
 				Component: Cart,
 			},
 			{
-				path: "/rabistha/checkout",
+				path: "/checkout",
 				Component: Checkout,
 			},
 			{
-				path: "/rabistha/order-confirmation",
+				path: "/order-confirmation",
 				Component: OrderConfirmation,
 			},
 			{
-				path: "/rabistha/qr-payment",
+				path: "/qr-payment",
 				Component: QRPayment,
 			},
 			{
-				path: "/rabistha/payment-success",
+				path: "/payment-success",
 				Component: PaymentSuccess,
 			},
 			{
-				path: "/rabistha/faqs",
+				path: "/faqs",
 				Component: FAQ,
 			},
 			{
-				path: "/rabistha/contact",
+				path: "/contact",
 				Component: Contact,
 			},
 			{
-				path: "/rabistha/wiki",
+				path: "/wiki",
 				Component: Wiki,
 			},
 			{
-				path: "/rabistha/wiki/quick-start",
+				path: "/wiki/quick-start",
 				Component: QuickStart,
 			},
 			{
-				path: "/rabistha/wiki/user-manual",
+				path: "/wiki/user-manual",
 				Component: UserManual,
 			},
 			{
-				path: "/rabistha/blog",
+				path: "/blog",
 				Component: Blog,
 			},
 			{
-				path: "/rabistha/news",
+				path: "/news",
 				Component: News,
 			},
 			{
-				path: "/rabistha/*",
+				path: "/*",
 				Component: NotFound
 			},
 		],
 
 	},
 	{
-		path: "/rabistha/admin/login",
+		path: "/login",
 		Component: Login
 	},
 	{
-		path: "/rabistha/admin/",
+		path: "/admin/",
 		Component: AdminLayout,
 		children: [
 			{
-				path: "/rabistha/admin/dashboard",
+				path: "/admin/dashboard",
 				Component: Dashboard,
 				index: true
 			},
 			{
-				path: "/rabistha/admin/licenses",
+				path: "/admin/licenses",
 				Component: Licenses
 			},
 			{
-				path: "/rabistha/admin/customers",
+				path: "/admin/customers",
 				Component: Customers
 			},
 			{
-				path: "/rabistha/admin/sales",
+				path: "/admin/sales",
 				Component: Sales
 			},
 			{
-				path: "/rabistha/admin/invoices",
+				path: "/admin/invoices",
 				Component: QuoteInvoice
 			},
 			{
-				path: "/rabistha/admin/*",
+				path: "/admin/*",
 				Component: NotFound
 			},
 		]

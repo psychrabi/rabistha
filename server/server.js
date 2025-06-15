@@ -10,37 +10,38 @@ const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(express.json());
-const generateJwt =(admin) => {
-  return sign({username:admin.username}, 'JWT_SECRET')
+const generateJwt = (admin) => {
+  return sign({ username: admin.username }, 'JWT_SECRET')
 }
 
 app.post("/api/admin", async (req, res) => {
-  try {    
+  try {
     const hashedPassword = await hash(req.body.password, 10);
 
     const admin = await prisma.admin.create({
-      data: {...req.body, password: hashedPassword}
+      data: { ...req.body, password: hashedPassword }
     });
 
-    const {password: _password, ...adminWithoutPassword} = admin 
-    res.json({...adminWithoutPassword, token: generateJwt(admin)});
+    const { password: _password, ...adminWithoutPassword } = admin
+    res.json({ ...adminWithoutPassword, token: generateJwt(admin) });
   } catch (error) {
-    res.json({error: "username is not unique"})
-  }
-
-});
-
-app.get("/api/admin", authenticate, async(req, res, next) =>{
-  try {
-    if(!req.admin){
-      return res.sendStatus(401)
-    }
-    const {password: _password, ...adminWithoutPassword} = req.admin 
-    res.json({...adminWithoutPassword, token: generateJwt(req.admin)});
-  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
     next(error)
   }
-} )
+});
+
+app.get("/api/admin", authenticate, async (req, res, next) => {
+  try {
+    if (!req.admin) {
+      return res.sendStatus(401)
+    }
+    const { password: _password, ...adminWithoutPassword } = req.admin
+    res.json({ ...adminWithoutPassword, token: generateJwt(req.admin) });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+    next(error)
+  }
+})
 
 // Admin login
 app.post("/api/admin/login", async (req, res) => {
@@ -50,50 +51,50 @@ app.post("/api/admin/login", async (req, res) => {
     });
 
     if (!admin) {
-      res.json({error: "Username not found"})
+      res.json({ error: "Username not found" })
     }
     const isPasswordCorrect = await compare(req.body.password, admin.password)
-    if(!isPasswordCorrect){
-      res.json({error: "Password incorrect"})
+    if (!isPasswordCorrect) {
+      res.json({ error: "Password incorrect" })
     }
-    const {password: _password, ...adminWithoutPassword} = admin
- 
-    res.json({...adminWithoutPassword, token: generateJwt(admin)});
-  } catch (error) {
-    res.json({error: "Username or password are incorrect"})
-  }
+    const { password: _password, ...adminWithoutPassword } = admin
 
+    res.json({ ...adminWithoutPassword, token: generateJwt(admin) });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+    next(error)  
+  }
 });
 
 // Add licenses (multiple at once)
 app.post("/api/admin/licenses", authenticate, async (req, res, next) => {
   try {
-    if(!req.admin){
+    if (!req.admin) {
       return res.sendStatus(401)
     }
 
     const { licenses } = req.body;
-  if (!Array.isArray(licenses) || licenses.length === 0) {
-    return res.status(400).json({ success: false, error: "No licenses provided" });
-  }
+    if (!Array.isArray(licenses) || licenses.length === 0) {
+      return res.status(400).json({ success: false, error: "No licenses provided" });
+    }
 
-  const editedLicenses = licenses.map(l => ({
-    ...l,
-    costPrice: l.costPrice ? Number(l.costPrice) : 0,
-    salesPrice: l.salesPrice ? Number(l.salesPrice) : undefined,
-    discount: l.discount ? Number(l.discount) : undefined,
-    noOfUsers: l.noOfUsers ? Number(l.noOfUsers) : undefined,
-    noOfDeactivation: l.noOfDeactivation ? Number(l.noOfDeactivation) : 0,
-    purchaseDate: l.purchaseDate ? new Date(l.purchaseDate).toISOString() : undefined,
-    soldDate: l.soldDate ? new Date(l.soldDate).toISOString() : undefined,
-    lastDeactivated: l.lastDeactivated ? new Date(l.lastDeactivated).toISOString() : undefined,
-  }));
+    const editedLicenses = licenses.map(l => ({
+      ...l,
+      costPrice: l.costPrice ? Number(l.costPrice) : 0,
+      salesPrice: l.salesPrice ? Number(l.salesPrice) : undefined,
+      discount: l.discount ? Number(l.discount) : undefined,
+      noOfUsers: l.noOfUsers ? Number(l.noOfUsers) : undefined,
+      noOfDeactivation: l.noOfDeactivation ? Number(l.noOfDeactivation) : 0,
+      purchaseDate: l.purchaseDate ? new Date(l.purchaseDate).toISOString() : undefined,
+      soldDate: l.soldDate ? new Date(l.soldDate).toISOString() : undefined,
+      lastDeactivated: l.lastDeactivated ? new Date(l.lastDeactivated).toISOString() : undefined,
+    }));
     const created = await prisma.license.createMany({ data: editedLicenses });
     res.json({ success: true, created });
 
-  
+
   } catch (error) {
-    res.status(400).json({ success: false, error: e.message });
+    res.status(400).json({ success: false, error: error.message });
 
     next(error)
   }
@@ -103,7 +104,7 @@ app.post("/api/admin/licenses", authenticate, async (req, res, next) => {
 // Get all licenses
 app.get("/api/admin/licenses", authenticate, async (req, res, next) => {
   try {
-    const licenses = await prisma.license.findMany();    
+    const licenses = await prisma.license.findMany();
     res.json(licenses);
   } catch (error) {
     next(error)
@@ -161,9 +162,11 @@ app.post("/api/admin/quote", authenticate, async (req, res) => {
 // Get all licenses
 app.get("/api/admin/users", authenticate, async (req, res, next) => {
   try {
-    const users = await prisma.user.findMany();    
+    const users = await prisma.user.findMany();
     res.json(users);
   } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+
     next(error)
   }
 });

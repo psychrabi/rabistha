@@ -87,11 +87,10 @@ export default function Licenses() {
 				</div>
 			</div>
 			<div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-				<div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+				<div className="rounded-lg border dark:bg-gray-100 dark:text-gray-900">
 					<div className="p-6">
 						<div className="flex items-center justify-between">
 							<div>
-
 								<p className="text-sm font-medium text-slate-600">Total Licenses</p>
 								<p className="text-3xl font-bold text-slate-900">{licenses.length}</p>
 							</div>
@@ -101,13 +100,10 @@ export default function Licenses() {
 						</div>
 					</div>
 				</div>
-
-				<div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+				<div className="rounded-lg border dark:bg-gray-100 dark:text-gray-900">
 					<div className="p-6">
 						<div className="flex items-center justify-between">
-							<div >
-
-
+							<div>
 								<p className="text-sm font-medium text-slate-600">Available</p>
 								<p className="text-3xl font-bold text-slate-900">
 									{licenses.filter(l => !l.isSold && l.isActive).length}
@@ -120,7 +116,7 @@ export default function Licenses() {
 					</div>
 				</div>
 
-				<div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+				<div className="rounded-lg border dark:bg-gray-100 dark:text-gray-900">
 					<div className="p-6">
 						<div className="flex items-center justify-between">
 							<div>
@@ -136,7 +132,7 @@ export default function Licenses() {
 					</div>
 				</div>
 
-				<div className="rounded-lg border bg-card text-card-foreground shadow-sm">
+				<div className="rounded-lg border dark:bg-gray-100 dark:text-gray-900">
 					<div className="p-6">
 						<div className="flex items-center justify-between">
 							<div>
@@ -153,44 +149,43 @@ export default function Licenses() {
 				</div>
 			</div>
 
-			<div className="rounded-lg border bg-card text-card-foreground shadow-sm mb-8">
-				<div className="p-6">
-					<div className="flex flex-col md:flex-row gap-4">
-						<div className="flex-1">
-							<div className="relative">
-								<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
-								<input
-									placeholder="Search by license key or type..."
-									value={searchTerm}
-									onChange={(e) => setSearchTerm(e.target.value)}
-									className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
-								/>
-							</div>
+			<div className="rounded-lg border dark:bg-gray-100 dark:text-gray-900">				<div className="p-6">
+				<div className="flex flex-col md:flex-row gap-4">
+					<div className="flex-1">
+						<div className="relative">
+							<Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+							<input
+								placeholder="Search by license key or type..."
+								value={searchTerm}
+								onChange={(e) => setSearchTerm(e.target.value)}
+								className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm"
+							/>
 						</div>
-						<select value={filterType} onChange={setFilterType} className="select bg-gray-100">
-							{/* <div className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+					</div>
+					<select value={filterType} onChange={setFilterType} className="select bg-gray-100">
+						{/* <div className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
                   <SelectValue placeholder="Filter by type" />
                 </div> */}
 
-							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="all">All Types</option>
-							{licenseTypes.map(type => (
-								<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" key={type} value={type}>{type}</option>
-							))}
+						<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="all">All Types</option>
+						{licenseTypes.map(type => (
+							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" key={type} value={type}>{type}</option>
+						))}
 
-						</select>
-						<select value={filterStatus} onChange={setFilterStatus} className="select  bg-gray-100">
-							{/* <div className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
+					</select>
+					<select value={filterStatus} onChange={setFilterStatus} className="select  bg-gray-100">
+						{/* <div className="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background data-[placeholder]:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1">
                   <SelectValue placeholder="Filter by status" />
                 </div> */}
 
-							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="all">All Status</option>
-							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="available">Available</option>
-							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="sold">Sold</option>
-							<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="inactive">Inactive</option>
+						<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="all">All Status</option>
+						<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="available">Available</option>
+						<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="sold">Sold</option>
+						<option className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50" value="inactive">Inactive</option>
 
-						</select>
-					</div>
+					</select>
 				</div>
+			</div>
 			</div>
 
 			<div className="flex flex-col mt-6">
