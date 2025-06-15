@@ -4,6 +4,8 @@ import { PrismaClient } from "@prisma/client";
 import { compare, hash } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { authenticate } from "../src/middleware/auth";
+import multer from 'multer';
+import path from 'path';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -170,6 +172,122 @@ app.get("/api/admin/users", authenticate, async (req, res, next) => {
     next(error)
   }
 });
+
+
+// Wiki Routes
+app.get('/api/admin/wikis', authenticate, async (req, res) => {
+  try {
+    const wikis = await prisma.wiki.findMany({
+      orderBy: { updatedAt: 'desc' }
+    });
+    res.json(wikis);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/admin/wikis', authenticate, async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    
+    const wiki = await prisma.wiki.create({
+      data: { title, content, slug }
+    });
+    res.json(wiki);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/api/admin/wikis/:id', authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
+    const wiki = await prisma.wiki.update({
+      where: { id: Number(id) },
+      data: { title, content, slug }
+    });
+    res.json(wiki);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/api/admin/wikis/:id', authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.wiki.delete({
+      where: { id: Number(id) }
+    });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads/wiki')
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix + path.extname(file.originalname))
+  }
+});
+
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type'));
+    }
+  }
+});
+
+// Add image upload endpoint
+app.post('/api/admin/wiki/upload', authenticate, upload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      throw new Error('No file uploaded');
+    }
+    const imageUrl = `/uploads/wiki/${req.file.filename}`;
+    res.json({ 
+      success: true,
+      file: {
+        url: imageUrl,
+        name: req.file.originalname
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/wiki/:slug', async (req, res) => {
+  try {
+    const { slug } = req.params;
+    const wiki = await prisma.wiki.findUnique({
+      where: { slug }
+    });
+
+    if (!wiki) {
+      return res.status(404).json({ error: 'Wiki not found' });
+    }
+
+    res.json(wiki);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.use('/uploads', express.static('public/uploads'));
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {

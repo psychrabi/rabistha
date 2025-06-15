@@ -31,7 +31,7 @@ export default function AddLicenseModal() {
 		// Call your API or store method with all licenses at once
 		addLicense(licenses).then(response => {
 			console.log(response)
-			navigate("/rabistha/admin/licenses");
+			navigate("/admin/licenses");
 		})
 	};
 
