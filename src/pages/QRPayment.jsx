@@ -10,7 +10,7 @@ const QRPayment = () => {
 
   useEffect(() => {
     if (!location.state) {
-      navigate('/rabistha/cart');
+      navigate('/cart');
       return;
     }
 
@@ -26,7 +26,7 @@ const QRPayment = () => {
 
   if (!orderDetails) return null;
 
-  const paymentUrl = `${window.location.origin}/rabistha/payment-success?orderId=${orderDetails.id}`;
+  const paymentUrl = `${window.location.origin}/payment-success?orderId=${orderDetails.id}`;
 
   return (
     <div className="max-w-2xl mx-auto p-6">
@@ -105,7 +105,7 @@ const QRPayment = () => {
         Total: ${location.state.total.toFixed(2)}
       </p>
       <button
-        onClick={() => navigate(`/rabistha/payment-success?orderId=${location.state.id}`)}
+        onClick={() => navigate(`/payment-success?orderId=${location.state.id}`)}
         className="btn btn-primary w-full"
       >
         I've Completed the Payment

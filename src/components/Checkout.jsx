@@ -20,7 +20,7 @@ const Checkout = () => {
   const orderDetails = location.state;
 
   if (!orderDetails) {
-    navigate('/rabistha/cart');
+    navigate('/cart');
     return null;
   }
 
@@ -45,7 +45,7 @@ const Checkout = () => {
       localStorage.setItem('orders', JSON.stringify(existingOrders));
 
       // Navigate to QR payment page with order ID
-      navigate('/rabistha/qr-payment', { 
+      navigate('/qr-payment', { 
         state: { ...orderData }
       });
       return;
@@ -73,7 +73,7 @@ const Checkout = () => {
 
       // Clear cart and navigate to confirmation
       clearCart();
-      navigate('/rabistha/order-confirmation');
+      navigate('/order-confirmation');
     } catch (error) {
       console.error('Error saving order:', error);
     }

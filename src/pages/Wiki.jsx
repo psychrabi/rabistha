@@ -9,37 +9,37 @@ function Wiki() {
     'quick-start': {
       title: 'Quick Start Guide',
       icon: <Book className="w-5 h-5" />,
-      path: '/rabistha/wiki/quick-start',
+      path: '/wiki/quick-start',
       description: 'Get started with ASTER quickly and efficiently'
     },
     'user-manual': {
       title: 'User Manual',
       icon: <FileText className="w-5 h-5" />,
-      path: '/rabistha/wiki/user-manual',
+      path: '/wiki/user-manual',
       description: 'Comprehensive guide to ASTER features and functionality'
     },
     'faq': {
       title: 'FAQ',
       icon: <HelpCircle className="w-5 h-5" />,
-      path: '/rabistha/wiki/faq',
+      path: '/wiki/faq',
       description: 'Frequently asked questions and answers'
     },
     'solutions': {
       title: 'Solutions',
       icon: <Star className="w-5 h-5" />,
-      path: '/rabistha/wiki/solutions',
+      path: '/wiki/solutions',
       description: 'Troubleshooting guides and solutions'
     },
     'version-history': {
       title: 'Version History',
       icon: <History className="w-5 h-5" />,
-      path: '/rabistha/wiki/version-history',
+      path: '/wiki/version-history',
       description: 'Release notes and version updates'
     },
     'useful-links': {
       title: 'Useful Links',
       icon: <Link className="w-5 h-5" />,
-      path: '/rabistha/wiki/useful-links',
+      path: '/wiki/useful-links',
       description: 'Additional resources and external links'
     }
   };
