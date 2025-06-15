@@ -10,7 +10,7 @@ const AdminLayout = () => {
 
 	useEffect(() => {
 		if (!isAuthenticated) {
-			navigate('/rabistha/admin/login');
+			navigate('/login');
 			return;
 		}
 	}, [isAuthenticated, navigate]);

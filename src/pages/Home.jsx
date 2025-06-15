@@ -42,7 +42,7 @@ function Home() {
               </div>
             </div>
             <div className="flex items-center justify-center w-full mt-6 lg:mt-0 lg:w-1/2">
-              <img className="w-full h-full lg:max-w-2xl" src="images/work_study_internet_dark.png" alt="ASTER 3 workplaces from one system" />
+              <img className="w-full h-full lg:max-w-2xl" src="/images/work_study_internet_dark.png" alt="ASTER 3 workplaces from one system" />
             </div>
           </div>
         </div>

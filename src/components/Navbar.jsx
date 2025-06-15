@@ -8,7 +8,7 @@ export default function Navbar() {
   const itemCount = items.reduce((total, item) => total + item.quantity, 0)
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 shadow-sm text-gray-100">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -24,7 +24,7 @@ export default function Navbar() {
             ))}
           </ul>
         </div>
-        <Link to="/rabistha/" className="btn btn-ghost text-xl">ASTER Multiseat Nepal</Link>
+        <Link to="/" className="btn btn-ghost text-xl">ASTER Multiseat Nepal</Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
@@ -52,7 +52,7 @@ export default function Navbar() {
               <span className="text-lg font-bold">{itemCount} Items</span>
               <span className="text-info">Subtotal: ${getTotal().toFixed(2)}</span>
               <div className="card-actions">
-                <Link to="/rabistha/cart" className="btn btn-primary btn-block">View cart</Link>
+                <Link to="/cart" className="btn btn-primary btn-block">View cart</Link>
               </div>
             </div>
           </div>

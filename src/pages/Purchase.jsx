@@ -45,7 +45,7 @@ function Purchase() {
 
   return (
     <>
-      <div className="flex flex-col gap-8 items-center pb-12">
+      <div className="flex flex-col gap-8 items-center py-12">
         <Toast
           message={toastMessage}
           isVisible={showToast}
@@ -71,7 +71,7 @@ function Purchase() {
           {Object.entries(currentPricing).map(([plan, data]) => (
             <div
               key={plan}
-              className={`flex flex-col gap-6 bg-base-200 rounded-box p-8 w-90 ${data.is_popular ? 'border border-primary shadow' : ''}`}
+              className={`flex flex-col gap-6 bg-base-200 text-gray-100 rounded-box p-8 w-90 ${data.is_popular ? 'border border-primary shadow' : ''}`}
             >
               {data.is_popular && (
                 <div className="badge badge-primary self-center badge-lg">
