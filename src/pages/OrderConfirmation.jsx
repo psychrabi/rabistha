@@ -62,7 +62,7 @@ const OrderConfirmation = () => {
 
       <div className="text-center">
         <button
-          onClick={() => navigate('/rabistha/')}
+          onClick={() => navigate('/')}
           className="btn btn-primary"
         >
           Return to Home

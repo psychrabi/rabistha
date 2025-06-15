@@ -122,7 +122,7 @@ function QuickStart() {
                         {section.image.map((img, i) => (
                           <div className="carousel-item w-full" key={i} id={`item${i}`}>
                             <img
-                              src={`/rabistha/images/${img}`}
+                              src={`/images/${img}`}
                               className="w-full"
                               alt={section.imageAlt}
                             />
@@ -139,7 +139,7 @@ function QuickStart() {
                     </div>
                   ) : (
                     <img
-                      src={`/rabistha/images/${section.image}`}
+                      src={`/images/${section.image}`}
                       alt={section.imageAlt}
                       className="rounded-lg shadow-lg max-w-full h-auto"
                     />

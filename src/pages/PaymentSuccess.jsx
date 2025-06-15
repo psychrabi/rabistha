@@ -14,7 +14,7 @@ const PaymentSuccess = () => {
   useEffect(() => {
     const orderId = new URLSearchParams(location.search).get('orderId');
     if (!orderId) {
-      navigate('/rabistha/cart');
+      navigate('/cart');
       return;
     }
 
@@ -57,7 +57,7 @@ const PaymentSuccess = () => {
       const order = orders.find(o => o.id === orderId);
       
       if (!order) {
-        navigate('/rabistha/cart');
+        navigate('/cart');
         return;
       }
 
@@ -162,7 +162,7 @@ const PaymentSuccess = () => {
 
       <div className="mt-8 text-center">
         <button
-          onClick={() => navigate('/rabistha/')}
+          onClick={() => navigate('/')}
           className="btn btn-primary"
         >
           Return to Home

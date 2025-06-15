@@ -31,7 +31,7 @@ export default function Cart() {
       shippingDetails
     }
 
-    navigate('/rabistha/checkout', { state: orderDetails })
+    navigate('/checkout', { state: orderDetails })
   }
 
   if (items.length === 0) {

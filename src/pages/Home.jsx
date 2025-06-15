@@ -6,7 +6,7 @@ function Home() {
   const navigate = useNavigate()
 
   const handleDownload = useCallback(() => {
-    navigate('/rabistha/download')
+    navigate('/download')
   }, [navigate]);
 
   return (

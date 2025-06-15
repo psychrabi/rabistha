@@ -39,7 +39,7 @@ export default function AddLicense() {
         soldDate: "",
       });
     });
-    navigate("/rabistha/admin");
+    navigate("/admin");
   };
 
   return (
