@@ -12,11 +12,11 @@ export default function ViewWiki() {
       try {
         setLoading(true);
         const response = await fetch(`http://localhost:4000/api/wiki/${slug}`);
-        
+
         if (!response.ok) {
           throw new Error('Wiki not found');
         }
-        
+
         const data = await response.json();
         setWiki(data);
       } catch (error) {
@@ -47,13 +47,10 @@ export default function ViewWiki() {
 
   return (
     <section >
-            <div className="container px-6 py-10 mx-auto">
-
-      <h1 className="text-3xl font-bold mb-6">{wiki?.title}</h1>
-      <div 
-        className="prose max-w-none text-white"
-        dangerouslySetInnerHTML={{ __html: wiki?.content }}
-      />
+      <div className="container px-6 py-10 mx-auto">
+        <h1 className="text-3xl font-bold mb-6">{wiki?.title}</h1>
+        <div className="prose max-w-none text-white" dangerouslySetInnerHTML={{ __html: wiki?.content }}
+        />
       </div>
     </section>
   );
