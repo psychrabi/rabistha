@@ -5,10 +5,10 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAdminStore } from '../store/adminStore';
 
-const AddWikiModal = ({ currentWiki }) => {
+const AddFAQModal = ({ currentFAQ }) => {
   const editor = useRef(null);
   const { register, handleSubmit, control, reset } = useForm({
-    defaultValues: { currentWiki }
+    defaultValues: { currentFAQ }
   });
   const { token } = useAdminStore();
 
@@ -19,7 +19,7 @@ const AddWikiModal = ({ currentWiki }) => {
     readonly: false,
     height: 600,
     uploader: {
-      url: 'http://localhost:4000/api/admin/wiki/upload',
+      url: 'http://localhost:4000/api/admin/faq/upload',
       headers: {
         'Authorization': `Bearer ${token}`
       },
@@ -57,12 +57,11 @@ const AddWikiModal = ({ currentWiki }) => {
     }
   }), []);
   const onSubmit = async (data) => {
-    console.log({ "onsubmit": data })
     try {
-      const method = currentWiki ? 'PUT' : 'POST';
-      const url = currentWiki
-        ? `http://localhost:4000/api/admin/wikis/${currentWiki.id}`
-        : 'http://localhost:4000/api/admin/wikis';
+      const method = currentFAQ ? 'PUT' : 'POST';
+      const url = currentFAQ
+        ? `http://localhost:4000/api/admin/faqs/${currentFAQ.id}`
+        : 'http://localhost:4000/api/admin/faqs';
 
       const response = await fetch(url, {
         method,
@@ -74,47 +73,36 @@ const AddWikiModal = ({ currentWiki }) => {
       });
 
       if (response.status === 200) {
-
-        navigate("/admin/wikis");
+        console.log(response)
+        navigate(0);
 
       }
     } catch (error) {
-      console.error('Error saving wiki:', error);
+      console.error('Error saving faq:', error);
     }
   };
 
   useEffect(() => {
-    console.log(currentWiki)
-    if (currentWiki) {
+    console.log(currentFAQ)
+    if (currentFAQ) {
       reset({
-        title: currentWiki.title,
-        content: currentWiki.content,
-        category: currentWiki.category
+        title: currentFAQ.title,
+        content: currentFAQ.content,
+        category: currentFAQ.category
       });
     }
-  }, [currentWiki, reset]);
+  }, [currentFAQ, reset]);
 
   return (
-    <dialog className="modal" id="addWikiModal">
+    <dialog className="modal" id="addFAQModal">
       <div className="modal-box w-11/12 max-w-5xl">
         <form onSubmit={handleSubmit(onSubmit)} >
-          <div className="mb-4">
-            <label className="block mb-2">Category</label>
-            <select {...register('category', { required: 'Category is required' })} className="select w-full px-3 py-2 border rounded">
-              <option value="quick-start-guite">Quick Start Guide</option>
-              <option value="user-manual">User Manual</option>
-              <option value="faqs">FAQs</option>
-              <option value="solutions">Solutions</option>
-              <option value="version-history">Version History</option>
-              <option value="useful-links">Useful Link</option>
-            </select>
-          </div>
           <div className="mb-4">
             <label className="block mb-2">Title</label>
             <input
               {...register('title', { required: 'Title is required' })}
               className="w-full px-3 py-2 border rounded"
-              placeholder="Enter wiki title"
+              placeholder="Enter faq title"
             />
           </div>
           <div className="mb-4">
@@ -126,6 +114,7 @@ const AddWikiModal = ({ currentWiki }) => {
               render={({ field: { onChange, value } }) => (
                 <JoditEditor
                   ref={editor}
+                  theme={'dark'}
                   value={value}
                   config={config}
                   onChange={onChange}
@@ -135,7 +124,7 @@ const AddWikiModal = ({ currentWiki }) => {
           </div>
           <div className="modal-action">
             <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600" >
-              {currentWiki ? 'Update' : 'Create'} Wiki
+              {currentFAQ ? 'Update' : 'Create'} FAQ
             </button>
           </div>
         </form>
@@ -148,4 +137,4 @@ const AddWikiModal = ({ currentWiki }) => {
   );
 };
 
-export default AddWikiModal;
+export default AddFAQModal;
