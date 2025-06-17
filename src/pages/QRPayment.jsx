@@ -13,6 +13,7 @@ const QRPayment = () => {
       navigate('/cart');
       return;
     }
+    console.log(location.state)
 
     // Store order details in localStorage for mobile access
     localStorage.setItem('currentOrder', JSON.stringify(location.state));

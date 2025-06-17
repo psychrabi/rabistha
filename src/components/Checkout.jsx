@@ -1,6 +1,6 @@
+import { Banknote, CreditCard, HandCoins, QrCode } from 'lucide-react';
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import {QRCodeSVG} from 'qrcode.react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useCartStore from '../store/cartStore';
 
 const Checkout = () => {
@@ -26,9 +26,9 @@ const Checkout = () => {
 
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
-    
+
     const orderId = Date.now().toString();
-    
+
     if (paymentMethod === 'qr') {
       // Create initial order record
       const orderData = {
@@ -45,7 +45,7 @@ const Checkout = () => {
       localStorage.setItem('orders', JSON.stringify(existingOrders));
 
       // Navigate to QR payment page with order ID
-      navigate('/qr-payment', { 
+      navigate('/qr-payment', {
         state: { ...orderData }
       });
       return;
@@ -64,10 +64,10 @@ const Checkout = () => {
     try {
       // Get existing orders from localStorage
       const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-      
+
       // Add new order
       existingOrders.push(orderData);
-      
+
       // Save back to localStorage
       localStorage.setItem('orders', JSON.stringify(existingOrders));
 
@@ -80,33 +80,33 @@ const Checkout = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-6">
+    <div className="max-w-lg mx-auto p-6">
       <h2 className="text-2xl font-bold mb-6">Payment Options</h2>
-      
+
       <div className="grid grid-cols-2 gap-4 mb-6">
         <button
           onClick={() => setPaymentMethod('card')}
-          className={`p-4 border rounded-lg ${paymentMethod === 'card' ? 'border-blue-500 bg-blue-50' : ''}`}
+          className={`flex gap-4 p-4 border rounded-lg ${paymentMethod === 'card' ? 'border-blue-500' : ''}`}
         >
-          Credit/Debit Card
+          <CreditCard />Credit/Debit Card
         </button>
         <button
           onClick={() => setPaymentMethod('paypal')}
-          className={`p-4 border rounded-lg ${paymentMethod === 'paypal' ? 'border-blue-500 bg-blue-50' : ''}`}
+          className={`flex gap-4 p-4 border rounded-lg ${paymentMethod === 'paypal' ? 'border-blue-500' : ''}`}
         >
-          PayPal
+          <HandCoins /> PayPal
         </button>
         <button
           onClick={() => setPaymentMethod('qr')}
-          className={`p-4 border rounded-lg ${paymentMethod === 'qr' ? 'border-blue-500 bg-blue-50' : ''}`}
+          className={`flex gap-4 p-4 border rounded-lg ${paymentMethod === 'qr' ? 'border-blue-500' : ''}`}
         >
-          QR Scan
+          <QrCode />QR Scan
         </button>
         <button
           onClick={() => setPaymentMethod('cod')}
-          className={`p-4 border rounded-lg ${paymentMethod === 'cod' ? 'border-blue-500 bg-blue-50' : ''}`}
+          className={`flex gap-4 p-4 border rounded-lg ${paymentMethod === 'cod' ? 'border-blue-500' : ''}`}
         >
-          Cash on Delivery
+          <Banknote />Cash on Delivery
         </button>
       </div>
 
@@ -115,34 +115,35 @@ const Checkout = () => {
           <div className="space-y-4">
             <input
               type="text"
+              placeholder="Cardholder Name"
+              className="input w-full p-2  border rounded"
+              value={cardDetails.name}
+              onChange={(e) => setCardDetails({ ...cardDetails, name: e.target.value })}
+            />
+            <input
+              type="text"
               placeholder="Card Number"
-              className="w-full p-2 border rounded"
+              className="input w-full p-2 border rounded"
               value={cardDetails.number}
-              onChange={(e) => setCardDetails({...cardDetails, number: e.target.value})}
+              onChange={(e) => setCardDetails({ ...cardDetails, number: e.target.value })}
             />
             <div className="grid grid-cols-2 gap-4">
               <input
                 type="text"
                 placeholder="MM/YY"
-                className="p-2 border rounded"
+                className="input p-2 border rounded"
                 value={cardDetails.expiry}
-                onChange={(e) => setCardDetails({...cardDetails, expiry: e.target.value})}
+                onChange={(e) => setCardDetails({ ...cardDetails, expiry: e.target.value })}
               />
               <input
                 type="text"
                 placeholder="CVV"
-                className="p-2 border rounded"
+                className="input p-2 border rounded"
                 value={cardDetails.cvv}
-                onChange={(e) => setCardDetails({...cardDetails, cvv: e.target.value})}
+                onChange={(e) => setCardDetails({ ...cardDetails, cvv: e.target.value })}
               />
             </div>
-            <input
-              type="text"
-              placeholder="Cardholder Name"
-              className="w-full p-2 border rounded"
-              value={cardDetails.name}
-              onChange={(e) => setCardDetails({...cardDetails, name: e.target.value})}
-            />
+
           </div>
         )}
 
@@ -167,7 +168,7 @@ const Checkout = () => {
       </form>
 
       {/* Order Summary */}
-      <div className="mt-8 p-4 rounded-lg">
+      <div className="mt-4 border p-4 rounded-lg">
         <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
         <div className="space-y-2">
           <div className="flex justify-between">
