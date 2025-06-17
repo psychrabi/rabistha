@@ -13,7 +13,8 @@ export const useAdminStore = create(
       sales: [],
       users: [],
       wikis: [],
-      
+      faqs: [],
+
       login: async (data) => {
         try {
           const response = await fetch(`${API_URL}/admin/login`, {
@@ -45,7 +46,7 @@ export const useAdminStore = create(
             }
           });
           if (!response.ok) throw new Error("Failed to fetch licenses");
-          
+
           const licenses = await response.json();
           const formattedLicenses = licenses.map(license => ({
             ...license,
@@ -59,7 +60,7 @@ export const useAdminStore = create(
               year: 'numeric', month: 'long', day: 'numeric'
             }) : null
           }));
-          
+
           set({ licenses: formattedLicenses });
         } catch (error) {
           console.error("Error fetching licenses:", error);
@@ -68,7 +69,7 @@ export const useAdminStore = create(
       },
       fetchWikis: async () => {
         try {
-          const response = await fetch('http://localhost:4000/api/admin/wikis', {
+          const response = await fetch('http://localhost:4000/api/wikis', {
             headers: {
               'Authorization': `Bearer ${useAdminStore.getState().token}`
             }
@@ -77,6 +78,19 @@ export const useAdminStore = create(
           set({ wikis: data });
         } catch (error) {
           console.error('Error fetching wikis:', error);
+        }
+      },
+      fetchFAQs: async () => {
+        try {
+          const response = await fetch('http://localhost:4000/api/faqs', {
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
+          const data = await response.json();
+          set({ faqs: data });
+        } catch (error) {
+          console.error('Error fetching faqs:', error);
         }
       },
       deleteWiki: async (wiki) => {
@@ -88,7 +102,19 @@ export const useAdminStore = create(
               'Authorization': `Bearer ${useAdminStore.getState().token}`
             }
           });
-          fetchWikis();
+          // fetchWikis();
+        }
+      },
+        deleteFAQ: async (faq) => {
+
+        if (confirm('Are you sure you want to delete this faq?')) {
+          await fetch(`http://localhost:4000/api/admin/faqs/${faq.id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
+          // fetchFAQs();
         }
       },
       fetchSales: async () => {
@@ -99,7 +125,7 @@ export const useAdminStore = create(
             }
           });
           if (!response.ok) throw new Error("Failed to fetch sales");
-          
+
           const sales = await response.json();
           set({ sales });
         } catch (error) {
@@ -116,7 +142,7 @@ export const useAdminStore = create(
             }
           });
           if (!response.ok) throw new Error("Failed to fetch users");
-          
+
           const users = await response.json();
           set({ users });
         } catch (error) {
@@ -134,7 +160,7 @@ export const useAdminStore = create(
             }
           });
           if (!response.ok) throw new Error("Failed to revoke license");
-          
+
           const result = await response.json();
           if (result.success) {
             set((state) => ({
@@ -152,21 +178,21 @@ export const useAdminStore = create(
         try {
           const response = await fetch(`${API_URL}/admin/licenses`, {
             method: "POST",
-            headers: { 
+            headers: {
               "Content-Type": "application/json",
               'Authorization': `Bearer ${useAdminStore.getState().token}`
             },
             body: JSON.stringify({ licenses })
           });
-          
+
           if (!response.ok) throw new Error("Failed to add licenses");
-          
+
           const result = await response.json();
           if (result.success) {
             // Refresh the licenses list after adding new ones
             await set((state) => ({ ...state })).fetchLicenses();
-            
-          } 
+
+          }
         } catch (error) {
           console.error("Error adding licenses:", error);
         }

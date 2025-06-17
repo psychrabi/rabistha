@@ -16,6 +16,31 @@ const generateJwt = (admin) => {
   return sign({ username: admin.username }, 'JWT_SECRET')
 }
 
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/uploads/wiki')
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix + path.extname(file.originalname))
+  }
+});
+
+const upload = multer({ 
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
+  fileFilter: (req, file, cb) => {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
+    if (allowedTypes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type'));
+    }
+  }
+});
+
+
 app.post("/api/admin", async (req, res) => {
   try {
     const hashedPassword = await hash(req.body.password, 10);
@@ -174,10 +199,12 @@ app.get("/api/admin/users", authenticate, async (req, res, next) => {
 });
 
 
+
+
 // Wiki Routes
-app.get('/api/admin/wikis', authenticate, async (req, res) => {
+app.get('/api/wikis', async (req, res) => {
   try {
-    const wikis = await prisma.wiki.findMany({
+    const wikis = await prisma.wiki.findMany({      
       orderBy: { updatedAt: 'desc' }
     });
     res.json(wikis);
@@ -188,11 +215,11 @@ app.get('/api/admin/wikis', authenticate, async (req, res) => {
 
 app.post('/api/admin/wikis', authenticate, async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content, category } = req.body;
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     
     const wiki = await prisma.wiki.create({
-      data: { title, content, slug }
+      data: { title, content, slug, category }
     });
     res.json(wiki);
   } catch (error) {
@@ -203,12 +230,12 @@ app.post('/api/admin/wikis', authenticate, async (req, res) => {
 app.put('/api/admin/wikis/:id', authenticate, async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, content } = req.body;
+    const { title, content, category } = req.body;
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
     const wiki = await prisma.wiki.update({
       where: { id: Number(id) },
-      data: { title, content, slug }
+      data: { title, content, slug, category }
     });
     res.json(wiki);
   } catch (error) {
@@ -225,29 +252,6 @@ app.delete('/api/admin/wikis/:id', authenticate, async (req, res) => {
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
-  }
-});
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public/uploads/wiki')
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, uniqueSuffix + path.extname(file.originalname))
-  }
-});
-
-const upload = multer({ 
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
-  fileFilter: (req, file, cb) => {
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    if (allowedTypes.includes(file.mimetype)) {
-      cb(null, true);
-    } else {
-      cb(new Error('Invalid file type'));
-    }
   }
 });
 
@@ -270,6 +274,23 @@ app.post('/api/admin/wiki/upload', authenticate, upload.single('image'), (req, r
   }
 });
 
+app.get('/api/wikis/:category', async (req, res) => {
+  try {
+    const { category } = req.params;
+    const wikis = await prisma.wiki.findMany({
+      where: { category }
+    });
+
+    if (!wikis) {
+      return res.status(404).json({ error: 'Wikis not found' });
+    }
+
+    res.json(wikis);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.get('/api/wiki/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
@@ -286,6 +307,98 @@ app.get('/api/wiki/:slug', async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+
+
+// FAQ Routes
+app.get('/api/faqs', async (req, res) => {
+  try {
+    const faqs = await prisma.faq.findMany({      
+      orderBy: { updatedAt: 'desc' }
+    });
+    res.json(faqs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.post('/api/admin/faqs', authenticate, async (req, res) => {
+  try {
+    const { title, content } = req.body;
+    const faq = await prisma.faq.create({
+      data: { title, content }
+    });
+    res.json(faq);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put('/api/admin/faqs/:id', authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    const faq = await prisma.faq.update({
+      where: { id: Number(id) },
+      data: { title, content }
+    });
+    res.json(faq);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete('/api/admin/faqs/:id', authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.faq.delete({
+      where: { id: Number(id) }
+    });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+// Add image upload endpoint
+app.post('/api/admin/faq/upload', authenticate, upload.single('image'), (req, res) => {
+  try {
+    if (!req.file) {
+      throw new Error('No file uploaded');
+    }
+    const imageUrl = `/uploads/faq/${req.file.filename}`;
+    res.json({ 
+      success: true,
+      file: {
+        url: imageUrl,
+        name: req.file.originalname
+      }
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+});
+
+app.get('/api/faqs/:category', async (req, res) => {
+  try {
+    const { category } = req.params;
+    const faqs = await prisma.faq.findMany({
+      where: { category }
+    });
+
+    if (!faqs) {
+      return res.status(404).json({ error: 'Wikis not found' });
+    }
+
+    res.json(faqs);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 
 app.use('/uploads', express.static('public/uploads'));
 

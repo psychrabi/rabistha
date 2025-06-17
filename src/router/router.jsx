@@ -2,6 +2,8 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import MainLayout from "@/layouts/MainLayout";
+import ViewWikiCategory from "../pages/wiki/viewWikiCategory";
+import FAQManager from "../pages/admin/FAQ";
 
 const AdminLayout = lazy(() => import("@/layouts/AdminLayout"));
 
@@ -30,8 +32,6 @@ const NotFound = lazy(() => import("@/components/NotFound"));
 // Wiki pages
 const WikiManager = lazy(() => import("@/pages/admin/Wiki"));
 const ViewWiki = lazy(() => import("@/pages/wiki/viewWiki"));
-const QuickStart = lazy(() => import("@/pages/wiki/QuickStart"));
-const UserManual = lazy(() => import("@/pages/wiki/UserManual"));
 
 export const router = createBrowserRouter([
 	{
@@ -81,7 +81,18 @@ export const router = createBrowserRouter([
 			{
 				path: "/wiki",
 				Component: Wiki,
+				children: [
+					{
+						path: "/wiki/:category",
+						Component: ViewWikiCategory,
+					},
+					{
+						path: "/wiki/:category/:slug",
+						Component: ViewWiki,
+					},				
+				]
 			},
+
 			{
 				path: "/wiki/:slug",
 				Component: ViewWiki,
@@ -133,6 +144,10 @@ export const router = createBrowserRouter([
 			{
 				path: "/admin/wikis",
 				Component: WikiManager
+			},
+			{
+				path: "/admin/faqs",
+				Component: FAQManager
 			},
 			{
 				path: "/admin/*",

@@ -46,12 +46,12 @@ export default function ViewWiki() {
   }
 
   return (
-    <section className="bg-white dark:bg-gray-900">
+    <section >
             <div className="container px-6 py-10 mx-auto">
 
       <h1 className="text-3xl font-bold mb-6">{wiki?.title}</h1>
       <div 
-        className="prose max-w-none"
+        className="prose max-w-none text-white"
         dangerouslySetInnerHTML={{ __html: wiki?.content }}
       />
       </div>
