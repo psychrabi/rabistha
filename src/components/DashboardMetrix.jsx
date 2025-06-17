@@ -1,12 +1,14 @@
-import { Banknote, BanknoteArrowUp, BarChart3, DollarSign, Eye, Key, ShieldAlert, ShieldX, Users } from "lucide-react";
-import MatrixCard from "./MatrixCard";
+import { BarChart3, DollarSign, Key, ShieldAlert, ShieldX, Users } from "lucide-react";
 import { useAdminStore } from "../store/adminStore";
+import MatrixCard from "./MatrixCard";
 
 const DashboardMetrix = () => {
   const { licenses, sales, users } = useAdminStore();
 
+  const noOfCustomers = users.length
+  const noOfSales = sales.length
+  const availableLicenses = licenses.length
   const totalRevenue = sales.reduce((sum, sale) => sum + sale.salesPrice, 0);
-  const activeLicenses = licenses.filter(l => l.status === 'available').length;
 
   const matrixData = [
     {
@@ -17,41 +19,29 @@ const DashboardMetrix = () => {
     },
     {
       title: 'Available Licenses',
-      value: licenses.length,
+      value: availableLicenses,
       Icon: Key,
       color: 'text-green-600'
     },
     {
       title: 'Total Customers',
-      value: users.length,
+      value: noOfCustomers,
       Icon: Users,
       color: 'text-blue-600'
     },
     {
       title: 'Total Sales',
-      value: licenses.filter(l => l.status === 'refunded').length,
+      value: noOfSales,
       Icon: BarChart3,
       color: 'text-red-600'
     },
-    {
-      title: 'Deeactivated',
-      value: licenses.filter(l => l.status === 'deactivated').length,
-      Icon: ShieldX,
-      color: 'text-red-600'
-    },
-    {
-      title: 'Expired',
-      value: licenses.filter(l => l.status === 'expired').length,
-      Icon: ShieldAlert,
-      color: 'text-orange-600'
-    }
   ]
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-4">
       {matrixData.map(data => (
         <MatrixCard data={data} />
-      ))}      
+      ))}
     </div>
   );
 };
