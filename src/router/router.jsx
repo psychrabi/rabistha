@@ -2,11 +2,10 @@ import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
 import MainLayout from "@/layouts/MainLayout";
-import ViewWikiCategory from "../pages/wiki/viewWikiCategory";
-import FAQManager from "../pages/admin/FAQ";
 
+const ViewWikiCategory = lazy(() => import("@/pages/wiki/viewWikiCategory"));
 const AdminLayout = lazy(() => import("@/layouts/AdminLayout"));
-
+const FAQManager = lazy(() => import("@/pages/admin/FAQ"));
 const Sales = lazy(() => import("@/pages/admin/Sales"));
 const QuoteInvoice = lazy(() => import("@/pages/admin/QuoteInvoice"));
 const Customers = lazy(() => import("@/pages/admin/Customers"));
@@ -44,7 +43,7 @@ export const router = createBrowserRouter([
 			},
 			{
 				path: "/features",
-				Component: Features,
+				Component: Features
 			},
 			{
 				path: "/purchase",
@@ -71,7 +70,7 @@ export const router = createBrowserRouter([
 				Component: PaymentSuccess,
 			},
 			{
-				path: "/faqs",
+				path: "/faqs/*",
 				Component: FAQ,
 			},
 			{
