@@ -45,6 +45,24 @@ model User {
   updatedAt     DateTime       @updatedAt
 }
 
+// Sale record for a license
+model Sale {
+  id             Int       @id @default(autoincrement())
+  licenseId      Int?      @unique
+  user           User      @relation(fields: [userId], references: [id])
+  userId         Int
+  salesPrice     Float?
+  discount       Float?    @default(0)
+  paymentMethod  String
+  paymentDetails String?
+  shippingEmail  String
+  soldDate       DateTime?
+  paymentStatus  String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  License        License[]
+}
+
 // License keys and their status
 model License {
   id                 Int           @id @default(autoincrement())
@@ -52,35 +70,18 @@ model License {
   type               String
   noOfUsers          Int?
   costPrice          Float
-  salesPrice         Float?
-  discount           Float?         @default(0)
   status             LicenseStatus // sold, deactivated, refunded, or "-" (not sold)
   purchaseDate       DateTime
   soldDate           DateTime?
   lastDeactivated    DateTime?
-  noOfDeactivation   Int?           @default(0)
+  noOfDeactivation   Int?          @default(0)
   replacementLicense String?
-  sale               Sale?
-  saleId             Int?
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt
   User               User?         @relation(fields: [userId], references: [id])
   userId             Int?
-}
-
-// Sale record for a license
-model Sale {
-  id             Int      @id @default(autoincrement())
-  license        License  @relation(fields: [licenseId], references: [id])
-  licenseId      Int      @unique
-  userId         Int
-  user           User     @relation(fields: [userId], references: [id])
-  paymentMethod  String
-  paymentDetails String?
-  shippingEmail  String
-  soldDate       DateTime
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  sale               Sale?         @relation(fields: [saleId], references: [id])
+  saleId             Int?
 }
 
 // For manual quotes/invoices sent to customers
@@ -94,7 +95,6 @@ model QuoteInvoice {
   message     String?
   sentAt      DateTime @default(now())
 }
-
 
 model Wiki {
   id        Int      @id @default(autoincrement())

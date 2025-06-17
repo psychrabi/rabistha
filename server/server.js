@@ -399,6 +399,39 @@ app.get('/api/faqs/:category', async (req, res) => {
 });
 
 
+// Create user/customer
+app.post('/api/users', async (req, res) => {
+  try {
+    const user = await prisma.user.create({ data: req.body });
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Create sale/order
+app.post('/api/sales', async (req, res) => {
+  try {
+    const sale = await prisma.sale.create({ data: req.body });
+    res.json(sale);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Find user by email
+app.get('/api/users/by-email/:email', async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: req.params.email }
+    });
+    if (user) return res.json(user);
+    res.status(404).json({ error: 'User not found' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 app.use('/uploads', express.static('public/uploads'));
 
