@@ -432,6 +432,40 @@ app.get('/api/users/by-email/:email', async (req, res) => {
   }
 });
 
+app.get('/api/licenses', async (req, res) => {
+  let { type, quantity, status } = req.query;
+
+  try {
+    const licenses = await prisma.license.findMany({
+      where: {status}
+    });
+    console.log(licenses)
+    res.json(licenses);
+    
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
+app.put('/api/licenses/bulk-update', async (req, res) => {
+  const { licenseIds, saleId, soldDate } = req.body;
+  await prisma.license.updateMany({
+    where: { id: { in: licenseIds } },
+    data: { saleId, soldDate: new Date(soldDate), status: 'sold' }
+  });
+  res.json({ success: true });
+});
+
+app.put('/api/sales/:id', async (req, res) => {
+  const { id } = req.params;
+  const { soldDate, status } = req.body;
+  const sale = await prisma.sale.update({
+    where: { id: Number(id) },
+    data: { soldDate: new Date(soldDate), status }
+  });
+  res.json(sale);
+});
 
 app.use('/uploads', express.static('public/uploads'));
 

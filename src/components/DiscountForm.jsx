@@ -1,7 +1,7 @@
 import { Tag } from 'lucide-react'
 import { useState } from 'react'
 
-export const DiscountForm = ({ onApply, isApplied }) => {
+export const DiscountForm = ({ onApply, isApplied, setIsApplied }) => {
   const [couponCode, setCouponCode] = useState('')
   const [isValid, setIsValid] = useState(true)
 

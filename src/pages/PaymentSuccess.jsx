@@ -1,92 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
-import useCartStore from '../store/cartStore';
-import { useAdminStore } from '../store/adminStore';
 
 const PaymentSuccess = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [orderDetails, setOrderDetails] = useState(null);
-  const {licenses} = useAdminStore()
  
-
-  useEffect(() => {
-    const orderId = new URLSearchParams(location.search).get('orderId');
-    if (!orderId) {
-      navigate('/cart');
-      return;
-    }
-
-    // Try to get order details from currentOrder in localStorage first
-    const currentOrder = JSON.parse(localStorage.getItem('currentOrder') || 'null');
-    
-    if (currentOrder && currentOrder.id === orderId) {
-      // Update order status
-      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-      const updatedOrders = orders.map(o => {
-        if (o.id === orderId) {
-          return { ...o, paymentStatus: 'completed' };
-        }
-        return o;
-      });
-      localStorage.setItem('orders', JSON.stringify(updatedOrders));
-      
-      // Remove currentOrder from localStorage
-      localStorage.removeItem('currentOrder');
-      
-      setOrderDetails({ ...currentOrder, paymentStatus: 'completed' });
-
-      // Update licenses status to sold
-      const licenses = JSON.parse(localStorage.getItem('licenses') || '[]');
-      const orderLicenses = licenses.filter(l => l.orderId === orderId);
-      
-      if (orderLicenses.length > 0) {
-        const updatedLicenses = licenses.map(license => {
-          if (license.orderId === orderId) {
-            return { ...license, status: 'sold' };
-          }
-          return license;
-        });
-        localStorage.setItem('licenses', JSON.stringify(updatedLicenses));
-        setPurchasedLicenses(orderLicenses.map(l => ({ ...l, status: 'sold' })));
-      }
-    } else {
-      // Fallback to getting order from orders list
-      const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-      const order = orders.find(o => o.id === orderId);
-      
-      if (!order) {
-        navigate('/cart');
-        return;
-      }
-
-      // Update order status
-      const updatedOrders = orders.map(o => {
-        if (o.id === orderId) {
-          return { ...o, paymentStatus: 'completed' };
-        }
-        return o;
-      });
-      localStorage.setItem('orders', JSON.stringify(updatedOrders));
-      setOrderDetails({ ...order, paymentStatus: 'completed' });
-
-      // Update licenses status to sold
-      const licenses = JSON.parse(localStorage.getItem('licenses') || '[]');
-      const orderLicenses = licenses.filter(l => l.orderId === orderId);
-      
-      if (orderLicenses.length > 0) {
-        const updatedLicenses = licenses.map(license => {
-          if (license.orderId === orderId) {
-            return { ...license, status: 'sold' };
-          }
-          return license;
-        });
-        localStorage.setItem('licenses', JSON.stringify(updatedLicenses));
-        setPurchasedLicenses(orderLicenses.map(l => ({ ...l, status: 'sold' })));
-      }
-    }
-  }, [location.search, navigate]);
+  
 
   if (!orderDetails) return null;
 
