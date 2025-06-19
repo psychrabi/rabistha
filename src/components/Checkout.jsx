@@ -27,56 +27,61 @@ const Checkout = () => {
   const handlePaymentSubmit = async (e) => {
     e.preventDefault();
 
-    const orderId = Date.now().toString();
-
-    if (paymentMethod === 'qr') {
-      // Create initial order record
-      const orderData = {
-        id: orderId,
-        paymentMethod,
-        ...orderDetails,
-        paymentStatus: 'pending',
-        timestamp: new Date().toISOString(),
-      };
-
-      // Save to localStorage
-      const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
-      existingOrders.push(orderData);
-      localStorage.setItem('orders', JSON.stringify(existingOrders));
-
-      // Navigate to QR payment page with order ID
-      navigate('/qr-payment', {
-        state: { ...orderData }
-      });
-      return;
-    }
-
-    const orderData = {
-      id: orderId,
-      paymentMethod,
-      ...orderDetails,
-      ...(paymentMethod === 'card' && { cardDetails }),
-      ...(paymentMethod === 'paypal' && { paypalEmail }),
-      ...(paymentMethod === 'cod' && { paymentStatus: 'pending' }),
-      timestamp: new Date().toISOString(),
-    };
-
     try {
-      // Get existing orders from localStorage
-      const existingOrders = JSON.parse(localStorage.getItem('orders') || '[]');
+      // 1. Check if user exists
+      let userRes = await fetch(`http://localhost:4000/api/users/by-email/${encodeURIComponent(orderDetails.user.email)}`);
+      let savedUser;
+      if (userRes.ok) {
+        savedUser = await userRes.json();
+      } else {
+        // 2. If not, create user
+        userRes = await fetch('http://localhost:4000/api/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderDetails.user),
+        });
+        if (!userRes.ok) throw new Error('Failed to save user');
+        savedUser = await userRes.json();
+      }
 
-      // Add new order
-      existingOrders.push(orderData);
+      if (paymentMethod === 'qr') {
+        
+        const salesData = {
+          userId: savedUser.id,
+          paymentMethod,
+          paymentStatus: 'pending',
+          salesPrice: orderDetails.subtotal,
+          discount: orderDetails.discount,
+          shippingEmail: orderDetails.user.email,
+        };
 
-      // Save back to localStorage
-      localStorage.setItem('orders', JSON.stringify(existingOrders));
+        // 3. Save order/sale to DB
+        const saleRes = await fetch('http://localhost:4000/api/sales', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(salesData)
+        });
+        if (!saleRes.ok) throw new Error('Failed to save order');
+        const savedSale = await saleRes.json();
+        
+        
 
-      // Clear cart and navigate to confirmation
-      clearCart();
-      navigate('/order-confirmation');
-    } catch (error) {
-      console.error('Error saving order:', error);
+
+        // Navigate to QR payment page with sales array
+        navigate('/qr-payment', {
+          state: { sales: savedSale, orderDetails: orderDetails }
+        });
+        return;
+      }
+    } catch (err) {
+      console.log(err.message || 'Checkout failed');
     }
+
+
+
+    // Clear cart and navigate to confirmation
+    // clearCart();
+    // navigate('/order-confirmation');
   };
 
   return (

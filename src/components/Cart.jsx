@@ -50,7 +50,7 @@ export default function Cart() {
               {items.map((item) => (
                 <div key={item.id} className="flex items-center justify-between p-4 bg-base-200 rounded-lg">
                   <div>
-                    <h3 className="font-medium">{item.name}</h3>
+                    <h3 className="font-medium capitalize">{item.type}</h3>
                     <p className="text-sm text-gray-500">${item.price.toFixed(2)}</p>
                   </div>
                   <div className="flex items-center gap-4">
@@ -92,6 +92,7 @@ export default function Cart() {
                     clearDiscount()
                   }}
                   isApplied={discount}
+                  setIsApplied={setDiscount}
                 />
               )}
             </div>

@@ -5,7 +5,7 @@ const useCartStore = create(
   persist(
     (set, get) => ({
       items: [],
-      discount: null,
+      discount: false,
       addItem: (item) => set((state) => {
         const existingItem = state.items.find(i => i.id === item.id)
         if (existingItem) {

@@ -23,22 +23,27 @@ function Purchase() {
   };
 
   const pricingData = {
-    annual: {
-      'Annual-2': { id: 'annual-2', name: 'Annual License - 2 Users', price: 14.99, users: 2, features: ['2 users', 'Expandable (up to 12) *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: true },
-      'Annual-3': { id: 'annual-3', name: 'Annual License - 3 Users', price: 19.99, users: 3, features: ['up to 3 users', 'Expandable (up to 12)  *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: false },
-      'Annual-6': { id: 'annual-6', name: 'Annual License - 6 Users', price: 36.99, users: 6, features: ['up to 6 users', 'Expandable (up to 12)  *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: false }
-    },
-    perpetual: {
-      'Pro-2': { id: 'pro-2', name: 'Perpetual License - 2 Users', price: 45.99, users: 2, features: ['2 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: true },
-      'Pro-3': { id: 'pro-3', name: 'Perpetual License - 3 Users', price: 57.99, users: 3, features: ['up to 3 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: false },
-      'Pro-6': { id: 'pro-6', name: 'Perpetual License - 6 Users', price: 109.99, users: 6, features: ['up to 6 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: false }
-    }
+    annual: [
+      { id: 1, type: 'annual-2', name: 'Annual License - 2 Users', price: 14.99, users: 2, features: ['2 users', 'Expandable (up to 12) *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: true },
+      { id: 2, type: 'annual-3', name: 'Annual License - 3 Users', price: 19.99, users: 3, features: ['up to 3 users', 'Expandable (up to 12)  *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: false },
+      { id: 3, type: 'annual-6', name: 'Annual License - 6 Users', price: 36.99, users: 6, features: ['up to 6 users', 'Expandable (up to 12)  *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: false }
+    ],
+    perpetual: [
+      { id: 4, type: 'pro-2', name: 'Perpetual License - 2 Users', price: 45.99, users: 2, features: ['2 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: true },
+      { id: 5, type: 'pro-3', name: 'Perpetual License - 3 Users', price: 57.99, users: 3, features: ['up to 3 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: false },
+      { id: 6, type: 'pro-6', name: 'Perpetual License - 6 Users', price: 109.99, users: 6, features: ['up to 6 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: false }
+    ]
   };
 
   const currentPricing = isPerpetual ? pricingData.perpetual : pricingData.annual;
 
   const handleAddToCart = (item) => {
-    addItem(item);
+    const itemDetails = {
+      id: item.id,
+      type: item.type,
+      price: item.price
+    }
+    addItem(itemDetails);
     setToastMessage(`${item.name} added to cart`);
     setShowToast(true);
   };
@@ -68,9 +73,9 @@ function Purchase() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 items-end px-2 gap-8">
-          {Object.entries(currentPricing).map(([plan, data]) => (
+          {currentPricing.map((data) => (
             <div
-              key={plan}
+              key={data.id}
               className={`flex flex-col gap-6 bg-base-200 text-gray-100 rounded-box p-8 w-90 ${data.is_popular ? 'border border-primary shadow' : ''}`}
             >
               {data.is_popular && (
@@ -79,10 +84,10 @@ function Purchase() {
                 </div>
               )}
               <div className="flex flex-col gap-4 text-center">
-                <h2 className="text-xl">{plan}</h2>
+                <h2 className="text-xl capitalize">{data.type}</h2>
                 <h1 className="text-5xl font-bold">${data.price}</h1>
                 <span className="text-sm">
-                  {(plan === 'Pro-2' || plan === "Annual-2") ? 'Share PC with 2 users' : `Share PC with up to ${data.users} users`}
+                  {(data.type === 'pro-2' || data.type === "annual-2") ? 'Share PC with 2 users' : `Share PC with up to ${data.users} users`}
                 </span>
               </div>
               <div className="flex flex-col">
