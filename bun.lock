@@ -20,6 +20,7 @@
         "lucide-react": "^0.513.0",
         "multer": "^2.0.1",
         "nodemailer": "^7.0.3",
+        "number-to-text": "^0.4.1",
         "qrcode.react": "^4.2.0",
         "react": "^19.1.0",
         "react-dom": "^19.1.0",
@@ -916,6 +917,8 @@
     "node-releases": ["node-releases@2.0.19", "", {}, "sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw=="],
 
     "nodemailer": ["nodemailer@7.0.3", "", {}, "sha512-Ajq6Sz1x7cIK3pN6KesGTah+1gnwMnx5gKl3piQlQQE/PwyJ4Mbc8is2psWYxK3RJTVeqsDaCv8ZzXLCDHMTZw=="],
+
+    "number-to-text": ["number-to-text@0.4.1", "", {}, "sha512-JMKtiggPKWdbhS3FeL4NULhoUI9CS/I3DTMZtgkmGyFkt+jBZ1kUTq4PqGFb8ltSsWynB/ePvx07cAGh7tpr/Q=="],
 
     "object-assign": ["object-assign@4.1.1", "", {}, "sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg=="],
 
