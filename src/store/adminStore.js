@@ -14,6 +14,7 @@ export const useAdminStore = create(
       users: [],
       wikis: [],
       faqs: [],
+      quotes: [],
 
       login: async (data) => {
         try {
@@ -91,6 +92,20 @@ export const useAdminStore = create(
           set({ faqs: data });
         } catch (error) {
           console.error('Error fetching faqs:', error);
+        }
+      },
+      fetchQuotes: async () => {
+        try {
+          const response = await fetch('http://localhost:4000/api/admin/quotes', {
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
+          const data = await response.json();
+          console.log(data)
+          set({ quotes: data });
+        } catch (error) {
+          console.error('Error fetching quotes:', error);
         }
       },
       deleteWiki: async (wiki) => {

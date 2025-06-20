@@ -1,11 +1,11 @@
-import useAuthStore from '../store/authStore';
+import { useAdminStore } from '../store/adminStore';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000/api';
 
 class ApiClient {
   async request(endpoint, options = {}) {
-    const { token } = useAuthStore.getState();
-    
+    const { token } = useAdminStore.getState();
+
     const config = {
       headers: {
         'Content-Type': 'application/json',
@@ -15,12 +15,10 @@ class ApiClient {
     };
 
     const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
-    
     if (!response.ok) {
       const error = await response.json().catch(() => ({ error: 'Network error' }));
       throw new Error(error.error || 'Something went wrong');
     }
-    
     return response.json();
   }
 

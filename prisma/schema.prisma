@@ -38,7 +38,7 @@ model User {
   city          String?
   state         String?
   zipCode       String?
-  quoteInvoices QuoteInvoice[] // Added relation field for QuoteInvoice
+  quoteInvoices Quotation[] // Added relation field for Quotation
   licenses      License[]
   sales         Sale[] // Added relation field for Sale
   createdAt     DateTime       @default(now())
@@ -85,15 +85,27 @@ model License {
 }
 
 // For manual quotes/invoices sent to customers
-model QuoteInvoice {
-  id          Int      @id @default(autoincrement())
-  user        User     @relation(fields: [userId], references: [id])
-  userId      Int
-  licenseType String
-  type        String // "quote" or "invoice"
-  price       Float
-  message     String?
-  sentAt      DateTime @default(now())
+model Quotation {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       Int
+  items        Json     // [{ description, quantity, price }]
+  subTotal     Float  @default(0)
+  discount     Float @default(0)
+  discountType String   // "amount" or "percent"
+  taxable      Float @default(0)
+  tax          Float @default(0)
+  total        Float @default(0)
+  price        Float @default(0)
+  message      String?
+  notes        String?
+  validUntil      DateTime
+  status          QuotationStatus @default(DRAFT)
+  sentAt          DateTime?
+  acceptedAt      DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
 }
 
 model Wiki {
@@ -114,4 +126,28 @@ model Faq {
   published Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT
+  PAID
+  OVERDUE
+  CANCELLED
+}
+
+enum QuotationStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  EXPIRED
+  REJECTED
 }

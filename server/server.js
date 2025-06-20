@@ -193,13 +193,25 @@ app.get("/api/admin/sales", authenticate, async (req, res) => {
 });
 
 // Quote/Invoice (example)
-app.post("/api/admin/quote", authenticate, async (req, res) => {
-  const { userId, licenseId, type, price, message } = req.body;
+app.post("/api/admin/quotes", authenticate, async (req, res) => {
   try {
-    const quote = await prisma.quoteInvoice.create({
-      data: { userId, licenseId, type, price, message }
+    const quote = await prisma.quotation.create({
+      data: req.body
     });
     res.json({ success: true, quote });
+  } catch (e) {
+    res.status(400).json({ success: false, error: e.message });
+  }
+});
+
+// Quote/Invoice (example)
+app.get("/api/admin/quotes", authenticate, async (req, res) => {
+  try {
+    const quotes = await prisma.quotation.findMany(
+      { include: { user: true } }
+    );
+    console.log(quotes)
+    res.json(quotes);
   } catch (e) {
     res.status(400).json({ success: false, error: e.message });
   }
