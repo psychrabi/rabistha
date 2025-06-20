@@ -7,7 +7,8 @@ const ViewWikiCategory = lazy(() => import("@/pages/wiki/viewWikiCategory"));
 const AdminLayout = lazy(() => import("@/layouts/AdminLayout"));
 const FAQManager = lazy(() => import("@/pages/admin/FAQ"));
 const Sales = lazy(() => import("@/pages/admin/Sales"));
-const QuoteInvoice = lazy(() => import("@/pages/admin/QuoteInvoice"));
+const Settings = lazy(() => import("@/pages/admin/Settings"));
+const Quotes = lazy(() => import("@/pages/admin/Quotes"));
 const Customers = lazy(() => import("@/pages/admin/Customers"));
 const Licenses = lazy(() => import("@/pages/admin/Licenses"));
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"));
@@ -137,8 +138,8 @@ export const router = createBrowserRouter([
 				Component: Sales
 			},
 			{
-				path: "/admin/invoices",
-				Component: QuoteInvoice
+				path: "/admin/quotes",
+				Component: Quotes
 			},
 			{
 				path: "/admin/wikis",
@@ -147,6 +148,10 @@ export const router = createBrowserRouter([
 			{
 				path: "/admin/faqs",
 				Component: FAQManager
+			},
+			{
+				path: "/admin/settings",
+				Component: Settings
 			},
 			{
 				path: "/admin/*",

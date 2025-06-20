@@ -54,7 +54,7 @@ export default function Licenses() {
 	};
 
 	return (
-		<section className="w-full p-6 overflow-y-auto">
+		<section className="w-full p-6 overflow-y-auto flex-grow">
 			{/* Header */}
 			<div className="mb-4">
 				<div className="sm:flex sm:items-center sm:justify-between">
@@ -71,7 +71,6 @@ export default function Licenses() {
 			</div>
 			<LicenseMatrix licenses={licenses} />
 			<Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
-
 			<div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg mb-4">
 				<table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
 					<thead className="bg-gray-50 dark:bg-gray-800 text-sm">
@@ -139,7 +138,6 @@ export default function Licenses() {
 						)}
 					</tbody>
 				</table>
-
 			</div>
 			<Pagination perPage={perPage} currentPage={currentPage} setCurrentPage={setCurrentPage} total={licenses.length} />
 		</section>

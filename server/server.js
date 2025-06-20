@@ -6,15 +6,32 @@ import { sign } from "jsonwebtoken";
 import { authenticate } from "../src/middleware/auth";
 import multer from 'multer';
 import path from 'path';
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
+
+
+dotenv.config();
 
 const app = express();
 const prisma = new PrismaClient();
 
 app.use(cors());
 app.use(express.json());
+
 const generateJwt = (admin) => {
   return sign({ username: admin.username }, 'JWT_SECRET')
 }
+
+// Email transporter
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || "smtp.gmail.com",
+  port: process.env.SMTP_PORT || 587,
+  secure: false,
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASS,
+  },
+});
 
 
 const storage = multer.diskStorage({
@@ -169,8 +186,10 @@ app.post("/api/admin/licenses/:id/deactivate", authenticate, async (req, res) =>
 
 // Sales details (example)
 app.get("/api/admin/sales", authenticate, async (req, res) => {
-  const sales = await prisma.sale.findMany({ include: { user: true, license: true } });
+  const sales = await prisma.sale.findMany({ include: { user: true } });
+  console.log(sales)
   res.json(sales);
+
 });
 
 // Quote/Invoice (example)

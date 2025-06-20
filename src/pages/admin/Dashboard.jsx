@@ -1,6 +1,5 @@
-import { Eye, Plus } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import { useEffect } from 'react';
-import AddLicenseModal from '../../components/AddLicenseModal';
 import DashboardMetrix from '../../components/DashboardMetrix';
 import { useAdminStore } from '../../store/adminStore';
 
@@ -13,22 +12,18 @@ export default function Dashboard() {
     fetchLicenses();
     fetchSales();
     fetchUsers();
+    console.log(sales)
   }, [isAuthenticated, fetchUsers, fetchSales, fetchLicenses]);
 
   return (
-    <section className="w-full p-6 overflow-y-auto">
-      <div className="mb-8">
+    <section className="w-full p-6 overflow-y-auto flex-grow">
+      {/* Header */}
+      <div className="mb-4">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">License Management</h1>
-            <p className="text-slate-600 dark:text-gray-300">Manage your ASTER license inventory</p>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">ASTER Nepal Dashboard</h1>
+            <p className="text-slate-600 dark:text-gray-300">Overview of sales and licenses</p>
           </div>
-          <button type="button" onClick={() => document.getElementById('addLicenseModal').showModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-            <Plus
-              className="w-5 h-5" />
-            <span>Add Licenses</span>
-          </button>
-          <AddLicenseModal />
         </div>
       </div>
       <DashboardMetrix licenses={licenses} />
@@ -38,16 +33,24 @@ export default function Dashboard() {
             <tr>
               <th scope="col" className="px-4 py-3.5 font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Customer&apos;s Name</th>
               <th scope="col" className="px-4 py-3.5 font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Email</th>
-              <th scope="col" className="px-4 py-3.5 font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Created At</th>
+              <th scope="col" className="px-4 py-3.5 font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Sales Price</th>
+              <th scope="col" className="px-4 py-3.5 font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Discount</th>
+              <th scope="col" className="px-4 py-3.5 font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Payment Method</th>
+              <th scope="col" className="px-4 py-3.5 font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Sold At</th>
+              <th scope="col" className="px-4 py-3.5 font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Payment Status</th>
               <th scope="col" className="px-4 py-3.5 font-normal text-center rtl:text-right text-gray-500 dark:text-gray-400">Actions</th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-            {sales.map((sales) => (
-              <tr key={sales.id} className="text-sm">
-                <td className="px-4 py-2 whitespace-nowrap font-medium">{sales.fullName}</td>
-                <td className="px-4 py-2 whitespace-nowrap text-center">{sales.email}</td>
-                <td className="px-4 py-2 whitespace-nowrap text-center">{sales.purchaseDate}</td>
+            {sales.map((sale) => (
+              <tr key={sale.id} className="text-sm">
+                <td className="px-4 py-2 whitespace-nowrap font-medium">{sale.user.name}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-center">{sale.shippingEmail}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-center capitalize">{sale.salesPrice}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-center capitalize">{sale.discount}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-center capitalize">{sale.paymentMethod}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-center capitalize">{sale.soldDate ?? "-"}</td>
+                <td className="px-4 py-2 whitespace-nowrap text-center capitalize"><span className='badge badge-info'>{sale.paymentStatus}</span></td>
                 <td className="px-4 py-2 whitespace-nowrap text-center">
                   <button type="button" className="text-green-600 hover:text-red-900">
                     <Eye />

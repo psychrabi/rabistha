@@ -2,7 +2,7 @@ import { DownloadCloud } from 'lucide-react'
 
 export default function Download() {
 	return (
-		<section className="bg-gray-200">
+		<section className="bg-white">
 			<div className="container flex flex-col items-center px-4 py-12 mx-auto text-center">
 				<h1 className="text-2xl font-bold tracking-tight text-gray-800 xl:text-3xl ">
 					Try ASTER for free
