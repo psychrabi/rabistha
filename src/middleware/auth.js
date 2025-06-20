@@ -15,7 +15,6 @@ export const authenticate = async (req, res, next) => {
 
  try {
     const decode = verify(token, "JWT_SECRET")
-    console.log(decode)
     const admin = await prisma.admin.findUnique({
         where : {
             username: decode.username
