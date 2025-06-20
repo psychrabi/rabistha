@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useEffect, useMemo, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { useAdminStore } from '../store/adminStore';
 import api from '../utils/api';
@@ -17,7 +18,7 @@ const quoteSchema = z.object({
 	discountType: z.enum(['amount', 'percent']).default('amount'),
 	notes: z.string().optional(),
 	message: z.string().optional(),
-	subtotal: z.number().optional(),
+	subTotal: z.number().optional(),
 	taxable: z.number().optional(),
 	tax: z.number().optional(),
 	total: z.number().optional(),
@@ -48,7 +49,7 @@ export default function CreateQuotationModal() {
 	const { users } = useAdminStore()
 	const [quotes, setQuotes] = useState([]);
 	const [lastAutoNote, setLastAutoNote] = useState('');
-
+  const navigate = useNavigate()
 	const { register, handleSubmit, reset, watch, control, setValue, getValues, formState: { errors } } = useForm({
 		resolver: zodResolver(quoteSchema),
 		defaultValues: {
@@ -71,19 +72,19 @@ export default function CreateQuotationModal() {
 		)
 		: [];
 
-	const subtotal = useMemo(() => {
+	const subTotal = useMemo(() => {
 		return itemArray.reduce((sum, item) => sum + ((Number(item.quantity) || 0) * (Number(item.price) || 0)), 0);
 	}, [itemArray]);
 
 	const discount = useMemo(() => {
 		const discountType = getValues('discountType')
 		if (discountType === 'percent') {
-			return +(subtotal * (discountValue / 100)).toFixed(2);
+			return +(subTotal * (discountValue / 100)).toFixed(2);
 		}
 		return discountValue;
-	}, [discountValue, subtotal]);
+	}, [discountValue, subTotal]);
 
-	const taxable = Math.max(subtotal - discount, 0);
+	const taxable = Math.max(subTotal - discount, 0);
 	const tax = +(taxable * 0.13).toFixed(2);
 	const total = +(taxable + tax).toFixed(2);
 
@@ -92,7 +93,7 @@ export default function CreateQuotationModal() {
 		// Patch calculated fields before sending
 		const patchedData = {
 			...data,
-			subtotal,
+			subTotal,
 			taxable,
 			tax,
 			total,
@@ -107,13 +108,12 @@ export default function CreateQuotationModal() {
 				body: JSON.stringify(patchedData),
 			});
 			setQuotes([...quotes, newQuote]);
-			setShowCreateForm(false);
+			navigate(0);
 			reset();
 		} catch (error) {
 			console.error('Failed to create quote:', error);
 		}
 	};
-
 
 	useEffect(() => {
 		const totalText = `Total Payable: ${numberToWordsUSD(total)}`;
@@ -226,7 +226,7 @@ export default function CreateQuotationModal() {
 							<div className="col-span-8"></div>
 							<div className="col-span-2 text-right flex items-center justify-end">Sub Total</div>
 							<div className="col-span-2 flex items-center">
-								<span className="font-semibold">${subtotal.toFixed(2)}</span>
+								<span className="font-semibold">${subTotal.toFixed(2)}</span>
 							</div>
 						</div>
 						<div className="grid grid-cols-12 gap-4">
