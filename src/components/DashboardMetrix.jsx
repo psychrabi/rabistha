@@ -40,7 +40,7 @@ const DashboardMetrix = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-4">
       {matrixData.map(data => (
-        <MatrixCard data={data} />
+        <MatrixCard data={data} key={data.title}/>
       ))}
     </div>
   );

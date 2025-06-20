@@ -1,16 +1,44 @@
 import { Plus } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import AddWikiModal from '../../components/AddWikiModal';
+import Filter from '../../components/Filter';
 import { useAdminStore } from '../../store/adminStore';
 
 export default function WikiManager() {
   const { wikis, fetchWikis, deleteWiki } = useAdminStore()
   const [currentWiki, setCurrentWiki] = useState([])
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filterType, setFilterType] = useState("all");
+  const [filterStatus, setFilterStatus] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [perPage] = useState(8);
+
+  // Update the filtering logic
+  const filteredWikis = wikis?.filter(wiki => {
+    // If no filters are active, return all wikis
+    if (searchTerm === '' && filterType === 'all' && filterStatus === 'all') {
+      return true;
+    }
+
+    const matchesSearch = searchTerm === '' ||
+      wiki.title.toLowerCase().includes(searchTerm.toLowerCase())
+
+    const matchesType = filterType === 'all' || wiki.type === filterType;
+
+    const matchesStatus = filterStatus === 'all' || wiki.status === filterStatus;
+
+    return matchesSearch && matchesType && matchesStatus;
+  }) || [];
+
+  // Get current wikis for pagination
+  const indexOfLastLicense = currentPage * perPage;
+  const indexOfFirstLicense = indexOfLastLicense - perPage;
+  const currentWikis = filteredWikis.slice(indexOfFirstLicense, indexOfLastLicense);
+
 
   const showModal = () => {
     setCurrentWiki(null)
     document.getElementById('addWikiModal').showModal()
-
   }
 
   useEffect(() => {
@@ -35,6 +63,8 @@ export default function WikiManager() {
           <AddWikiModal currentWiki={currentWiki} />
         </div>
       </div>
+      <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
+
       <div className="overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50">
@@ -56,8 +86,8 @@ export default function WikiManager() {
           <tbody className="bg-white divide-y divide-gray-200">
 
 
-            {wikis.length > 0 ? (
-              wikis.map(wiki => (
+            {currentWikis.length > 0 ? (
+              currentWikis.map(wiki => (
                 <tr key={wiki.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-gray-900">{wiki.title}</div>
