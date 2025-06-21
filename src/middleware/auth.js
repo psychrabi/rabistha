@@ -7,7 +7,6 @@ export const authenticate = async (req, res, next) => {
     throw new Error('Unauthorized')
  }
 
- console.log(req.headers.authorization)
  const token = req.headers.authorization.split(' ')[1]
  if (!token){
     throw new Error("Token not found")
@@ -25,6 +24,5 @@ export const authenticate = async (req, res, next) => {
  } catch (err) {
     req.admin = undefined
     next()
-    
  }
 } 

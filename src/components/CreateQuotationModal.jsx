@@ -1,10 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { z } from 'zod';
 import { useAdminStore } from '../store/adminStore';
-import api from '../utils/api';
 
 
 const quoteSchema = z.object({
@@ -24,6 +23,15 @@ const quoteSchema = z.object({
 	total: z.number().optional(),
 	validUntil: z.string().min(1, 'Valid until date is required'),
 });
+
+function formatDateForInput(dateStr) {
+	if (!dateStr) return '';
+	const d = new Date(dateStr);
+	// Adjust for timezone offset so the date is correct in local time
+	const tzOffset = d.getTimezoneOffset() * 60000;
+	return new Date(d - tzOffset).toISOString().slice(0, 10);
+}
+
 
 // Helper to convert number to words (USD)
 function numberToWordsUSD(amount) {
@@ -45,17 +53,29 @@ function numberToWordsUSD(amount) {
 	return words.charAt(0).toUpperCase() + words.slice(1);
 }
 
-export default function CreateQuotationModal() {
-	const { users } = useAdminStore()
-	const [quotes, setQuotes] = useState([]);
+export default function CreateQuotationModal({ quote, onClose }) {
+	const dialogRef = useRef(null);
+	const { users, token } = useAdminStore()
 	const [lastAutoNote, setLastAutoNote] = useState('');
-  const navigate = useNavigate()
+	const navigate = useNavigate()
+
 	const { register, handleSubmit, reset, watch, control, setValue, getValues, formState: { errors } } = useForm({
 		resolver: zodResolver(quoteSchema),
-		defaultValues: {
-			items: [{ description: '', quantity: 1, price: 0 }],
-		},
+		defaultValues: quote
+			? {
+				...quote,
+				validUntil: formatDateForInput(quote.validUntil),
+
+				// Ensure items are numbers for quantity/price
+				items: quote.items?.map(item => ({
+					...item,
+					quantity: Number(item.quantity),
+					price: Number(item.price),
+				})) || [],
+			}
+			: {},
 	});
+
 	const { fields, append, remove } = useFieldArray({
 		control,
 		name: 'items',
@@ -90,9 +110,16 @@ export default function CreateQuotationModal() {
 
 	const onSubmit = async (data) => {
 
+		const method = quote && quote.id ? 'PUT' : 'POST';
+		const url = quote && quote.id
+			? `http://localhost:4000/api/admin/quotes/${quote.id}`
+			: 'http://localhost:4000/api/admin/quotes';
+
+
 		// Patch calculated fields before sending
 		const patchedData = {
 			...data,
+			userId: Number(quote.userId),
 			subTotal,
 			taxable,
 			tax,
@@ -100,22 +127,28 @@ export default function CreateQuotationModal() {
 			price: total,
 			validUntil: new Date(data.validUntil).toISOString(),
 		};
-		console.log(patchedData)
-
 		try {
-			const newQuote = await api.request('/admin/quotes', {
-				method: 'POST',
+			const quote = await fetch(url, {
+				method,
+				headers: {
+					'Content-Type': 'application/json',
+					'Authorization': `Bearer ${token}`
+				},
 				body: JSON.stringify(patchedData),
 			});
-			setQuotes([...quotes, newQuote]);
-			navigate(0);
-			reset();
+			reset({ quote });
+
 		} catch (error) {
 			console.error('Failed to create quote:', error);
+		} finally {
+			window.location.reload();
 		}
 	};
 
 	useEffect(() => {
+		if (dialogRef.current) {
+			dialogRef.current.showModal();
+		}
 		const totalText = `Total Payable: ${numberToWordsUSD(total)}`;
 		if (!total || notes === lastAutoNote) {
 			setLastAutoNote(totalText);
@@ -123,9 +156,8 @@ export default function CreateQuotationModal() {
 		}
 	}, [total]);
 	return (
-		<dialog className="modal" id="createQuotationModal">
+		<dialog ref={dialogRef} id="createQuotationModal" className="modal">
 			<div className="modal-box w-11/12 max-w-5xl">
-
 				{/* Display all errors */}
 				{Object.keys(errors).length > 0 && (
 					<ul>
@@ -134,7 +166,6 @@ export default function CreateQuotationModal() {
 						))}
 					</ul>
 				)}
-
 				<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 						<div>
@@ -170,7 +201,6 @@ export default function CreateQuotationModal() {
 							)}
 						</div>
 					</div>
-
 					{/* Items Section */}
 					<div className="divider">Quote Items</div>
 					<div className="space-y-4">
@@ -244,7 +274,6 @@ export default function CreateQuotationModal() {
 								<select
 									className="select block w-full px-4 py-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
 									{...register('discountType')}
-
 								>
 									<option value="amount">$</option>
 									<option value="percent">%</option>
@@ -304,16 +333,11 @@ export default function CreateQuotationModal() {
 					</div>
 
 					<div className="card-actions justify-end">
-
 						<button type="submit" className="btn btn-primary">
-							Create Quote
+							{quote ? 'Update' : 'Create'} Quotation
 						</button>
+						<button className="btn btn-secondary" onClick={onClose}>Close</button>
 					</div>
-				</form>
-
-				<form method="dialog">
-					{/* if there is a button, it will close the modal */}
-					<button className="btn">Cancel</button>
 				</form>
 			</div>
 		</dialog>

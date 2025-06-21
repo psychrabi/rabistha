@@ -1,5 +1,6 @@
-import { Eye } from 'lucide-react';
+import { Eye, Pencil, Trash } from 'lucide-react';
 import { lazy, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import { useAdminStore } from '../../store/adminStore';
@@ -14,6 +15,8 @@ export default function Quotes() {
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(8);
   const [selectedQuote, setSelectedQuote] = useState([]);
+  const [showQuoteModal, setShowQuoteModal] = useState(false);
+  const { navigate } = useNavigate();
 
   // Update the filtering logic
   const filteredQuotes = quotes?.filter(quote => {
@@ -47,6 +50,30 @@ export default function Quotes() {
     }
   };
 
+  const showAddModal = () => {
+    setSelectedQuote(null);
+    setShowQuoteModal(true);
+  };
+
+  const showEditModal = (quote) => {
+    setSelectedQuote(quote);
+    setShowQuoteModal(true);
+  };
+
+  const deleteQuote = async (quote) => {
+    if (confirm('Are you sure you want to delete this quotation?')) {
+      const response = await fetch(`http://localhost:4000/api/admin/quotes/${quote.id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${useAdminStore.getState().token}`
+        }
+      });
+      if (response.success) {
+        navigate(0)
+      }
+    }
+  }
+
   useEffect(() => {
     fetchQuotes();
   }, [fetchQuotes]);
@@ -56,13 +83,14 @@ export default function Quotes() {
       <div className="mb-4">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">Quotes & Invoices</h1>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Quotes & Invoices</h1>
             <p className="text-slate-600 dark:text-gray-300">Create and manage quotes and invoices</p>
           </div>
-          <button className="btn btn-primary" onClick={() => document.getElementById('createQuotationModal').showModal()} >
+          <button className="btn btn-primary" onClick={() => showAddModal()} >
             Create New Quote
           </button>
-          <CreateQuotationModal />
+          {showQuoteModal && (<CreateQuotationModal quote={selectedQuote} onClose={() => setShowQuoteModal(false)} />)}
+
         </div>
       </div>
       <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
@@ -98,9 +126,15 @@ export default function Quotes() {
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{new Date(quote.validUntil).toLocaleDateString()}</td>
                   <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{new Date(quote.createdAt).toLocaleDateString()}</td>
-                  <td className="px-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                    <button className="text-blue-600 hover:underline" onClick={() => showQuotation(quote)}>
+                  <td className="px-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap space-x-2">
+                    <button className="text-green-600" type="button" onClick={() => showQuotation(quote)}>
                       <Eye className="inline" />
+                    </button>
+                    <button className="text-blue-600" type="button" onClick={() => showEditModal(quote)}>
+                      <Pencil className="inline" />
+                    </button>
+                    <button className="text-red-600" type="button" onClick={() => deleteQuote(quote)}>
+                      <Trash className="inline" />
                     </button>
                   </td>
                 </tr>

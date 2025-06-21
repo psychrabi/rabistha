@@ -51,7 +51,6 @@ export default function WikiManager() {
 
   useEffect(() => {
     fetchWikis();
-    console.log(currentWiki)
   }, []);
 
 

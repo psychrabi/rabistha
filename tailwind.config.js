@@ -83,5 +83,12 @@ export default {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
-  },  
+  },
+   corePlugins: {
+    preflight: false, // optional if you're using your own base styles
+  },
+  future: {
+    // Disable new color functions that break html2canvas
+    respectDefaultRingColorOpacity: false,
+  }  
 }
