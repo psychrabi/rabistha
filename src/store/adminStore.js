@@ -102,7 +102,6 @@ export const useAdminStore = create(
             }
           });
           const data = await response.json();
-          console.log(data)
           set({ quotes: data });
         } catch (error) {
           console.error('Error fetching quotes:', error);

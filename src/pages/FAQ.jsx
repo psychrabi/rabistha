@@ -23,7 +23,7 @@ function FAQ() {
 					<span className="inline-block w-3 h-1 mx-1 bg-blue-500 rounded-full"></span>
 					<span className="inline-block w-1 h-1 bg-blue-500 rounded-full"></span>
 				</div>
-				<div className="space-y-2">
+				<div className="space-y-2 mb-6">
 					{currentFAQs.map((faq, idx) => (
 						<div key={idx} className="collapse collapse-plus bg-gray-100 rounded-lg dark:bg-gray-800">
 							<input type="radio" name={`faqs`} />
@@ -37,9 +37,9 @@ function FAQ() {
 						</div>
 					))}
 				</div>
+				<Pagination perPage={faqsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} total={faqs.length} />
 
 			</div>
-			<Pagination perPage={faqsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} total={faqs.length} />
 			<Download />
 		</section>
 	);

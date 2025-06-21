@@ -1,13 +1,13 @@
-import express from "express";
-import cors from "cors";
 import { PrismaClient } from "@prisma/client";
 import { compare, hash } from "bcrypt";
-import { sign } from "jsonwebtoken";
-import { authenticate } from "../src/middleware/auth";
-import multer from 'multer';
-import path from 'path';
-import nodemailer from "nodemailer";
+import cors from "cors";
 import dotenv from "dotenv";
+import express from "express";
+import { sign } from "jsonwebtoken";
+import multer from 'multer';
+import nodemailer from "nodemailer";
+import path from 'path';
+import { authenticate } from "../src/middleware/auth";
 
 
 dotenv.config();
@@ -44,7 +44,7 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ 
+const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB limit
   fileFilter: (req, file, cb) => {
@@ -106,7 +106,7 @@ app.post("/api/admin/login", async (req, res) => {
     res.json({ ...adminWithoutPassword, token: generateJwt(admin) });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
-    next(error)  
+    next(error)
   }
 });
 
@@ -192,6 +192,38 @@ app.get("/api/admin/sales", authenticate, async (req, res) => {
 
 });
 
+app.delete('/api/admin/quotes/:id', authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    await prisma.quotation.delete({
+      where: { id: Number(id) }
+    });
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Quote/Invoice (example)
+app.put("/api/admin/quotes/:id", authenticate, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const {
+      userId, items, subTotal, discount, discountType, taxable, tax, total, price, message, notes, validUntil, status
+    } = req.body;
+
+    const quote = await prisma.quotation.update({
+      where: { id: Number(id) },
+      data: {
+        userId, items, subTotal, discount, discountType, taxable, tax, total, price, message, notes, validUntil, status
+      }
+    });
+    res.json({ success: true, quote });
+  } catch (e) {
+    res.status(400).json({ success: false, error: e.message });
+  }
+});
+
 // Quote/Invoice (example)
 app.post("/api/admin/quotes", authenticate, async (req, res) => {
   try {
@@ -210,7 +242,6 @@ app.get("/api/admin/quotes", authenticate, async (req, res) => {
     const quotes = await prisma.quotation.findMany(
       { include: { user: true } }
     );
-    console.log(quotes)
     res.json(quotes);
   } catch (e) {
     res.status(400).json({ success: false, error: e.message });
@@ -235,7 +266,7 @@ app.get("/api/admin/users", authenticate, async (req, res, next) => {
 // Wiki Routes
 app.get('/api/wikis', async (req, res) => {
   try {
-    const wikis = await prisma.wiki.findMany({      
+    const wikis = await prisma.wiki.findMany({
       orderBy: { updatedAt: 'desc' }
     });
     res.json(wikis);
@@ -248,7 +279,6 @@ app.post('/api/admin/wikis', authenticate, async (req, res) => {
   try {
     const { title, content, category } = req.body;
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    
     const wiki = await prisma.wiki.create({
       data: { title, content, slug, category }
     });
@@ -293,7 +323,7 @@ app.post('/api/admin/wiki/upload', authenticate, upload.single('image'), (req, r
       throw new Error('No file uploaded');
     }
     const imageUrl = `/uploads/wiki/${req.file.filename}`;
-    res.json({ 
+    res.json({
       success: true,
       file: {
         url: imageUrl,
@@ -344,7 +374,7 @@ app.get('/api/wiki/:slug', async (req, res) => {
 // FAQ Routes
 app.get('/api/faqs', async (req, res) => {
   try {
-    const faqs = await prisma.faq.findMany({      
+    const faqs = await prisma.faq.findMany({
       orderBy: { updatedAt: 'desc' }
     });
     res.json(faqs);
@@ -400,7 +430,7 @@ app.post('/api/admin/faq/upload', authenticate, upload.single('image'), (req, re
       throw new Error('No file uploaded');
     }
     const imageUrl = `/uploads/faq/${req.file.filename}`;
-    res.json({ 
+    res.json({
       success: true,
       file: {
         url: imageUrl,
@@ -468,11 +498,10 @@ app.get('/api/licenses', async (req, res) => {
 
   try {
     const licenses = await prisma.license.findMany({
-      where: {status}
+      where: { status }
     });
     console.log(licenses)
     res.json(licenses);
-    
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
