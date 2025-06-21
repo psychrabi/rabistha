@@ -5,8 +5,9 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAdminStore } from '../store/adminStore';
 
-const AddFAQModal = ({ currentFAQ }) => {
+const AddFAQModal = ({ currentFAQ, onClose }) => {
   const editor = useRef(null);
+  const dialogRef = useRef(null);
   const { register, handleSubmit, control, reset } = useForm({
     defaultValues: { currentFAQ }
   });
@@ -91,6 +92,9 @@ const AddFAQModal = ({ currentFAQ }) => {
         category: currentFAQ.category
       });
     }
+    if (dialogRef.current) {
+			dialogRef.current.showModal();
+		}
   }, [currentFAQ, reset]);
 
   return (

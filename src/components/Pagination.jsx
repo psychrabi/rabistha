@@ -1,4 +1,6 @@
-const Pagination = ({
+import React from "react";
+
+const Pagination = React.memo(({
   perPage,
   total,
   setCurrentPage,
@@ -47,6 +49,6 @@ const Pagination = ({
       </div>
     </div>
   );
-};
+});
 
 export default Pagination;

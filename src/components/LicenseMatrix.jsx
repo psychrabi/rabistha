@@ -1,7 +1,8 @@
 import { Banknote, BanknoteArrowUp, Eye, Key, ShieldAlert, ShieldX } from "lucide-react";
+import React from "react";
 import MatrixCard from "./MatrixCard";
 
-const LicenseMatrix = ({ licenses }) => {
+const LicenseMatrix = React.memo(({ licenses }) => {
 
   const matrixData = [
     {
@@ -44,14 +45,11 @@ const LicenseMatrix = ({ licenses }) => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-4">
-
       {matrixData.map(data => (
-        <MatrixCard data={data} />
+        <MatrixCard data={data} key={data.title}/>
       ))}
-      
-      
     </div>
   );
-};
+});
 
 export default LicenseMatrix;
