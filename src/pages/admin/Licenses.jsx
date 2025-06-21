@@ -1,10 +1,10 @@
 import { Ban, Eye, Plus } from "lucide-react";
-import { useState } from "react";
-import AddLicenseModal from "../../components/AddLicenseModal";
+import { lazy, useState } from "react";
 import Filter from "../../components/Filter";
 import LicenseMatrix from "../../components/LicenseMatrix";
 import Pagination from "../../components/Pagination";
 import { useAdminStore } from "../../store/adminStore";
+const AddLicenseModal = lazy(() => import('../../components/AddLicenseModal'));
 
 
 export default function Licenses() {
@@ -14,6 +14,7 @@ export default function Licenses() {
 	const [filterStatus, setFilterStatus] = useState("all");
 	const [currentPage, setCurrentPage] = useState(1);
 	const [perPage] = useState(8);
+	const [showModal, setShowModal] = useState(false);
 
 	// Update the filtering logic
 	const filteredLicenses = licenses?.filter(license => {
@@ -53,6 +54,11 @@ export default function Licenses() {
 		});
 	};
 
+	const showAddLicenseModal = () => {
+		setShowModal(true);
+	}
+
+
 	return (
 		<section className="w-full p-6 overflow-y-auto flex-grow">
 			{/* Header */}
@@ -62,11 +68,11 @@ export default function Licenses() {
 						<h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">License Management</h1>
 						<p className="text-slate-600 dark:text-gray-300">Manage your ASTER license inventory</p>
 					</div>
-					<button type="button" onClick={() => document.getElementById('addLicenseModal').showModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+					<button type="button" onClick={() => showAddLicenseModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
 						<Plus className="w-5 h-5" />
 						<span>Add Licenses</span>
 					</button>
-					<AddLicenseModal />
+					{showModal && <AddLicenseModal onClose={() => setShowModal(false)} />}
 				</div>
 			</div>
 			<LicenseMatrix licenses={licenses} />

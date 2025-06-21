@@ -1,10 +1,10 @@
 import { Eye } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import CreateQuotationModal from '../../components/CreateQuotationModal';
+import { lazy, useEffect, useState } from 'react';
 import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
-import ViewQuoteModal from '../../components/ViewQuoteModal';
 import { useAdminStore } from '../../store/adminStore';
+const ViewQuoteModal = lazy(() => import('../../components/ViewQuoteModal'));
+const CreateQuotationModal = lazy(() => import('../../components/CreateQuotationModal'));
 
 export default function Quotes() {
   const { quotes, fetchQuotes } = useAdminStore()
@@ -119,7 +119,7 @@ export default function Quotes() {
         </table>
       </div>
       <Pagination total={currentQuotes.length} perPage={perPage} currentPage={currentPage} onPageChange={setCurrentPage} />
-      <ViewQuoteModal quote={selectedQuote} />
+      {selectedQuote && <ViewQuoteModal quote={selectedQuote} />}
     </section>
   );
 }

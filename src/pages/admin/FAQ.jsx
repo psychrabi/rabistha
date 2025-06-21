@@ -5,7 +5,6 @@ import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
 import { useAdminStore } from '../../store/adminStore';
 
-
 export default function FAQManager() {
   const { faqs, fetchFAQs, deleteFAQ } = useAdminStore()
   const [currentFAQ, setCurrentFAQ] = useState([])
@@ -14,10 +13,11 @@ export default function FAQManager() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(12);
+	const [showModal, setShowModal] = useState(false);
 
-  const showModal = () => {
+  const showAddFAQModal = () => {
     setCurrentFAQ(null)
-    document.getElementById('addFAQModal').showModal()
+    setShowModal(true);
   }
 
   // Update the filtering logic
@@ -66,11 +66,13 @@ export default function FAQManager() {
             <h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">FAQ Management</h1>
             <p className="text-slate-600 dark:text-gray-300">Manage ASTER FAQs from here</p>
           </div>
-          <button type="button" onClick={() => showModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+          <button type="button" onClick={() => showAddFAQModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
             <Plus className="w-5 h-5" />
             <span>Add a new FAQ</span>
           </button>
-          <AddFAQModal currentFAQ={currentFAQ} />
+          					{showModal &&  <AddFAQModal currentFAQ={currentFAQ} onClose={() => setShowModal(false)}/>}
+
+         
         </div>
       </div>
       <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />

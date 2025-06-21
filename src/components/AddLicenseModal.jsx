@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAdminStore } from "../store/adminStore";
 
-export default function AddLicenseModal() {
+export default function AddLicenseModal({ onClose }) {
+	const dialogRef = useRef(null);
 	const [form, setForm] = useState({
 		license: "",
 		type: "",
@@ -35,8 +36,15 @@ export default function AddLicenseModal() {
 		})
 	};
 
+	useEffect(() => {
+		if (dialogRef.current) {
+			dialogRef.current.showModal();
+		}
+	}, []);
+
 	return (
-		<dialog className="modal" id="addLicenseModal">
+		<dialog className="modal" id="addLicenseModal" ref={dialogRef}>
+			<div className="modal-"></div>
 			<div className="modal-box">
 				<form onSubmit={handleSubmit} className="space-y-4">
 					<div>
@@ -79,7 +87,10 @@ export default function AddLicenseModal() {
 						</div>
 					</div>
 					{error && <div className="text-red-600">{error}</div>}
-					<button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Add Licenses</button>
+					<div className="flex justify-end space-x-3 mt-4">
+						<button className="bg-blue-600 text-white px-4 py-2 rounded" type="submit">Add Licenses</button>
+						<button className="bg-red-600 text-white px-4 py-2 rounded" type="button " onClick={onClose}>Close</button>
+					</div>
 				</form>
 			</div>
 		</dialog>

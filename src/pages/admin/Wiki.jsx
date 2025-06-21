@@ -1,8 +1,8 @@
 import { Plus } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import AddWikiModal from '../../components/AddWikiModal';
+import { lazy, useEffect, useState } from 'react';
 import Filter from '../../components/Filter';
 import { useAdminStore } from '../../store/adminStore';
+const AddWikiModal = lazy(() => import('../../components/AddWikiModal'));
 
 export default function WikiManager() {
   const { wikis, fetchWikis, deleteWiki } = useAdminStore()
@@ -12,6 +12,7 @@ export default function WikiManager() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(8);
+  const [showModal, setShowModal] = useState(false);
 
   // Update the filtering logic
   const filteredWikis = wikis?.filter(wiki => {
@@ -36,8 +37,15 @@ export default function WikiManager() {
   const currentWikis = filteredWikis.slice(indexOfFirstLicense, indexOfLastLicense);
 
 
-  const showModal = () => {
+  const showAddModal = () => {
     setCurrentWiki(null)
+    setShowModal(true);
+    document.getElementById('addWikiModal').showModal()
+  }
+
+  const showEditModal = (wiki) => {
+    setCurrentWiki(wiki)
+    setShowModal(true);
     document.getElementById('addWikiModal').showModal()
   }
 
@@ -56,11 +64,11 @@ export default function WikiManager() {
             <h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">Wiki Management</h1>
             <p className="text-slate-600 dark:text-gray-300">Manage ASTER Wikis from here</p>
           </div>
-          <button type="button" onClick={() => showModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
+          <button type="button" onClick={() => showAddModal()} className="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
             <Plus className="w-5 h-5" />
             <span>Add a new Wiki</span>
           </button>
-          <AddWikiModal currentWiki={currentWiki} />
+          {showModal && <AddWikiModal currentWiki={currentWiki} />}
         </div>
       </div>
       <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
@@ -102,21 +110,17 @@ export default function WikiManager() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
-                      onClick={() => {
-                        setCurrentWiki(wiki);
-                        document.getElementById('addWikiModal').showModal()
-
-                      }}
+                      onClick={() => showEditModal(wiki)}
                       className="text-yellow-600 hover:text-yellow-900 mx-2"
                     >
                       Edit
                     </button>
-                    <button
+                    <buttonfilterStatus
                       onClick={() => window.open(`/wiki/${wiki.slug}`, '_blank')}
                       className="text-blue-600 hover:text-blue-900 mx-2"
                     >
                       View
-                    </button>
+                    </buttonfilterStatus>
                     <button
                       onClick={() => deleteWiki(wiki)}
                       className="text-red-600 hover:text-red-900 mx-2"
