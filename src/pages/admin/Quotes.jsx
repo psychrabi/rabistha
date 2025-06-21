@@ -1,10 +1,10 @@
+import { Eye } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import CreateQuotationModal from '../../components/CreateQuotationModal';
 import Filter from '../../components/Filter';
+import Pagination from '../../components/Pagination';
+import ViewQuoteModal from '../../components/ViewQuoteModal';
 import { useAdminStore } from '../../store/adminStore';
-import api from '../../utils/api';
-
-
 
 export default function Quotes() {
   const { quotes, fetchQuotes } = useAdminStore()
@@ -13,6 +13,7 @@ export default function Quotes() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(8);
+  const [selectedQuote, setSelectedQuote] = useState([]);
 
   // Update the filtering logic
   const filteredQuotes = quotes?.filter(quote => {
@@ -38,31 +39,17 @@ export default function Quotes() {
   const currentQuotes = filteredQuotes.slice(indexOfFirstQuote, indexOfLastQuote);
 
 
-  const sendQuote = async (quoteId) => {
-    try {
-      await api.request(`/quotes/${quoteId}/send`, { method: 'POST' });
-      // Update quote status in local state
-      setQuotes(quotes.map(q => q.id === quoteId ? { ...q, status: 'SENT' } : q));
-    } catch (error) {
-      console.error('Failed to send quote:', error);
-    }
-  };
-
-  const convertToInvoice = async (quoteId) => {
-    try {
-      const invoice = await api.request(`/quotes/${quoteId}/convert`, { method: 'POST' });
-      setInvoices([...invoices, invoice]);
-    } catch (error) {
-      console.error('Failed to convert quote:', error);
+  const showQuotation = (quote) => {
+    setSelectedQuote(quote);
+    const modal = document.getElementById('quotationModal');
+    if (modal) {
+      modal.showModal();
     }
   };
 
   useEffect(() => {
     fetchQuotes();
-
   }, [fetchQuotes]);
-
-
 
   return (
     <section className="w-full p-6 overflow-y-auto">
@@ -84,9 +71,7 @@ export default function Quotes() {
         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
-              <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-
-                Quote #</th>
+              <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Quote #</th>
               <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Customer</th>
               <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Amount</th>
               <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Status</th>
@@ -103,7 +88,7 @@ export default function Quotes() {
                   <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{quote.user.name}</td>
                   <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">${quote.total}</td>
                   <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                    <div className={`badge ${quote.status === 'DRAFT' ? 'badge-neutral' :
+                    <div className={`badge ${quote.status === 'DRAFT' ? 'badge-secondary' :
                       quote.status === 'SENT' ? 'badge-info' :
                         quote.status === 'ACCEPTED' ? 'badge-success' :
                           'badge-error'
@@ -113,18 +98,10 @@ export default function Quotes() {
                   </td>
                   <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{new Date(quote.validUntil).toLocaleDateString()}</td>
                   <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{new Date(quote.createdAt).toLocaleDateString()}</td>
-                  <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
-                    <div className="dropdown dropdown-end">
-                      <div tabIndex={0} role="button" className="btn btn-ghost btn-xs">
-                        Actions
-                      </div>
-                      <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a onClick={() => sendQuote(quote.id)}>Send Quote</a></li>
-                        <li><a onClick={() => convertToInvoice(quote.id)}>Convert to Invoice</a></li>
-                        <li><a>Edit</a></li>
-                        <li><a>Download PDF</a></li>
-                      </ul>
-                    </div>
+                  <td className="px-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                    <button className="text-blue-600 hover:underline" onClick={() => showQuotation(quote)}>
+                      <Eye className="inline" />
+                    </button>
                   </td>
                 </tr>
               ))
@@ -141,9 +118,8 @@ export default function Quotes() {
           </tbody>
         </table>
       </div>
-
-
-
+      <Pagination total={currentQuotes.length} perPage={perPage} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <ViewQuoteModal quote={selectedQuote} />
     </section>
   );
 }
