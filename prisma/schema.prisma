@@ -13,121 +13,29 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
+enum ProductType {
+  ANNUAL_2
+  ANNUAL_3
+  ANNUAL_5
+  PRO_2
+  PRO_3
+  PRO_6
+  PRO_12_USB
+  PRO_12_EDU
+}
+
 enum LicenseStatus {
-  deactivated
-  sold
-  refunded
-  expired
-  available
+  DEACTIVATED
+  SOLD
+  REFUNDED
+  EXPIRED
+  AVAILABLE
 }
-
-model Admin {
-  id       Int    @id @default(autoincrement())
-  username String @unique
-  password String
-}
-
-// User/customer info (for license sales)
-model User {
-  id            Int            @id @default(autoincrement())
-  name          String
-  email         String         @unique
-  address       String?
-  contact       String?
-  country       String?
-  city          String?
-  state         String?
-  zipCode       String?
-  quoteInvoices Quotation[] // Added relation field for Quotation
-  licenses      License[]
-  sales         Sale[] // Added relation field for Sale
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-}
-
-// Sale record for a license
-model Sale {
-  id             Int       @id @default(autoincrement())
-  licenseId      Int?      @unique
-  user           User      @relation(fields: [userId], references: [id])
-  userId         Int
-  salesPrice     Float?
-  discount       Float?    @default(0)
-  paymentMethod  String
-  paymentDetails String?
-  shippingEmail  String
-  soldDate       DateTime?
-  paymentStatus  String
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-  License        License[]
-}
-
-// License keys and their status
-model License {
-  id                 Int           @id @default(autoincrement())
-  license            String        @unique
-  type               String
-  noOfUsers          Int?
-  costPrice          Float
-  status             LicenseStatus // sold, deactivated, refunded, or "-" (not sold)
-  purchaseDate       DateTime
-  soldDate           DateTime?
-  lastDeactivated    DateTime?
-  noOfDeactivation   Int?          @default(0)
-  replacementLicense String?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  User               User?         @relation(fields: [userId], references: [id])
-  userId             Int?
-  sale               Sale?         @relation(fields: [saleId], references: [id])
-  saleId             Int?
-}
-
-// For manual quotes/invoices sent to customers
-model Quotation {
-  id           Int      @id @default(autoincrement())
-  user         User     @relation(fields: [userId], references: [id])
-  userId       Int
-  items        Json     // [{ description, quantity, price }]
-  subTotal     Float  @default(0)
-  discount     Float @default(0)
-  discountType String   // "amount" or "percent"
-  taxable      Float @default(0)
-  tax          Float @default(0)
-  total        Float @default(0)
-  price        Float @default(0)
-  message      String?
-  notes        String?
-  validUntil      DateTime
-  status          QuotationStatus @default(DRAFT)
-  sentAt          DateTime?
-  acceptedAt      DateTime?
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-
-}
-
-model Wiki {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String   @db.Text
-  slug      String   @unique
-  category  String
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-model Faq {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String   @db.Text
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
 
 enum OrderStatus {
   PENDING
@@ -150,4 +58,155 @@ enum QuotationStatus {
   ACCEPTED
   EXPIRED
   REJECTED
+}
+
+model User {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  firstName String
+  lastName  String
+  role      UserRole  @default(USER)
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  orders    Order[]
+  licenses  License[]
+  sales     Sale[]
+  quotations Quotation[]
+}
+
+model License {
+  id          String        @id @default(uuid())
+  licenseKey  String        @unique
+  productId   String
+  product     Product       @relation(fields: [productId], references: [id])
+  seats       Int
+  price       Float
+  isActive    Boolean       @default(true)
+  status      LicenseStatus @default(AVAILABLE)
+  expiresAt   DateTime?
+  userId      String?
+  user        User?         @relation(fields: [userId], references: [id])
+  orderId     String?
+  order       Order?        @relation(fields: [orderId], references: [id])
+  saleId      String?       @unique
+  sale        Sale?         @relation(fields: [saleId], references: [id])
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+}
+
+model Sale {
+  id             String    @id @default(uuid())
+  licenses        License[]
+  userId         String
+  user           User      @relation(fields: [userId], references: [id])
+  salesPrice     Float?
+  discount       Float?    @default(0)
+  paymentMethod  String
+  paymentDetails String?
+  shippingEmail  String
+  soldDate       DateTime?
+  paymentStatus  String
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  orderNumber String      @unique
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  status      OrderStatus @default(PENDING)
+  totalAmount Float
+  currency    String      @default("USD")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  licenses    License[]
+  invoices    Invoice[]
+  quotations  Quotation[]
+}
+
+model Invoice {
+  id            String        @id @default(uuid())
+  invoiceNumber String        @unique
+  orderId       String
+  order         Order         @relation(fields: [orderId], references: [id])
+  status        InvoiceStatus @default(DRAFT)
+  amount        Float
+  currency      String        @default("USD")
+  dueDate       DateTime
+  sentAt        DateTime?
+  paidAt        DateTime?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model Quotation {
+  id              String          @id @default(uuid())
+  quotationNumber String          @unique
+  orderId         String
+  order           Order           @relation(fields: [orderId], references: [id])
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+  items           Json            // [{ description, quantity, price }]
+  subTotal        Float           @default(0)
+  discount        Float           @default(0)
+  discountType    String          // "amount" or "percent"
+  taxable         Float           @default(0)
+  tax             Float           @default(0)
+  total           Float           @default(0)
+  price           Float           @default(0)
+  message         String?
+  notes           String?
+  validUntil      DateTime
+  status          QuotationStatus @default(DRAFT)
+  sentAt          DateTime?
+  acceptedAt      DateTime?
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
+
+model WikiPage {
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  content   String
+  isPublic  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model FAQ {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
+  category  String?
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Settings {
+  id          String @id @default(uuid())
+  key         String @unique
+  value       String
+  description String?
+}
+
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  seats       Int
+  price       Float
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  licenses    License[]
 }
