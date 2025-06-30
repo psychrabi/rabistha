@@ -15,7 +15,7 @@ export default function WikiManager() {
   const [showModal, setShowModal] = useState(false);
 
   // Update the filtering logic
-  const filteredWikis = wikis?.filter(wiki => {
+  const filteredWikis = (Array.isArray(wikis) ? wikis : []).filter(wiki => {
     // If no filters are active, return all wikis
     if (searchTerm === '' && filterType === 'all' && filterStatus === 'all') {
       return true;
@@ -67,7 +67,7 @@ export default function WikiManager() {
             <Plus className="w-5 h-5" />
             <span>Add a new Wiki</span>
           </button>
-          {showModal && <AddWikiModal currentWiki={currentWiki} />}
+          <AddWikiModal currentWiki={currentWiki} />
         </div>
       </div>
       <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
@@ -100,7 +100,7 @@ export default function WikiManager() {
                     <div className="text-sm font-medium text-gray-900">{wiki.title}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{wiki.category}</div>
+                    <div className="text-sm font-medium text-gray-900">{wiki.category.name}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-500">

@@ -13,22 +13,29 @@ export default function FAQManager() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(12);
-	const [showModal, setShowModal] = useState(false);
 
   const showAddFAQModal = () => {
     setCurrentFAQ(null)
-    setShowModal(true);
+    document.getElementById('addFAQModal').showModal()
+
   }
 
+  const showEditFAQModal = (faq) => {
+    setCurrentFAQ(faq)
+    document.getElementById('addFAQModal').showModal()
+  }
+
+
+
   // Update the filtering logic
-  const filteredFAQs = faqs?.filter(faqs => {
+  const filteredFAQs = (Array.isArray(faqs) ? faqs : []).filter(faqs => {
     // If no filters are active, return all faqss
     if (searchTerm === '' && filterType === 'all' && filterStatus === 'all') {
       return true;
     }
 
     const matchesSearch = searchTerm === '' ||
-      faqs.title.toLowerCase().includes(searchTerm.toLowerCase());
+      faqs.question.toLowerCase().includes(searchTerm.toLowerCase());
 
     const matchesType = filterType === 'all' || faqs.type === filterType;
 
@@ -50,10 +57,9 @@ export default function FAQManager() {
     });
   };
 
-
   useEffect(() => {
     fetchFAQs();
-    console.log(currentFAQ)
+    console.log(faqs)
   }, []);
 
 
@@ -70,9 +76,9 @@ export default function FAQManager() {
             <Plus className="w-5 h-5" />
             <span>Add a new FAQ</span>
           </button>
-          					{showModal &&  <AddFAQModal currentFAQ={currentFAQ} onClose={() => setShowModal(false)}/>}
+          <AddFAQModal currentFAQ={currentFAQ}/>
 
-         
+
         </div>
       </div>
       <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
@@ -96,13 +102,13 @@ export default function FAQManager() {
               currentFAQs?.map(faq => (
                 <tr key={faq.id} className="text-sm">
                   <td className="px-4 py-2 whitespace-nowrap font-medium">
-                    {faq.title}
+                    {faq.question}
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap text-center">
                     {formatDate(faq.updatedAt)}
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap font-medium">
-                    <button onClick={() => { setCurrentFAQ(faq); document.getElementById('addFAQModal').showModal() }}
+                    <button onClick={() => showEditFAQModal(faq)}
                       className="text-yellow-600 hover:text-yellow-900 mx-2">
                       <Pencil />
                     </button>

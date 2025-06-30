@@ -10,7 +10,7 @@ const AddWikiModal = ({ currentWiki }) => {
   const { register, handleSubmit, control, reset } = useForm({
     defaultValues: { currentWiki }
   });
-  const { token } = useAdminStore();
+  const { token, fetchCategories, categories } = useAdminStore();
 
   const navigate = useNavigate()
 
@@ -57,7 +57,7 @@ const AddWikiModal = ({ currentWiki }) => {
     }
   }), []);
   const onSubmit = async (data) => {
-    console.log({ "onsubmit": data })
+    
     try {
       const method = currentWiki ? 'PUT' : 'POST';
       const url = currentWiki
@@ -74,9 +74,10 @@ const AddWikiModal = ({ currentWiki }) => {
       });
 
       if (response.status === 200) {
+            document.getElementById('addWikiModal').close()
 
-        navigate("/admin/wikis");
-
+        navigate('/admin/wikis', {replace: true});
+        reset()
       }
     } catch (error) {
       console.error('Error saving wiki:', error);
@@ -85,11 +86,12 @@ const AddWikiModal = ({ currentWiki }) => {
 
   useEffect(() => {
     console.log(currentWiki)
+    fetchCategories()
     if (currentWiki) {
       reset({
         title: currentWiki.title,
         content: currentWiki.content,
-        category: currentWiki.category
+        categoryId: currentWiki.categoryId
       });
     }
   }, [currentWiki, reset]);
@@ -100,13 +102,10 @@ const AddWikiModal = ({ currentWiki }) => {
         <form onSubmit={handleSubmit(onSubmit)} >
           <div className="mb-4">
             <label className="block mb-2">Category</label>
-            <select {...register('category', { required: 'Category is required' })} className="select w-full px-3 py-2 border rounded">
-              <option value="quick-start-guite">Quick Start Guide</option>
-              <option value="user-manual">User Manual</option>
-              <option value="faqs">FAQs</option>
-              <option value="solutions">Solutions</option>
-              <option value="version-history">Version History</option>
-              <option value="useful-links">Useful Link</option>
+            <select {...register('categoryId', { required: 'Category is required' })} className="select w-full px-3 py-2 border rounded">
+              {categories.map((category)=> {
+                return <option key={category.id} value={category.id}>{category.name}</option>
+              })}
             </select>
           </div>
           <div className="mb-4">

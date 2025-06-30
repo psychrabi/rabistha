@@ -5,19 +5,21 @@ export default function ViewWiki() {
   const [wiki, setWiki] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const { slug } = useParams();
+  const { slug, category } = useParams();
 
   useEffect(() => {
     const fetchWiki = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:4000/api/wiki/${slug}`);
+        const response = await fetch(`http://localhost:4000/api/wikis/${category}/${slug}`);
 
         if (!response.ok) {
           throw new Error('Wiki not found');
         }
 
         const data = await response.json();
+
+        console.log(data)
         setWiki(data);
       } catch (error) {
         setError(error.message);

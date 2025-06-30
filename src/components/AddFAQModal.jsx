@@ -5,7 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAdminStore } from '../store/adminStore';
 
-const AddFAQModal = ({ currentFAQ, onClose }) => {
+const AddFAQModal = ({ currentFAQ }) => {
   const editor = useRef(null);
   const dialogRef = useRef(null);
   const { register, handleSubmit, control, reset } = useForm({
@@ -87,8 +87,8 @@ const AddFAQModal = ({ currentFAQ, onClose }) => {
     console.log(currentFAQ)
     if (currentFAQ) {
       reset({
-        title: currentFAQ.title,
-        content: currentFAQ.content,
+        question: currentFAQ.question,
+        answer: currentFAQ.answer,
         category: currentFAQ.category
       });
     }
@@ -104,15 +104,15 @@ const AddFAQModal = ({ currentFAQ, onClose }) => {
           <div className="mb-4">
             <label className="block mb-2">Title</label>
             <input
-              {...register('title', { required: 'Title is required' })}
+              {...register('question', { required: 'Title is required' })}
               className="w-full px-3 py-2 border rounded"
-              placeholder="Enter faq title"
+              placeholder="Enter faq question"
             />
           </div>
           <div className="mb-4">
             <label className="block mb-2">Content</label>
             <Controller
-              name="content"
+              name="answer"
               control={control}
               rules={{ required: 'Content is required' }}
               render={({ field: { onChange, value } }) => (

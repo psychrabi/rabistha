@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { ChevronRight, Book, HelpCircle, FileText, Link, History, Star } from 'lucide-react';
-import { Outlet, Link as RouterLink } from 'react-router-dom';
+import { Outlet, Link as RouterLink, useParams } from 'react-router-dom';
 
 function Wiki() {
-  const [activeSection, setActiveSection] = useState('quick-start');
+    const {category} = useParams()
+
+  const [activeSection, setActiveSection] = useState(category);
 
   const wikiSections = {
     'quick-start': {
@@ -68,10 +70,10 @@ function Wiki() {
       {/* Main Content */}
       <div className="flex-1 p-8">
         <div className="prose max-w-none">
-          {/* <h1 className="text-4xl font-bold mb-8">ASTER Documentation</h1>
+         <h1 className="text-4xl font-bold mb-8">ASTER Documentation</h1>
           <p className="text-lg mb-8">
             Welcome to the ASTER documentation. Choose a section from the sidebar to learn more about ASTER&lsquo;s features and functionality.
-          </p> */}
+          </p>
 
           {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {Object.entries(wikiSections).map(([key, section]) => (
@@ -91,7 +93,7 @@ function Wiki() {
                 </div>
               </RouterLink>
             ))}
-          </div> */}
+          </div>  */}
           <Outlet />
         </div>
       </div>

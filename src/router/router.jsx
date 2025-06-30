@@ -25,7 +25,10 @@ const Purchase = lazy(() => import("@/pages/Purchase"));
 const FAQ = lazy(() => import("@/pages/FAQ"));
 const Contact = lazy(() => import("@/pages/Contact"));
 const Wiki = lazy(() => import("@/pages/Wiki"));
-const Blog = lazy(() => import("@/pages/Blog"));
+const Blog = lazy(() => import("@/pages/Blog"));ViewWikiCategory
+const Download = lazy(() => import("@/pages/Download"));
+const ArchivedDownloads = lazy(() => import("@/pages/ArchivedDownloads"));
+
 const News = lazy(() => import("@/pages/News"));
 const NotFound = lazy(() => import("@/components/NotFound"));
 
@@ -49,6 +52,14 @@ export const router = createBrowserRouter([
 			{
 				path: "/purchase",
 				Component: Purchase,
+			},
+			{
+				path: "/download",
+				Component: Download,
+			},
+			{
+				path: "/archived-downloads",
+				Component: ArchivedDownloads,
 			},
 			{
 				path: "/cart",

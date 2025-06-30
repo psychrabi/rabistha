@@ -8,7 +8,7 @@ export default function Navbar() {
   const itemCount = items.reduce((total, item) => total + item.quantity, 0)
 
   return (
-    <div className=" bg-base-100 shadow-sm text-gray-100 fixed top-0 left-0 w-full">
+    <div className=" bg-base-100 shadow-sm text-gray-100 fixed top-0 left-0 w-full z-1">
       <div className="navbar container mx-auto ">
       <div className="navbar-start">
         <div className="dropdown">

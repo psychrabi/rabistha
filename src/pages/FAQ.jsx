@@ -6,7 +6,7 @@ import { useAdminStore } from "../store/adminStore";
 function FAQ() {
 	const { fetchFAQs, faqs } = useAdminStore()
 	const [currentPage, setCurrentPage] = useState(1);
-	const [faqsPerPage] = useState(10);
+	const [faqsPerPage] = useState(15);
 	const indexOfLastFAQ = currentPage * faqsPerPage;
 	const indexOfFirstFAQ = indexOfLastFAQ - faqsPerPage;
 	const currentFAQs = faqs.slice(indexOfFirstFAQ, indexOfLastFAQ);
@@ -25,13 +25,13 @@ function FAQ() {
 				</div>
 				<div className="space-y-2 mb-6">
 					{currentFAQs.map((faq, idx) => (
-						<div key={idx} className="collapse collapse-plus bg-gray-100 rounded-lg dark:bg-gray-800">
-							<input type="radio" name={`faqs`} />
-							<div className="collapse-title font-semibold text-gray-700 dark:text-white">{faq.title}</div>
+						<div key={idx} className="collapse collapse-plus bg-gray-100 rounded-lg dark:bg-gray-800 z-0">
+							<input type="checkbox" name={`faqs`} />
+							<div className="collapse-title font-semibold text-gray-700 dark:text-white">{faq.question}</div>
 							<div className="collapse-content">
 								<div
 									className="prose max-w-none text-white"
-									dangerouslySetInnerHTML={{ __html: faq?.content }}
+									dangerouslySetInnerHTML={{ __html: faq?.answer }}
 								/>
 							</div>
 						</div>

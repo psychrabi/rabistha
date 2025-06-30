@@ -15,10 +15,11 @@ export const useAdminStore = create(
       wikis: [],
       faqs: [],
       quotes: [],
+      categories: [],
 
       login: async (data) => {
         try {
-          const response = await fetch(`${API_URL}/admin/login`, {
+          const response = await fetch(`http://localhost:4000/api/admin/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -83,15 +84,22 @@ export const useAdminStore = create(
       },
       fetchFAQs: async () => {
         try {
-          const response = await fetch('http://localhost:4000/api/faqs', {
-            headers: {
-              'Authorization': `Bearer ${useAdminStore.getState().token}`
-            }
-          });
+          const response = await fetch('http://localhost:4000/api/faqs');
           const data = await response.json();
+          console.log(data)
           set({ faqs: data });
         } catch (error) {
           console.error('Error fetching faqs:', error);
+        }
+      },
+      fetchCategories: async () => {
+        try {
+          const response = await fetch('http://localhost:4000/api/categories');
+          const data = await response.json();
+          console.log(data)
+          set({ categories: data });
+        } catch (error) {
+          console.error('Error fetching categories:', error);
         }
       },
       fetchQuotes: async () => {

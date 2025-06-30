@@ -15,11 +15,12 @@ export default function ViewWikiCategory() {
         setLoading(true);
         const response = await fetch(`http://localhost:4000/api/wikis/${category}`);
         
+        console.log(response)
         if (!response.ok) {
           throw new Error('Wiki not found');
         }
-        
-        const data = await response.json();
+        const data = await response.json();                
+
         setWikis(data);
       } catch (error) {
         setError(error.message);
@@ -50,10 +51,11 @@ export default function ViewWikiCategory() {
   return (
     <section className="">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              
             {Object.entries(wikis).map(([key, wiki]) => (
               <RouterLink
                 key={key}
-                to={`/wiki/${wiki.category}/${wiki.slug}`}
+                to={`/wiki/${wiki.category?.slug}/${wiki.slug}`}
                 className="block p-6 bg-base-200 rounded-lg hover:bg-base-300 transition-colors"
               >
                 <div className="flex items-center gap-3 mb-3">

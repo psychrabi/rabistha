@@ -88,10 +88,10 @@ app.get("/api/admin", authenticate, async (req, res, next) => {
 })
 
 // Admin login
-app.post("/api/admin/login", async (req, res) => {
+app.post("/api/admin/login", async (req, res, next) => {
   try {
-    const admin = await prisma.admin.findFirst({
-      where: { username: req.body.username }
+    const admin = await prisma.user.findUnique({
+      where: { email: req.body.email }
     });
 
     if (!admin) {
@@ -262,12 +262,22 @@ app.get("/api/admin/users", authenticate, async (req, res, next) => {
 
 
 
+// Categories
+app.get('/api/categories', async (req, res) => {
+  try {
+    const categories = await prisma.category.findMany();
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // Wiki Routes
 app.get('/api/wikis', async (req, res) => {
   try {
     const wikis = await prisma.wiki.findMany({
-      orderBy: { updatedAt: 'desc' }
+      orderBy: { updatedAt: 'desc' },
+      include: { category: true }
     });
     res.json(wikis);
   } catch (error) {
@@ -277,10 +287,10 @@ app.get('/api/wikis', async (req, res) => {
 
 app.post('/api/admin/wikis', authenticate, async (req, res) => {
   try {
-    const { title, content, category } = req.body;
+    const { title, content, categoryId } = req.body;
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
     const wiki = await prisma.wiki.create({
-      data: { title, content, slug, category }
+      data: { title, content, slug, categoryId }
     });
     res.json(wiki);
   } catch (error) {
@@ -291,12 +301,12 @@ app.post('/api/admin/wikis', authenticate, async (req, res) => {
 app.put('/api/admin/wikis/:id', authenticate, async (req, res) => {
   try {
     const { id } = req.params;
-    const { title, content, category } = req.body;
+    const { title, content, categoryId } = req.body;
     const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
     const wiki = await prisma.wiki.update({
-      where: { id: Number(id) },
-      data: { title, content, slug, category }
+      where: { id: id },
+      data: { title, content, slug, categoryId }
     });
     res.json(wiki);
   } catch (error) {
@@ -336,23 +346,31 @@ app.post('/api/admin/wiki/upload', authenticate, upload.single('image'), (req, r
 });
 
 app.get('/api/wikis/:category', async (req, res) => {
+
   try {
     const { category } = req.params;
+    const wikiCat = await prisma.category.findFirst({ where: { slug: category } });
     const wikis = await prisma.wiki.findMany({
-      where: { category }
+      where: {
+        categoryId: wikiCat.id
+      },
+      include: {
+        category: true
+      },
+      orderBy: {
+        createdAt: 'asc'
+      }
     });
-
     if (!wikis) {
       return res.status(404).json({ error: 'Wikis not found' });
     }
-
     res.json(wikis);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-app.get('/api/wiki/:slug', async (req, res) => {
+app.get('/api/wikis/:category/:slug', async (req, res) => {
   try {
     const { slug } = req.params;
     const wiki = await prisma.wiki.findUnique({

@@ -61,45 +61,44 @@ enum QuotationStatus {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  email     String    @unique
-  password  String
-  firstName String
-  lastName  String
-  role      UserRole  @default(USER)
-  isActive  Boolean   @default(true)
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-
-  orders    Order[]
-  licenses  License[]
-  sales     Sale[]
+  id         String      @id @default(uuid())
+  email      String      @unique
+  password   String
+  firstName  String
+  lastName   String
+  role       UserRole    @default(USER)
+  isActive   Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  orders     Order[]
+  licenses   License[]
+  sales      Sale[]
   quotations Quotation[]
 }
 
 model License {
-  id          String        @id @default(uuid())
-  licenseKey  String        @unique
-  productId   String
-  product     Product       @relation(fields: [productId], references: [id])
-  seats       Int
-  price       Float
-  isActive    Boolean       @default(true)
-  status      LicenseStatus @default(AVAILABLE)
-  expiresAt   DateTime?
-  userId      String?
-  user        User?         @relation(fields: [userId], references: [id])
-  orderId     String?
-  order       Order?        @relation(fields: [orderId], references: [id])
-  saleId      String?       @unique
-  sale        Sale?         @relation(fields: [saleId], references: [id])
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id         String        @id @default(uuid())
+  licenseKey String        @unique
+  productId  String
+  product    Product       @relation(fields: [productId], references: [id])
+  seats      Int
+  price      Float
+  isActive   Boolean       @default(true)
+  status     LicenseStatus @default(AVAILABLE)
+  expiresAt  DateTime?
+  userId     String?
+  user       User?         @relation(fields: [userId], references: [id])
+  orderId    String?
+  order      Order?        @relation(fields: [orderId], references: [id])
+  saleId     String?       @unique
+  sale       Sale?         @relation(fields: [saleId], references: [id])
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
 }
 
 model Sale {
   id             String    @id @default(uuid())
-  licenses        License[]
+  licenses       License[]
   userId         String
   user           User      @relation(fields: [userId], references: [id])
   salesPrice     Float?
@@ -123,7 +122,6 @@ model Order {
   currency    String      @default("USD")
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-
   licenses    License[]
   invoices    Invoice[]
   quotations  Quotation[]
@@ -151,10 +149,10 @@ model Quotation {
   order           Order           @relation(fields: [orderId], references: [id])
   userId          String
   user            User            @relation(fields: [userId], references: [id])
-  items           Json            // [{ description, quantity, price }]
+  items           Json // [{ description, quantity, price }]
   subTotal        Float           @default(0)
   discount        Float           @default(0)
-  discountType    String          // "amount" or "percent"
+  discountType    String // "amount" or "percent"
   taxable         Float           @default(0)
   tax             Float           @default(0)
   total           Float           @default(0)
@@ -169,17 +167,19 @@ model Quotation {
   updatedAt       DateTime        @updatedAt
 }
 
-model WikiPage {
-  id        String   @id @default(uuid())
-  title     String
-  slug      String   @unique
-  content   String
-  isPublic  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Wiki {
+  id         String    @id @default(uuid())
+  categoryId String?
+  title      String
+  slug       String    @unique
+  content    String
+  isPublic   Boolean   @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  category   Category? @relation(fields: [categoryId], references: [id])
 }
 
-model FAQ {
+model Faq {
   id        String   @id @default(uuid())
   question  String
   answer    String
@@ -191,22 +191,27 @@ model FAQ {
 }
 
 model Settings {
-  id          String @id @default(uuid())
-  key         String @unique
+  id          String  @id @default(uuid())
+  key         String  @unique
   value       String
   description String?
 }
 
-
 model Product {
-  id          String   @id @default(uuid())
-  name        String   @unique
+  id          String    @id @default(uuid())
+  name        String    @unique
   description String?
   seats       Int
   price       Float
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   licenses    License[]
+}
+
+model Category {
+  id    String @id @default(uuid())
+  name  String @unique
+  slug  String
+  wikis Wiki[]
 }
