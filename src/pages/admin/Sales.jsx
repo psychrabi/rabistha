@@ -36,7 +36,7 @@ export default function SalesDetails() {
   const currentSales = filteredSales.slice(indexOfFirstLicense, indexOfLastLicense);
 
   return (
-    <section className="w-full p-6 overflow-y-auto">
+    <section className="w-full p-6 overflow-y-auto  h-full">
     {/* Header */}
     <div className="mb-4">
         <div className="sm:flex sm:items-center sm:justify-between">

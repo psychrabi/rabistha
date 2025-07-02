@@ -66,7 +66,7 @@ export default function FAQManager() {
   return (
     <section className="w-full p-6 overflow-y-auto">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-4">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">FAQ Management</h1>
@@ -109,10 +109,10 @@ export default function FAQManager() {
                   </td>
                   <td className="px-4 py-2 whitespace-nowrap font-medium">
                     <button onClick={() => showEditFAQModal(faq)}
-                      className="text-yellow-600 hover:text-yellow-900 mx-2">
+                      className="text-yellow-600 hover:text-yellow-900 m-2 ">
                       <Pencil />
                     </button>
-                    <button onClick={() => deleteFAQ(faq)} className="text-red-600 hover:text-red-900 mx-2" >
+                    <button onClick={() => deleteFAQ(faq)} className="text-red-600 hover:text-red-900 m-2" >
                       <Trash2 />
                     </button>
                   </td>

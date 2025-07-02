@@ -72,16 +72,20 @@ export default function AdminSettings() {
   }
 
   return (
-    <div className="p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-gray-600">Configure your ASTER license management system</p>
+    <section className="w-full p-6 overflow-y-auto  h-full">
+      <div className="mb-4">
+        <div className="sm:flex sm:items-center sm:justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">Settings</h1>
+            <p className="text-slate-600 dark:text-gray-300">Configure your ASTER license management system</p>
+          </div>
+        </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 justify-center">
         {/* Sidebar */}
-        <div className="lg:w-64">
-          <div className="menu bg-base-200 rounded-box">
+        <div className="lg:w-[15%]">
+          <ul className="menu bg-base-100 rounded-box w-full">
             <li>
               <button className={activeTab === 'general' ? 'active' : ''} onClick={() => setActiveTab('general')} >
                 General Settings
@@ -102,11 +106,11 @@ export default function AdminSettings() {
                 Billing Settings
               </button>
             </li>
-          </div>
+          </ul>
         </div>
 
         {/* Main Content */}
-        <div className="flex-1">
+        <div className="w-200">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="card bg-base-100 shadow-xl">
               <div className="card-body">
@@ -115,39 +119,30 @@ export default function AdminSettings() {
                   <div className="space-y-6">
                     <h2 className="card-title">General Settings</h2>
                     <div>
-                      <label class="text-gray-700 dark:text-gray-200" for="siteName">Site Name</label>
+                      <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Site Name</label>
                       <input placeholder="ASTER Multiseat"
                         {...register('siteName')}
-                        type="text" class="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
+                        type="text" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                       {errors.siteName && (
-                        <label className="label">
-                          <span className="label-text-alt text-error">{errors.siteName.message}</span>
-                        </label>
+                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.siteName.message}</p>
                       )}
                     </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Site Description</span>
-                      </label>
+                    <div >
+                      <label className="block text-sm text-gray-500 dark:text-gray-300">Site Description</label>
                       <textarea
-                        className={`textarea textarea-bordered ${errors.siteDescription ? 'textarea-error' : ''}`}
+                        className={`block mt-2 w-full  placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-4 h-32 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 ${errors.siteDescription ? 'textarea-error' : ''}`}
                         placeholder="Transform one computer into multiple workstations"
                         {...register('siteDescription')}
                       ></textarea>
                       {errors.siteDescription && (
-                        <label className="label">
-                          <span className="label-text-alt text-error">{errors.siteDescription.message}</span>
-                        </label>
+                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.siteDescription.message}</p>
+
                       )}
                     </div>
                     <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Logo Upload</span>
-                      </label>
-                      <input type="file" className="file-input file-input-bordered" accept="image/*" />
-                      <label className="label">
-                        <span className="label-text-alt">Upload your company logo (PNG, JPG)</span>
-                      </label>
+                      <label className="block text-sm text-gray-500 dark:text-gray-300">Logo Upload</label>
+                      <input type="file" class="block w-full px-3 py-2 mt-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full dark:file:bg-gray-800 dark:file:text-gray-200 dark:text-gray-300 placeholder-gray-400/70 dark:placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:focus:border-blue-300" accept="image/*" />
+                      <p class="mt-3 text-xs text-grey-400 dark:text-gray-600">Upload your company logo (PNG, JPG)</p>
                     </div>
                   </div>
                 )}
@@ -155,53 +150,37 @@ export default function AdminSettings() {
                 {/* Contact Information Tab */}
                 {activeTab === 'contact' && (
                   <div className="space-y-6">
-                    <h2 className="card-title">Contact Information</h2>
 
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Contact Email</span>
-                      </label>
-                      <input
-                        type="email"
-                        placeholder="contact@yourcompany.com"
-                        className={`input input-bordered ${errors.contactEmail ? 'input-error' : ''}`}
+                    <h2 className="card-title">Contact Information</h2>
+                    <div>
+                      <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Contact Email</label>
+                      <input placeholder="email@example.com"
                         {...register('contactEmail')}
-                      />
+                        type="email" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                       {errors.contactEmail && (
-                        <label className="label">
-                          <span className="label-text-alt text-error">{errors.contactEmail.message}</span>
-                        </label>
+                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactEmail.message}</p>
                       )}
                     </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Phone Number</span>
-                      </label>
-                      <input
-                        type="tel"
-                        placeholder="+1 (555) 123-4567"
-                        className={`input input-bordered ${errors.contactPhone ? 'input-error' : ''}`}
+                    <div>
+                      <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Phone number</label>
+                      <input placeholder="+1 (555) 123-4567"
+
                         {...register('contactPhone')}
-                      />
+                        type="tel" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                       {errors.contactPhone && (
-                        <label className="label">
-                          <span className="label-text-alt text-error">{errors.contactPhone.message}</span>
-                        </label>
+                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactPhone.message}</p>
                       )}
                     </div>
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">Business Address</span>
-                      </label>
+                    <div >
+                      <label className="block text-sm text-gray-500 dark:text-gray-300">Business Address</label>
                       <textarea
-                        className={`textarea textarea-bordered ${errors.contactAddress ? 'textarea-error' : ''}`}
-                        placeholder="123 Business St, City, State 12345"
+                        className={`block mt-2 w-full  placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-4 h-32 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 ${errors.siteDescription ? 'textarea-error' : ''}`}
+                        placeholder="Transform one computer into multiple workstations"
                         {...register('contactAddress')}
                       ></textarea>
                       {errors.contactAddress && (
-                        <label className="label">
-                          <span className="label-text-alt text-error">{errors.contactAddress.message}</span>
-                        </label>
+                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactAddress.message}</p>
+
                       )}
                     </div>
                   </div>
@@ -213,75 +192,43 @@ export default function AdminSettings() {
                     <h2 className="card-title">Email Configuration</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">SMTP Host</span>
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="smtp.gmail.com"
-                          className={`input input-bordered ${errors.smtpHost ? 'input-error' : ''}`}
+                      <div>
+                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">SMTP Host</label>
+                        <input placeholder="smtp.gmail.com"
                           {...register('smtpHost')}
-                        />
+                          type="text" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                         {errors.smtpHost && (
-                          <label className="label">
-                            <span className="label-text-alt text-error">{errors.smtpHost.message}</span>
-                          </label>
+                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.smtpHost.message}</p>
                         )}
                       </div>
-
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">SMTP Port</span>
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="587"
-                          className={`input input-bordered ${errors.smtpPort ? 'input-error' : ''}`}
+                      <div>
+                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">SMTP Port</label>
+                        <input placeholder="587"
                           {...register('smtpPort')}
-                        />
+                          type="text" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                         {errors.smtpPort && (
-                          <label className="label">
-                            <span className="label-text-alt text-error">{errors.smtpPort.message}</span>
-                          </label>
+                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.smtpPort.message}</p>
+                        )}
+                      </div>
+                      <div>
+                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">SMTP Username</label>
+                        <input placeholder="email@example.com"
+                          {...register('smtpUser')}
+                          type="email" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+                        {errors.smtpUser && (
+                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.smtpUser.message}</p>
+                        )}
+                      </div>
+                      <div>
+                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Contact Email</label>
+                        <input placeholder="email@example.com"
+                          {...register('smtpPass')}
+                          type="password" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+                        {errors.smtpPass && (
+                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.smtpPass.message}</p>
                         )}
                       </div>
                     </div>
-
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">SMTP Username</span>
-                      </label>
-                      <input
-                        type="email"
-                        placeholder="your-email@gmail.com"
-                        className={`input input-bordered ${errors.smtpUser ? 'input-error' : ''}`}
-                        {...register('smtpUser')}
-                      />
-                      {errors.smtpUser && (
-                        <label className="label">
-                          <span className="label-text-alt text-error">{errors.smtpUser.message}</span>
-                        </label>
-                      )}
-                    </div>
-
-                    <div className="form-control">
-                      <label className="label">
-                        <span className="label-text">SMTP Password</span>
-                      </label>
-                      <input
-                        type="password"
-                        placeholder="Your app password"
-                        className={`input input-bordered ${errors.smtpPass ? 'input-error' : ''}`}
-                        {...register('smtpPass')}
-                      />
-                      {errors.smtpPass && (
-                        <label className="label">
-                          <span className="label-text-alt text-error">{errors.smtpPass.message}</span>
-                        </label>
-                      )}
-                    </div>
-
                     <div className="alert alert-info">
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
@@ -297,12 +244,21 @@ export default function AdminSettings() {
                     <h2 className="card-title">Billing Settings</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">Default Currency</span>
-                        </label>
-                        <select
-                          className={`select select-bordered ${errors.currency ? 'select-error' : ''}`}
+                         <div>
+                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Tax Rate (%)</label>
+                        <input
+                          {...register('taxRate', { valueAsNumber: true })}
+                           step="0.01"
+                          placeholder="0.00"
+                          type="number" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+                        {errors.taxRate && (
+                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.taxRate.message}</p>
+                        )}
+                      </div>
+                         <div>
+                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Default Currency</label>
+                         <select
+                          className={`select block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 ${errors.currency ? 'select-error' : ''}`}
                           {...register('currency')}
                         >
                           <option value="">Select currency</option>
@@ -312,27 +268,7 @@ export default function AdminSettings() {
                           <option value="RUB">RUB - Russian Ruble</option>
                         </select>
                         {errors.currency && (
-                          <label className="label">
-                            <span className="label-text-alt text-error">{errors.currency.message}</span>
-                          </label>
-                        )}
-                      </div>
-
-                      <div className="form-control">
-                        <label className="label">
-                          <span className="label-text">Tax Rate (%)</span>
-                        </label>
-                        <input
-                          type="number"
-                          step="0.01"
-                          placeholder="0.00"
-                          className={`input input-bordered ${errors.taxRate ? 'input-error' : ''}`}
-                          {...register('taxRate', { valueAsNumber: true })}
-                        />
-                        {errors.taxRate && (
-                          <label className="label">
-                            <span className="label-text-alt text-error">{errors.taxRate.message}</span>
-                          </label>
+                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.currency.message}</p>
                         )}
                       </div>
                     </div>
@@ -348,6 +284,6 @@ export default function AdminSettings() {
           </form>
         </div>
       </div>
-    </div>
+    </section>
   );
 }

@@ -38,7 +38,7 @@ const Customers = () => {
   const currentUsers = filteredUsers.slice(indexOfFirstLicense, indexOfLastLicense);
 
   return (
-    <section className="w-full p-6 overflow-y-auto">
+    <section className="w-full p-6 overflow-y-auto h-full">
       {/* Header */}
       <div className="mb-4">
         <div className="sm:flex sm:items-center sm:justify-between">
@@ -78,9 +78,9 @@ const Customers = () => {
                 {currentUsers.length > 0 ? (
                   currentUsers.map((user, index) => (
                     <tr key={index} className="hover:bg-gray-50 dark:hover:bg-gray-800">
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{user.name}</td>
+                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{user.firstName} {user.lastName}</td>
                       <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{user.email}</td>
-                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{user.createdAt}</td>
+                      <td className="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">{new Date(user.createdAt).toLocaleDateString()}</td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <button type="button" className="relative z-10 block p-2 text-white transition-colors duration-300 transform bg-blue-600 rounded-lg hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-80">
                           <Edit2 className="w-5 h-5" />

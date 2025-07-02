@@ -1,6 +1,6 @@
 export default function Footer({className}) {
 	return (
-		<footer className="bg-gray-100 dark:bg-gray-900">
+		<footer className="bg-gray-100 dark:bg-gray-800">
 			<div className={`${className} flex flex-col items-center justify-between p-6 mx-auto space-y-4 sm:space-y-0 sm:flex-row`}>
 				<p className="text-sm text-gray-600 dark:text-gray-300">&copy; Copyright 2025. All Rights Reserved.</p>
 				<div className="flex -mx-2">

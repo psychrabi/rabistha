@@ -38,7 +38,6 @@ function FAQ() {
 					))}
 				</div>
 				<Pagination perPage={faqsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} total={faqs.length} />
-
 			</div>
 			<Download />
 		</section>

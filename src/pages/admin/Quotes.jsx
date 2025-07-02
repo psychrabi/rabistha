@@ -79,7 +79,7 @@ export default function Quotes() {
   }, [fetchQuotes]);
 
   return (
-    <section className="w-full p-6 overflow-y-auto">
+    <section className="w-full p-6 overflow-y-auto  h-full">
       <div className="mb-4">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>

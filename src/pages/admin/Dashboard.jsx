@@ -16,7 +16,7 @@ export default function Dashboard() {
   }, [isAuthenticated, fetchUsers, fetchSales, fetchLicenses]);
 
   return (
-    <section className="w-full p-6 overflow-y-auto flex-grow">
+    <section className="w-full p-6 overflow-y-auto h-full">
       {/* Header */}
       <div className="mb-4">
         <div className="sm:flex sm:items-center sm:justify-between">

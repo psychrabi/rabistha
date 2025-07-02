@@ -49,18 +49,21 @@ function Purchase() {
   };
 
   return (
-    <>
-      <div className="flex flex-col gap-8 items-center py-12">
-        <Toast
-          message={toastMessage}
-          isVisible={showToast}
-          onClose={() => setShowToast(false)}
-        />
-        <div className="flex flex-col gap-2 text-center">
-          <h1 className="font-bold text-3xl">Pricing</h1>
-          <span>Whatever your status, our offers evolve according to your needs</span>
-        </div>
+    <section className="bg-white dark:bg-gray-900 min-h-[calc(100vh-8.6875rem)]">
+      <div className="container px-6 py-4 mx-auto">
 
+        <h1 className="text-2xl font-semibold text-gray-800 capitalize lg:text-3xl dark:text-white">
+          Pricing
+        </h1>
+        <div className="flex mx-auto my-6">
+          <span className="inline-block w-30 h-1 bg-blue-500 rounded-full"></span>
+          <span className="inline-block w-3 h-1 mx-1 bg-blue-500 rounded-full"></span>
+          <span className="inline-block w-1 h-1 bg-blue-500 rounded-full"></span>
+        </div>
+                  <span className='text-2xl'>Whatever your status, our offers evolve according to your needs</span>
+
+      </div>
+      <div className="flex flex-col gap-8 items-center py-12">
         <div className="flex gap-2">
           <span>Annual</span>
           <input
@@ -114,7 +117,12 @@ function Purchase() {
         </div>
       </div>
       <Download />
-    </>
+      <Toast
+        message={toastMessage}
+        isVisible={showToast}
+        onClose={() => setShowToast(false)}
+      />
+    </section>
   );
 }
 

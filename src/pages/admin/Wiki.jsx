@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Eye, Pencil, Plus, Trash2 } from 'lucide-react';
 import { lazy, useEffect, useState } from 'react';
 import Filter from '../../components/Filter';
 import { useAdminStore } from '../../store/adminStore';
@@ -55,9 +55,9 @@ export default function WikiManager() {
 
 
   return (
-    <section className="w-full p-6 overflow-y-auto">
+    <section className="w-full p-6 overflow-y-auto h-full">
       {/* Header */}
-      <div className="mb-8">
+      <div className="mb-4">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
             <h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">Wiki Management</h1>
@@ -72,59 +72,40 @@ export default function WikiManager() {
       </div>
       <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+      <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg mb-4">
+        <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Title
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Category
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Last Updated
-              </th>
-              <th scope="col" className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Actions
-              </th>
+              <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Title</th>
+              <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Category</th>
+              <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Last Updated</th>
+              <th scope="col" className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Actions</th>
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
 
 
             {currentWikis.length > 0 ? (
               currentWikis.map(wiki => (
-                <tr key={wiki.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{wiki.title}</div>
+                <tr key={wiki.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+                  <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                    {wiki.title}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{wiki.category.name}</div>
+                  <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                    {wiki.category.name}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">
-                      {new Date(wiki.updatedAt).toLocaleDateString()}
-                    </div>
+                  <td className="px-4 py-2 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap">
+                    {new Date(wiki.updatedAt).toLocaleDateString()}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                    <button
-                      onClick={() => showEditModal(wiki)}
-                      className="text-yellow-600 hover:text-yellow-900 mx-2"
-                    >
-                      Edit
+                  <td className="px-4 py-2 text-sm whitespace-nowrap">
+                    <button onClick={() => showEditModal(wiki)} className="text-yellow-600 hover:text-yellow-900 m-2 ">
+                      <Pencil />
                     </button>
-                    <button
-                      onClick={() => window.open(`/wiki/${wiki.slug}`, '_blank')}
-                      className="text-blue-600 hover:text-blue-900 mx-2"
-                    >
-                      View
+                    <button onClick={() => window.open(`/wiki/${wiki.slug}`, '_blank')} className="text-blue-600 hover:text-blue-900 m-2" >
+                      <Eye />
                     </button>
-                    <button
-                      onClick={() => deleteWiki(wiki)}
-                      className="text-red-600 hover:text-red-900 mx-2"
-                    >
-                      Delete
+                    <button onClick={() => deleteWiki(wiki)} className="text-red-600 hover:text-red-900 m-2" >
+                      <Trash2 />
                     </button>
                   </td>
                 </tr>
@@ -140,7 +121,6 @@ export default function WikiManager() {
 
               </tr>
             )}
-
           </tbody>
         </table>
       </div>

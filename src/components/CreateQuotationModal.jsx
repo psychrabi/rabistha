@@ -7,7 +7,7 @@ import { useAdminStore } from '../store/adminStore';
 
 
 const quoteSchema = z.object({
-	userId: z.number().min(1, 'Customer is required'),
+	userId: z.string(),
 	items: z.array(z.object({
 		description: z.string().min(1, 'Description is required'),
 		quantity: z.number().min(1, 'Quantity must be at least 1'),
@@ -119,7 +119,7 @@ export default function CreateQuotationModal({ quote, onClose }) {
 		// Patch calculated fields before sending
 		const patchedData = {
 			...data,
-			userId: Number(quote.userId),
+			userId: data.userId ?? '',
 			subTotal,
 			taxable,
 			tax,
@@ -172,7 +172,7 @@ export default function CreateQuotationModal({ quote, onClose }) {
 							<label className="text-gray-700 dark:text-gray-200">Customer's Name</label>
 							<select
 								className={`select select-bordered ${errors.userId ? 'select-error' : ''} mt-2 block w-full px-4 py-2  text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring`}
-								{...register('userId', { required: true, valueAsNumber: true })}
+								{...register('userId')}
 							>
 								<option value="">Select customer</option>
 								{users.map((user) => (
