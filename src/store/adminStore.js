@@ -127,8 +127,7 @@ export const useAdminStore = create(
           // fetchWikis();
         }
       },
-        deleteFAQ: async (faq) => {
-
+      deleteFAQ: async (faq) => {
         if (confirm('Are you sure you want to delete this faq?')) {
           await fetch(`http://localhost:4000/api/admin/faqs/${faq.id}`, {
             method: 'DELETE',

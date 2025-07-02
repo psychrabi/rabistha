@@ -14,7 +14,7 @@ export default function Quotes() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(8);
-  const [selectedQuote, setSelectedQuote] = useState([]);
+  const [selectedQuote, setSelectedQuote] = useState();
   const [showQuoteModal, setShowQuoteModal] = useState(false);
   const { navigate } = useNavigate();
 
