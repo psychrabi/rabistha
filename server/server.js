@@ -187,7 +187,6 @@ app.post("/api/admin/licenses/:id/deactivate", authenticate, async (req, res) =>
 // Sales details (example)
 app.get("/api/admin/sales", authenticate, async (req, res) => {
   const sales = await prisma.sale.findMany({ include: { user: true } });
-  console.log(sales)
   res.json(sales);
 
 });
@@ -229,6 +228,25 @@ app.post("/api/admin/quotes", authenticate, async (req, res) => {
   try {
     const quote = await prisma.quotation.create({
       data: req.body
+    });
+    res.json({ success: true, quote });
+  } catch (e) {
+    res.status(400).json({ success: false, error: e.message });
+  }
+});
+
+
+// Settings create
+app.post("/api/admin/settings", authenticate, async (req, res) => {
+  const { settings } = req.body;
+  const data = settings.map(s => ({
+    key: s.key,
+    value: s.value,
+    description: s.description
+  }));
+  try {
+    const quote = await prisma.settings.createMany({
+      data: data
     });
     res.json({ success: true, quote });
   } catch (e) {
@@ -518,7 +536,6 @@ app.get('/api/licenses', async (req, res) => {
     const licenses = await prisma.license.findMany({
       where: { status }
     });
-    console.log(licenses)
     res.json(licenses);
   } catch (error) {
     res.status(500).json({ error: error.message });

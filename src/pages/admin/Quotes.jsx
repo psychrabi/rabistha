@@ -19,7 +19,7 @@ export default function Quotes() {
   const { navigate } = useNavigate();
 
   // Update the filtering logic
-  const filteredQuotes = quotes?.filter(quote => {
+  const filteredQuotes =(Array.isArray(quotes) ? quotes : [])?.filter(quote => {
     // If no filters are active, return all quotes
     if (searchTerm === '' && filterType === 'all' && filterStatus === 'all') {
       return true;

@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import AddFAQModal from '../../components/AddFAQModal';
 import Filter from '../../components/Filter';
 import Pagination from '../../components/Pagination';
-import { useAdminStore } from '../../store/adminStore';
+import { useFAQStore } from '../../store/faqStore';
 
 export default function FAQManager() {
-  const { faqs, fetchFAQs, deleteFAQ } = useAdminStore()
+  const { faqs, fetchFAQs, deleteFAQ } = useFAQStore()
   const [currentFAQ, setCurrentFAQ] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");

@@ -40,7 +40,7 @@ export default function Download() {
             </ul>
           </div>
         </div>
-        <div class="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mb-10">
+        <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100 mb-10">
           <table className="table">
             <thead>
               <tr className="">

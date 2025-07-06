@@ -2,17 +2,18 @@ import { Eye, Pencil, Plus, Trash2 } from 'lucide-react';
 import { lazy, useEffect, useState } from 'react';
 import Filter from '../../components/Filter';
 import { useAdminStore } from '../../store/adminStore';
+import { useWikiStore } from '../../store/wikiStore';
+import Pagination from '../../components/Pagination';
 const AddWikiModal = lazy(() => import('../../components/AddWikiModal'));
 
 export default function WikiManager() {
-  const { wikis, fetchWikis, deleteWiki } = useAdminStore()
+  const { wikis, fetchWikis, deleteWiki, fetchCategories, categories } = useWikiStore()
   const [currentWiki, setCurrentWiki] = useState([])
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState("all");
   const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(8);
-  const [showModal, setShowModal] = useState(false);
 
   // Update the filtering logic
   const filteredWikis = (Array.isArray(wikis) ? wikis : []).filter(wiki => {
@@ -20,10 +21,8 @@ export default function WikiManager() {
     if (searchTerm === '' && filterType === 'all' && filterStatus === 'all') {
       return true;
     }
-
     const matchesSearch = searchTerm === '' ||
       wiki.title.toLowerCase().includes(searchTerm.toLowerCase())
-
     const matchesType = filterType === 'all' || wiki.type === filterType;
 
     const matchesStatus = filterStatus === 'all' || wiki.status === filterStatus;
@@ -39,19 +38,18 @@ export default function WikiManager() {
 
   const showAddModal = () => {
     setCurrentWiki(null)
-    setShowModal(true);
     document.getElementById('addWikiModal').showModal()
   }
 
   const showEditModal = (wiki) => {
     setCurrentWiki(wiki)
-    setShowModal(true);
     document.getElementById('addWikiModal').showModal()
   }
 
   useEffect(() => {
     fetchWikis();
-  }, []);
+    fetchCategories();
+  }, [fetchWikis, fetchCategories]);
 
 
   return (
@@ -70,8 +68,7 @@ export default function WikiManager() {
           <AddWikiModal currentWiki={currentWiki} />
         </div>
       </div>
-      <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
-
+      <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} categories={categories} />
       <div className="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg mb-4">
         <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
           <thead className="bg-gray-50 dark:bg-gray-800">
@@ -83,8 +80,6 @@ export default function WikiManager() {
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-
-
             {currentWikis.length > 0 ? (
               currentWikis.map(wiki => (
                 <tr key={wiki.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
@@ -124,6 +119,7 @@ export default function WikiManager() {
           </tbody>
         </table>
       </div>
+      <Pagination perPage={perPage} currentPage={currentPage} setCurrentPage={setCurrentPage} total={wikis.length} />
     </section>
   );
 }

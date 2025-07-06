@@ -12,10 +12,7 @@ export const useAdminStore = create(
       licenses: [],
       sales: [],
       users: [],
-      wikis: [],
-      faqs: [],
       quotes: [],
-      categories: [],
 
       login: async (data) => {
         try {
@@ -69,39 +66,6 @@ export const useAdminStore = create(
           set({ licenses: [] });
         }
       },
-      fetchWikis: async () => {
-        try {
-          const response = await fetch('http://localhost:4000/api/wikis', {
-            headers: {
-              'Authorization': `Bearer ${useAdminStore.getState().token}`
-            }
-          });
-          const data = await response.json();
-          set({ wikis: data });
-        } catch (error) {
-          console.error('Error fetching wikis:', error);
-        }
-      },
-      fetchFAQs: async () => {
-        try {
-          const response = await fetch('http://localhost:4000/api/faqs');
-          const data = await response.json();
-          console.log(data)
-          set({ faqs: data });
-        } catch (error) {
-          console.error('Error fetching faqs:', error);
-        }
-      },
-      fetchCategories: async () => {
-        try {
-          const response = await fetch('http://localhost:4000/api/categories');
-          const data = await response.json();
-          console.log(data)
-          set({ categories: data });
-        } catch (error) {
-          console.error('Error fetching categories:', error);
-        }
-      },
       fetchQuotes: async () => {
         try {
           const response = await fetch('http://localhost:4000/api/admin/quotes', {
@@ -113,29 +77,6 @@ export const useAdminStore = create(
           set({ quotes: data });
         } catch (error) {
           console.error('Error fetching quotes:', error);
-        }
-      },
-      deleteWiki: async (wiki) => {
-
-        if (confirm('Are you sure you want to delete this wiki?')) {
-          await fetch(`http://localhost:4000/api/admin/wikis/${wiki.id}`, {
-            method: 'DELETE',
-            headers: {
-              'Authorization': `Bearer ${useAdminStore.getState().token}`
-            }
-          });
-          // fetchWikis();
-        }
-      },
-      deleteFAQ: async (faq) => {
-        if (confirm('Are you sure you want to delete this faq?')) {
-          await fetch(`http://localhost:4000/api/admin/faqs/${faq.id}`, {
-            method: 'DELETE',
-            headers: {
-              'Authorization': `Bearer ${useAdminStore.getState().token}`
-            }
-          });
-          // fetchFAQs();
         }
       },
       fetchSales: async () => {

@@ -97,11 +97,6 @@ export default function AdminSettings() {
               </button>
             </li>
             <li>
-              <button className={activeTab === 'email' ? 'active' : ''} onClick={() => setActiveTab('email')} >
-                Email Configuration
-              </button>
-            </li>
-            <li>
               <button className={activeTab === 'billing' ? 'active' : ''} onClick={() => setActiveTab('billing')} >
                 Billing Settings
               </button>
@@ -122,9 +117,9 @@ export default function AdminSettings() {
                       <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Site Name</label>
                       <input placeholder="ASTER Multiseat"
                         {...register('siteName')}
-                        type="text" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+                        type="text" className="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                       {errors.siteName && (
-                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.siteName.message}</p>
+                        <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.siteName.message}</p>
                       )}
                     </div>
                     <div >
@@ -135,14 +130,14 @@ export default function AdminSettings() {
                         {...register('siteDescription')}
                       ></textarea>
                       {errors.siteDescription && (
-                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.siteDescription.message}</p>
+                        <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.siteDescription.message}</p>
 
                       )}
                     </div>
                     <div className="form-control">
                       <label className="block text-sm text-gray-500 dark:text-gray-300">Logo Upload</label>
-                      <input type="file" class="block w-full px-3 py-2 mt-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full dark:file:bg-gray-800 dark:file:text-gray-200 dark:text-gray-300 placeholder-gray-400/70 dark:placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:focus:border-blue-300" accept="image/*" />
-                      <p class="mt-3 text-xs text-grey-400 dark:text-gray-600">Upload your company logo (PNG, JPG)</p>
+                      <input type="file" className="block w-full px-3 py-2 mt-2 text-sm text-gray-600 bg-white border border-gray-200 rounded-lg file:bg-gray-200 file:text-gray-700 file:text-sm file:px-4 file:py-1 file:border-none file:rounded-full dark:file:bg-gray-800 dark:file:text-gray-200 dark:text-gray-300 placeholder-gray-400/70 dark:placeholder-gray-500 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:focus:border-blue-300" accept="image/*" />
+                      <p className="mt-3 text-xs text-grey-400 dark:text-gray-600">Upload your company logo (PNG, JPG)</p>
                     </div>
                   </div>
                 )}
@@ -156,9 +151,9 @@ export default function AdminSettings() {
                       <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Contact Email</label>
                       <input placeholder="email@example.com"
                         {...register('contactEmail')}
-                        type="email" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+                        type="email" className="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                       {errors.contactEmail && (
-                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactEmail.message}</p>
+                        <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactEmail.message}</p>
                       )}
                     </div>
                     <div>
@@ -166,9 +161,9 @@ export default function AdminSettings() {
                       <input placeholder="+1 (555) 123-4567"
 
                         {...register('contactPhone')}
-                        type="tel" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+                        type="tel" className="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                       {errors.contactPhone && (
-                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactPhone.message}</p>
+                        <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactPhone.message}</p>
                       )}
                     </div>
                     <div >
@@ -179,64 +174,12 @@ export default function AdminSettings() {
                         {...register('contactAddress')}
                       ></textarea>
                       {errors.contactAddress && (
-                        <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactAddress.message}</p>
+                        <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.contactAddress.message}</p>
 
                       )}
                     </div>
                   </div>
-                )}
-
-                {/* Email Configuration Tab */}
-                {activeTab === 'email' && (
-                  <div className="space-y-6">
-                    <h2 className="card-title">Email Configuration</h2>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">SMTP Host</label>
-                        <input placeholder="smtp.gmail.com"
-                          {...register('smtpHost')}
-                          type="text" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                        {errors.smtpHost && (
-                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.smtpHost.message}</p>
-                        )}
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">SMTP Port</label>
-                        <input placeholder="587"
-                          {...register('smtpPort')}
-                          type="text" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                        {errors.smtpPort && (
-                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.smtpPort.message}</p>
-                        )}
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">SMTP Username</label>
-                        <input placeholder="email@example.com"
-                          {...register('smtpUser')}
-                          type="email" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                        {errors.smtpUser && (
-                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.smtpUser.message}</p>
-                        )}
-                      </div>
-                      <div>
-                        <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Contact Email</label>
-                        <input placeholder="email@example.com"
-                          {...register('smtpPass')}
-                          type="password" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
-                        {errors.smtpPass && (
-                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.smtpPass.message}</p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="alert alert-info">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="stroke-current shrink-0 w-6 h-6">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                      </svg>
-                      <span>For Gmail, use an App Password instead of your regular password.</span>
-                    </div>
-                  </div>
-                )}
+                )}             
 
                 {/* Billing Settings Tab */}
                 {activeTab === 'billing' && (
@@ -250,9 +193,9 @@ export default function AdminSettings() {
                           {...register('taxRate', { valueAsNumber: true })}
                            step="0.01"
                           placeholder="0.00"
-                          type="number" class="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
+                          type="number" className="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                         {errors.taxRate && (
-                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.taxRate.message}</p>
+                          <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.taxRate.message}</p>
                         )}
                       </div>
                          <div>
@@ -268,7 +211,7 @@ export default function AdminSettings() {
                           <option value="RUB">RUB - Russian Ruble</option>
                         </select>
                         {errors.currency && (
-                          <p class="mt-3 text-xs text-red-400 dark:text-red-600">{errors.currency.message}</p>
+                          <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.currency.message}</p>
                         )}
                       </div>
                     </div>

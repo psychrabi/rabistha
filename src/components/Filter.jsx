@@ -1,6 +1,7 @@
 import React from "react";
 
-const Filter = React.memo(function Filter({ setFilterType, setSearchTerm, setFilterStatus, filterStatus, filterType, searchTerm }) {
+const Filter = React.memo(function Filter({ setFilterType, setSearchTerm, setFilterStatus, filterStatus, filterType, searchTerm, categories }) {
+	console.log(categories)
 	return (
 		<div className="rounded-lg border bg-gray-100 dark:bg-gray-800 text-gray-100 dark:text-gray-900  mb-4">
 			<div className="p-3">
@@ -13,13 +14,9 @@ const Filter = React.memo(function Filter({ setFilterType, setSearchTerm, setFil
 						</div>
 					</div>
 					<select className="select px-4 py-2 border rounded-lg" value={filterType} onChange={(e) => setFilterType(e.target.value)} >
-						<option value="all">All Types</option>
-						<option value="Pro-1">Pro-1</option>
-						<option value="Pro-2">Pro-2</option>
-						<option value="Pro-6">Pro-6</option>
-						<option value="Annual-2">Annual-2</option>
-						<option value="Annual-3">Annual-3</option>
-						<option value="Annual-6">Annual-6</option>
+						{categories.map(category => {
+							<option value={category.id}>{category.name}</option>
+						})}
 					</select>
 					<select className="select px-4 py-2 border rounded-lg" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
 						<option value="all">All Status</option>

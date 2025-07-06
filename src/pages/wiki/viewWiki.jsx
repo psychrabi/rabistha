@@ -1,5 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import DOMPurify from "dompurify";
+import Loading from "../../components/Loading";
+import ErrorBoundary from "../../components/ErrorBoundary";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 
 export default function ViewWiki() {
   const [wiki, setWiki] = useState(null);
@@ -8,50 +13,43 @@ export default function ViewWiki() {
   const { slug, category } = useParams();
 
   useEffect(() => {
+    let isMounted = true;
     const fetchWiki = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`http://localhost:4000/api/wikis/${category}/${slug}`);
-
-        if (!response.ok) {
-          throw new Error('Wiki not found');
-        }
-
+        setError(null);
+        const response = await fetch(
+          `${API_BASE_URL}/api/wikis/${category}/${slug}`
+        );
+        if (!response.ok) throw new Error("Wiki not found");
         const data = await response.json();
-
-        console.log(data)
-        setWiki(data);
-      } catch (error) {
-        setError(error.message);
+        if (isMounted) setWiki(data);
+      } catch (err) {
+        if (isMounted) setError(err.message || "Unknown error");
       } finally {
-        setLoading(false);
+        if (isMounted) setLoading(false);
       }
     };
-
     fetchWiki();
-  }, [slug]);
+    return () => {
+      isMounted = false;
+    };
+  }, [slug, category]);
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-red-500">{error}</div>
-      </div>
-    );
-  }
+  if (loading) return <Loading />;
+  if (error) return <ErrorBoundary message={error} />;
 
   return (
-    <section >
+    <section>
       <div className="container px-6 py-10 mx-auto">
         <h1 className="text-3xl font-bold mb-6">{wiki?.title}</h1>
-        <div className="prose max-w-none text-white" dangerouslySetInnerHTML={{ __html: wiki?.content }}
+        <div
+          className="prose max-w-none text-white"
+          dangerouslySetInnerHTML={{
+            __html: DOMPurify(new JSDOM("<!DOCTYPE html>").window).sanitize(
+              wiki?.content || ""
+            ),
+          }}
         />
       </div>
     </section>

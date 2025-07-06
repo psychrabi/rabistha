@@ -1,9 +1,7 @@
-const Loading = () => {
+export default function Loading() {
   return (
-    <div className="w-full h-screen flex justify-center items-center">
-      <span className="loading loading-spinner loading-xl w-48 h-48"></span>
+    <div className="flex items-center justify-center min-h-screen">
+      <span className="loading loading-spinner loading-lg text-blue-500"></span>
     </div>
   );
-};
-
-export default Loading;
+}
