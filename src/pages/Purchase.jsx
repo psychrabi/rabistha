@@ -24,14 +24,14 @@ function Purchase() {
 
   const pricingData = {
     annual: [
-      { id: 1, type: 'annual-2', name: 'Annual License - 2 Users', price: 14.99, users: 2, features: ['2 users', 'Expandable (up to 12) *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: true },
-      { id: 2, type: 'annual-3', name: 'Annual License - 3 Users', price: 19.99, users: 3, features: ['up to 3 users', 'Expandable (up to 12)  *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: false },
-      { id: 3, type: 'annual-6', name: 'Annual License - 6 Users', price: 36.99, users: 6, features: ['up to 6 users', 'Expandable (up to 12)  *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: false }
+      { id: 1, type: 'annual-2', name: 'Annual License - 2 Users', price: 14.99, discounted_price: 12.99, users: 2, features: ['2 users', 'Expandable (up to 12) *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: true },
+      { id: 2, type: 'annual-3', name: 'Annual License - 3 Users', price: 19.99, discounted_price: 17.99, users: 3, features: ['up to 3 users', 'Expandable (up to 12)  *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: false },
+      { id: 3, type: 'annual-6', name: 'Annual License - 6 Users', price: 36.99, discounted_price: 32.99, users: 6, features: ['up to 6 users', 'Expandable (up to 12)  *', 'Transferrable (4 Times)', 'Technical Support'], is_popular: false }
     ],
     perpetual: [
-      { id: 4, type: 'pro-2', name: 'Perpetual License - 2 Users', price: 45.99, users: 2, features: ['2 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: true },
-      { id: 5, type: 'pro-3', name: 'Perpetual License - 3 Users', price: 57.99, users: 3, features: ['up to 3 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: false },
-      { id: 6, type: 'pro-6', name: 'Perpetual License - 6 Users', price: 109.99, users: 6, features: ['up to 6 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: false }
+      { id: 4, type: 'pro-2', name: 'Perpetual License - 2 Users', price: 59.99, discounted_price: 53.99, users: 2, features: ['2 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: true },
+      { id: 5, type: 'pro-3', name: 'Perpetual License - 3 Users', price: 74.99, discounted_price: 67.99, users: 3, features: ['up to 3 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: false },
+      { id: 6, type: 'pro-6', name: 'Perpetual License - 6 Users', price: 142.99, discounted_price: 124.99, users: 6, features: ['up to 6 users', 'Expandable (up to 12) *', 'Transferrable (4 Times / year)', 'Technical Support'], is_popular: false }
     ]
   };
 
@@ -88,7 +88,10 @@ function Purchase() {
               )}
               <div className="flex flex-col gap-4 text-center">
                 <h2 className="text-xl capitalize">{data.type}</h2>
-                <h1 className="text-5xl font-bold">${data.price}</h1>
+                <h1 className={`text-3xl font-bold ${data.discounted_price ? 'line-through' : ''}`}>${data.price}</h1>
+                {data.discounted_price && (
+                  <h1 className="text-5xl font-bold">${data.discounted_price}</h1>
+                )}
                 <span className="text-sm">
                   {(data.type === 'pro-2' || data.type === "annual-2") ? 'Share PC with 2 users' : `Share PC with up to ${data.users} users`}
                 </span>
