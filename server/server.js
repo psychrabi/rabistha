@@ -105,7 +105,9 @@ app.post("/api/admin/login", async (req, res, next) => {
 
     res.json({ ...adminWithoutPassword, token: generateJwt(admin) });
   } catch (error) {
+    console.log(error)
     res.status(400).json({ success: false, error: error.message });
+    
     next(error)
   }
 });

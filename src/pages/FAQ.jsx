@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Download from "../components/Download";
 import Pagination from "../components/Pagination";
-import { useAdminStore } from "../store/adminStore";
+import { useFAQStore } from "../store/faqStore";
 
 function FAQ() {
-	const { fetchFAQs, faqs } = useAdminStore()
+	const { fetchFAQs, faqs } = useFAQStore()
 	const [currentPage, setCurrentPage] = useState(1);
 	const [faqsPerPage] = useState(15);
 	const indexOfLastFAQ = currentPage * faqsPerPage;
@@ -13,7 +13,7 @@ function FAQ() {
 
 	useEffect(() => {
 		fetchFAQs()
-	}, []);
+	}, [fetchFAQs]);
 	return (
 		<section className="bg-white dark:bg-gray-900 min-h-[calc(100vh-11.75rem)]">
 			<div className="container px-6 py-4 mx-auto">
