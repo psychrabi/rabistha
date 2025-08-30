@@ -107,7 +107,7 @@ export default function Licenses() {
 								<tr key={license.id} className="text-sm">
 									<td className="px-4 py-2 whitespace-nowrap font-medium ">{license.license}</td>
 									<td className="px-4 py-2 whitespace-nowrap text-center">{license.type}</td>
-									<td className="px-4 py-2 whitespace-nowrap text-center">{formatCurrency(license.costPrice)}</td>
+									<td className="px-4 py-2 whitespace-nowrap text-center">{formatCurrency(license.price)}</td>
 									<td className="px-4 py-2 whitespace-nowrap text-center">{formatDate(license.purchaseDate)}</td>
 									<td className="px-4 py-2 whitespace-nowrap text-center">
 										<span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 

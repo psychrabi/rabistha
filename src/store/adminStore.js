@@ -16,7 +16,7 @@ export const useAdminStore = create(
 
       login: async (data) => {
         try {
-          const response = await fetch(`http://localhost:4000/api/admin/login`, {
+          const response = await fetch(`${API_URL}/admin/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(data)
@@ -68,7 +68,7 @@ export const useAdminStore = create(
       },
       fetchQuotes: async () => {
         try {
-          const response = await fetch('http://localhost:4000/api/admin/quotes', {
+          const response = await fetch(`${API_URL}/admin/quotes`, {
             headers: {
               'Authorization': `Bearer ${useAdminStore.getState().token}`
             }

@@ -4,13 +4,14 @@ import { useEffect, useMemo, useRef } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { useAdminStore } from '../store/adminStore';
+import { useWikiStore } from '../store/wikiStore';
 
 const AddWikiModal = ({ currentWiki }) => {
   const editor = useRef(null);
   const { register, handleSubmit, control, reset } = useForm({
     defaultValues: { currentWiki }
   });
-  const { token, fetchCategories, categories } = useAdminStore();
+  const { token, fetchCategories, categories } = useWikiStore();
 
   const navigate = useNavigate()
 
@@ -103,7 +104,7 @@ const AddWikiModal = ({ currentWiki }) => {
           <div className="mb-4">
             <label className="block mb-2">Category</label>
             <select {...register('categoryId', { required: 'Category is required' })} className="select w-full px-3 py-2 border rounded">
-              {categories.map((category)=> {
+              {categories?.map((category)=> {
                 return <option key={category.id} value={category.id}>{category.name}</option>
               })}
             </select>

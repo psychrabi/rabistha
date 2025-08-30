@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useAdminStore } from './adminStore'; // Add this import
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:4000';
+const API_URL = 'http://localhost:4000/api';
 
 export const useWikiStore = create(
   persist(
@@ -14,7 +14,7 @@ export const useWikiStore = create(
       fetchWikis: async () => {
         set({ loading: true, error: null });
         try {
-          const response = await fetch(`${API_BASE_URL}/api/wikis`);
+          const response = await fetch(`${API_URL}/wikis`);
           if (!response.ok) throw new Error('Failed to fetch wikis');
           const data = await response.json();
           console.log(data)
@@ -26,8 +26,9 @@ export const useWikiStore = create(
       fetchCategories: async () => {
         set({ loading: true, error: null });
         try {
-          const response = await fetch(`${API_BASE_URL}/api/categories`);
+          const response = await fetch(`${API_URL}/categories`);
           const data = await response.json();
+          console.log(data)
           set({ categories: Array.isArray(data) ? data : [], loading: false });
         } catch (error) {
           set({ error: error.message, loading: false });
@@ -36,7 +37,7 @@ export const useWikiStore = create(
       addWiki: async (wiki) => {
         const token = useAdminStore.getState().token;
         try {
-          const response = await fetch(`${API_BASE_URL}/api/admin/wikis`, {
+          const response = await fetch(`${API_URL}/admin/wikis`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -53,7 +54,7 @@ export const useWikiStore = create(
       updateWiki: async (id, wiki) => {
         const token = useAdminStore.getState().token;
         try {
-          const response = await fetch(`${API_BASE_URL}/api/admin/wikis/${id}`, {
+          const response = await fetch(`${API_URL}/admin/wikis/${id}`, {
             method: 'PUT',
             headers: {
               'Content-Type': 'application/json',
@@ -71,7 +72,7 @@ export const useWikiStore = create(
         const token = useAdminStore.getState().token;
         try {
           if (confirm('Are you sure you want to delete this wiki?')) {
-            const response = await fetch(`${API_BASE_URL}/api/admin/wikis/${id}`, {
+            const response = await fetch(`${API_URL}/admin/wikis/${id}`, {
               method: 'DELETE',
               'Authorization': `Bearer ${token}`,
             });

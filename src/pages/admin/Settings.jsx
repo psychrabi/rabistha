@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
+const API_URL = 'http://localhost:4000/api';
 
 const settingsSchema = z.object({
   siteName: z.string().min(1, 'Site name is required'),
@@ -21,7 +22,7 @@ const settingsSchema = z.object({
 });
 
 export default function AdminSettings() {
-  const [, setSettings] = useState({});
+  const [settings, setSettings] = useState({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState('general')
@@ -36,9 +37,10 @@ export default function AdminSettings() {
 
   const fetchSettings = async () => {
     try {
-      const data = await api.getSettings();
-      setSettings(data);
-      reset(data);
+      const response = await fetch(`${API_URL}/admin/settings`);
+      if (!response.ok) throw new Error('Failed to fetch Settings');
+      const data = await response.json();      
+      setSettings(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Failed to fetch settings:', error);
     } finally {
@@ -179,7 +181,7 @@ export default function AdminSettings() {
                       )}
                     </div>
                   </div>
-                )}             
+                )}
 
                 {/* Billing Settings Tab */}
                 {activeTab === 'billing' && (
@@ -187,20 +189,20 @@ export default function AdminSettings() {
                     <h2 className="card-title">Billing Settings</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                         <div>
+                      <div>
                         <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Tax Rate (%)</label>
                         <input
                           {...register('taxRate', { valueAsNumber: true })}
-                           step="0.01"
+                          step="0.01"
                           placeholder="0.00"
                           type="number" className="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                         {errors.taxRate && (
                           <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.taxRate.message}</p>
                         )}
                       </div>
-                         <div>
+                      <div>
                         <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Default Currency</label>
-                         <select
+                        <select
                           className={`select block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300 ${errors.currency ? 'select-error' : ''}`}
                           {...register('currency')}
                         >

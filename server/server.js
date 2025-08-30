@@ -237,6 +237,16 @@ app.post("/api/admin/quotes", authenticate, async (req, res) => {
   }
 });
 
+// Get Settings
+app.get("/api/admin/settings", async (req, res) => {
+  try {
+    const settings = await prisma.settings.findMany();
+    res.json(settings);
+  } catch (e) {
+    res.status(400).json({ success: false, error: e.message });
+  }
+});
+
 
 // Settings create
 app.post("/api/admin/settings", authenticate, async (req, res) => {
@@ -536,9 +546,12 @@ app.get('/api/licenses', async (req, res) => {
 
   try {
     const licenses = await prisma.license.findMany({
-      where: { status }
+      where: { status },
+      include: {
+        product: true
+      }
     });
-    res.json(licenses);
+    res.json(licenses);    
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

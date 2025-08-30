@@ -13,11 +13,13 @@ const Filter = React.memo(function Filter({ setFilterType, setSearchTerm, setFil
 							/>
 						</div>
 					</div>
-					<select className="select px-4 py-2 border rounded-lg" value={filterType} onChange={(e) => setFilterType(e.target.value)} >
-						{categories.map(category => {
-							<option value={category.id}>{category.name}</option>
-						})}
-					</select>
+					{categories && categories.length > 0 && (
+						<select className="select px-4 py-2 border rounded-lg" value={filterType} onChange={(e) => setFilterType(e.target.value)} >
+							{categories.map(category => {
+								<option value={category.id}>{category.name}</option>
+							})}
+						</select>
+					)}
 					<select className="select px-4 py-2 border rounded-lg" value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)}>
 						<option value="all">All Status</option>
 						<option value="available">Available</option>
