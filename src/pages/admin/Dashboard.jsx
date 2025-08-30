@@ -44,7 +44,7 @@ export default function Dashboard() {
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             {sales.map((sale) => (
               <tr key={sale.id} className="text-sm">
-                <td className="px-4 py-2 whitespace-nowrap font-medium">{sale.user.name}</td>
+                <td className="px-4 py-2 whitespace-nowrap font-medium">{sale.user.firstName+ " "+sale.user.lastName}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-center">{sale.shippingEmail}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-center capitalize">{sale.salesPrice}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-center capitalize">{sale.discount}</td>

@@ -6,9 +6,9 @@ const DashboardMetrix = () => {
   const { licenses, sales, users } = useAdminStore();
 
   const noOfCustomers = users.length
-  const noOfSales = sales.length
+  const noOfSales = sales.reduce((total, sale) => sale.paymentStatus === "paid" ? total + 1 : total, 0)
   const availableLicenses = licenses.length
-  const totalRevenue = sales.reduce((sum, sale) => sum + sale.salesPrice, 0);
+  const totalRevenue = sales.reduce((sum, sale) => sale.paymentStatus === "paid" ? sum + parseFloat(sale.salesPrice) : sum, 0).toFixed(2);
 
   const matrixData = [
     {

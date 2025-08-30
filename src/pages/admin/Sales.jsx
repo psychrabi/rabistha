@@ -3,6 +3,7 @@ import { useState } from "react";
 import Pagination from "../../components/Pagination";
 import { useAdminStore } from "../../store/adminStore";
 import Filter from "../../components/Filter";
+import { useNavigate } from "react-router-dom";
 
 export default function SalesDetails() {
   const { sales } = useAdminStore();
@@ -11,6 +12,7 @@ export default function SalesDetails() {
   const [filterStatus, setFilterStatus] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
   const [perPage] = useState(8);
+  const navigate = useNavigate();
 
   // Update the filtering logic
   const filteredSales = sales?.filter(sale => {
@@ -44,11 +46,10 @@ export default function SalesDetails() {
             <h1 className="text-3xl font-bold text-slate-900 dark:text-gray-100 mb-2">Sales Management</h1>
             <p className="text-slate-600 dark:text-gray-300">Manage your sales</p>
           </div>
-          <Link to="/admin/dashboard" className="btn btn-primary flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600">
-            <ArrowLeft className="w-5 h-5" />
+          <button className="btn btn-primary" onClick={() => navigate('/admin/dashboard')} >
             Back to Dashboard
-          </Link>
-        </div>
+          </button>
+          </div>
       </div>
       <Filter setFilterStatus={setFilterStatus} setSearchTerm={setSearchTerm} setFilterType={setFilterType} searchTerm={searchTerm} filterType={filterType} filterStatus={filterStatus} />
 
@@ -70,7 +71,7 @@ export default function SalesDetails() {
           <tbody className="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
             {currentSales.map((sale) => (
               <tr key={sale.id} className="text-sm">
-                <td className="px-4 py-2 whitespace-nowrap font-medium">{sale.user.name}</td>
+                <td className="px-4 py-2 whitespace-nowrap font-medium">{sale.user.firstName + " " + sale.user.lastName}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-center">{sale.shippingEmail}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-center capitalize">{sale.salesPrice}</td>
                 <td className="px-4 py-2 whitespace-nowrap text-center capitalize">{sale.discount}</td>

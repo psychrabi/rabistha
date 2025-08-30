@@ -13,6 +13,7 @@ export const useAdminStore = create(
       sales: [],
       users: [],
       quotes: [],
+      orders: [],
 
       login: async (data) => {
         try {
@@ -77,6 +78,19 @@ export const useAdminStore = create(
           set({ quotes: data });
         } catch (error) {
           console.error('Error fetching quotes:', error);
+        }
+      },
+      fetchOrders: async () => {
+        try {
+          const response = await fetch(`${API_URL}/admin/orders`, {
+            headers: {
+              'Authorization': `Bearer ${useAdminStore.getState().token}`
+            }
+          });
+          const data = await response.json();
+          set({ orders: data });
+        } catch (error) {
+          console.error('Error fetching orders:', error);
         }
       },
       fetchSales: async () => {
