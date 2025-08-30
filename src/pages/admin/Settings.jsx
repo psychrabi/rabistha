@@ -22,7 +22,7 @@ const settingsSchema = z.object({
 });
 
 export default function AdminSettings() {
-  const [settings, setSettings] = useState({});
+  const [settings, setSettings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [activeTab, setActiveTab] = useState('general')
@@ -35,18 +35,24 @@ export default function AdminSettings() {
     fetchSettings();
   }, []);
 
-  const fetchSettings = async () => {
-    try {
-      const response = await fetch(`${API_URL}/admin/settings`);
-      if (!response.ok) throw new Error('Failed to fetch Settings');
-      const data = await response.json();      
-      setSettings(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error('Failed to fetch settings:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+const fetchSettings = async () => {
+  try {
+    const response = await fetch(`${API_URL}/admin/settings`);
+    if (!response.ok) throw new Error('Failed to fetch Settings');
+    const data = await response.json();
+    const settingsObj = data.reduce((acc, setting) => {
+      acc[setting.key] =
+        setting.key === 'taxRate' ? parseFloat(setting.value) : setting.value;
+      return acc;
+    }, {});
+    setSettings(data);
+    reset(settingsObj); // Applies values correctly to form
+  } catch (error) {
+    console.error('Failed to fetch settings:', error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const onSubmit = async (data) => {
     setSaving(true);
@@ -118,7 +124,7 @@ export default function AdminSettings() {
                     <div>
                       <label className="block text-sm text-gray-500 dark:text-gray-300" htmlFor="siteName">Site Name</label>
                       <input placeholder="ASTER Multiseat"
-                        {...register('siteName')}
+                        {...register('siteName')}                        
                         type="text" className="block mt-2 w-full placeholder-gray-400/70 dark:placeholder-gray-500 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-gray-700 focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:focus:border-blue-300" />
                       {errors.siteName && (
                         <p className="mt-3 text-xs text-red-400 dark:text-red-600">{errors.siteName.message}</p>
