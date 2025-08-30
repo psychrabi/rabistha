@@ -9,6 +9,7 @@ const FAQManager = lazy(() => import("@/pages/admin/FAQ"));
 const Sales = lazy(() => import("@/pages/admin/Sales"));
 const Settings = lazy(() => import("@/pages/admin/Settings"));
 const Quotes = lazy(() => import("@/pages/admin/Quotes"));
+const Orders = lazy(() => import("@/pages/admin/Orders"));
 const Customers = lazy(() => import("@/pages/admin/Customers"));
 const Licenses = lazy(() => import("@/pages/admin/Licenses"));
 const Dashboard = lazy(() => import("@/pages/admin/Dashboard"));
@@ -151,6 +152,10 @@ export const router = createBrowserRouter([
 			{
 				path: "/admin/quotes",
 				Component: Quotes
+			},
+			{
+				path: "/admin/orders",
+				Component: Orders
 			},
 			{
 				path: "/admin/wikis",
