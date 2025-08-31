@@ -101,7 +101,7 @@ function QuickStart() {
           <h1 className="text-4xl font-bold">Quick Start Guide</h1>
         </div>
 
-        <div className="prose max-w-none">
+        <div className="max-w-none">
           <p className="text-lg mb-8">
             Welcome to ASTER! This quick start guide will help you get up and running with ASTER quickly. Follow these steps to set up your multi-user workstation environment.
           </p>

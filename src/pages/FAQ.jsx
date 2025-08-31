@@ -30,7 +30,7 @@ function FAQ() {
 							<div className="collapse-title font-semibold text-gray-700 dark:text-white">{faq.question}</div>
 							<div className="collapse-content">
 								<div
-									className="prose max-w-none text-white"
+									className="max-w-none text-white"
 									dangerouslySetInnerHTML={{ __html: faq?.answer }}
 								/>
 							</div>

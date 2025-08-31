@@ -78,7 +78,7 @@ function UserManual() {
               {section.icon}
               <h2 className="text-2xl font-bold">{section.title}</h2>
             </div>
-            <div className="prose max-w-none">
+            <div className="max-w-none">
               <div className="whitespace-pre-wrap">{section.content}</div>
             </div>
           </section>

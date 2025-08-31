@@ -41,13 +41,14 @@ export default function ViewWiki() {
 
   return (
     <section>
-      <div className="container px-6 py-10 mx-auto bg-base-content">
-        <h1 className="text-3xl font-bold mb-6 text-gray-900">{wiki?.title}</h1>
+      <div className="px-6 py-10 bg-base-content">
+        <h1 className="text-3xl font-bold mb-4 text-gray-700">{wiki?.title}</h1>
         <div
-          className="prose max-w-none text-gray-900 dark:text-white"
+          className="text-gray-700"
           dangerouslySetInnerHTML={{
             __html: DOMPurify.sanitize(
-              wiki?.content || ""
+              wiki?.content || "",
+              { USE_PROFILES: { html: true }}
             ),
           }}
         />

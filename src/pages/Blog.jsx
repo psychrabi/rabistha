@@ -95,7 +95,7 @@ function Blog() {
               </div>
             </div>
 
-            <div className="prose max-w-none mb-4">
+            <div className="max-w-none mb-4">
               <div className="whitespace-pre-wrap">{post.content}</div>
             </div>
 
